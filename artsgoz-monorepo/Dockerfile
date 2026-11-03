@@ -10,6 +10,7 @@ COPY apps ./apps
 COPY scripts ./scripts
 
 RUN pnpm install --frozen-lockfile
+RUN pnpm nx sync
 
 ARG APP_NAME=artsgoz-backoffice
 ARG VITE_API_BASE_URL=http://localhost:8080/api
