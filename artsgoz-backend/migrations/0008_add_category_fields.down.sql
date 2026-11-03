@@ -1,0 +1,4 @@
+ALTER TABLE categories DROP COLUMN IF EXISTS sort_order;
+ALTER TABLE categories DROP COLUMN IF EXISTS color;
+ALTER TABLE categories DROP COLUMN IF EXISTS updated_at;
+
