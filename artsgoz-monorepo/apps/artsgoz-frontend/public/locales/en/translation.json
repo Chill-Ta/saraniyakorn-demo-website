@@ -1,0 +1,1165 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About GOZ",
+    "student_services": "Student Services",
+    "curriculum": "Curriculum",
+    "help": "Help",
+    "internships": "Internships",
+    "internships_dropdown_review": "Internship Reviews",
+    "internships_dropdown_open": "Currently Open",
+    "account": "Account",
+    "search_placeholder": "Search",
+    "language": "EN"
+  },
+  "home": {
+    "student_services_title": "Student Services",
+    "student_services_desc": "Quick shortcuts to all Faculty of Arts systems in one place",
+    "manage_menu": "Manage Menu",
+    "add_shortcut": "Add Shortcut",
+    "done": "Done"
+  },
+  "agenda": {
+    "title": "Activity Calendar & Schedule",
+    "description": "Follow news, events, and important schedules at the Faculty of Arts",
+    "upcoming_title": "Upcoming Events",
+    "view_all": "View All",
+    "month_label": "Aug 2026",
+    "events": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "important": "Important",
+      "dont_forget": "Don't Forget",
+      "submit_proposal": "Submit Project Proposal",
+      "national_seminar": "National Academic Seminar",
+      "internship_orientation": "Summer Internship Orientation",
+      "committee_meeting": "Department Student Committee Meeting",
+      "national_seminar_full": "National Academic Seminar, Faculty of Arts",
+      "faculty_committee_meeting": "Faculty Student Committee Meeting"
+    },
+    "months": {
+      "mar": "Mar",
+      "apr": "Apr"
+    }
+  },
+  "articles": {
+    "section_title": "Articles from Saraniyakorn Club",
+    "section_desc": "Latest news, articles, and events from within the Faculty",
+    "view_all": "View All Articles",
+    "drag": "drag",
+    "dragging": "dragging",
+    "mock": {
+      "art01": {
+        "title": "Welcome to Arts GOZ Student Portal",
+        "excerpt": "Discover how the new GOZ student portal simplifies your academic and daily life at Faculty of Arts, Chula.",
+        "author": "Saraniyakorn Team",
+        "category": "Announcement",
+        "content_0": "We are proud to introduce the new Arts GOZ Student Portal. This platform is designed to be the central hub for all student services, academic tracking, and public relations.",
+        "content_1": "You can now easily track your curriculum progress, submit course petitions, download important documents, and keep up with campus events through our integrated calendar.",
+        "content_2": "Explore the various tabs and features. If you find any issues, feel free to submit feedback to help us improve the platform."
+      },
+      "art02": {
+        "title": "How to Prepare for the Summer Internship Program",
+        "excerpt": "An ultimate guide on finding internships, building resumes, and preparing for interviews in your junior year.",
+        "author": "P'Siri, Arts 84",
+        "category": "Career Tips",
+        "content_0": "Securing a summer internship is a great way to gain professional experience and explore career paths. Start by preparing your resume and showcasing your language skills.",
+        "content_1": "Many top companies offer roles in Content Marketing, UX/UI Design, and Localization for Arts students. Tailor your application for each role.",
+        "content_2": "Practice common interview questions and be confident in your multilingual capabilities. Good luck!"
+      },
+      "art03": {
+        "title": "WestCiv Survival Guide: Tips from Senior Students",
+        "excerpt": "Don't panic! Here are the best study techniques and reading recommendations to pass Western Civilization with an A.",
+        "author": "History Major Seniors",
+        "category": "Study Guide",
+        "content_0": "Western Civilization (WestCiv) is known for its heavy reading load. The key is consistent reading and understanding the main historical themes rather than memorizing dates.",
+        "content_1": "Form study groups to discuss key concepts and summarize chapters. Sharing notes can help clarify complex historical events.",
+        "content_2": "Don't hesitate to ask your professors for guidance during office hours. They are always happy to help."
+      },
+      "art04": {
+        "title": "Student Wellness: Managing Stress and Mental Health",
+        "excerpt": "Learn about the counseling services and wellness activities available to Chula students.",
+        "author": "GOZ Welfare Team",
+        "category": "Health & Wellness",
+        "content_0": "Academic stress can take a toll on your mental health. Chulalongkorn University provides various support channels, including MindSpace and professional counseling.",
+        "content_1": "Remember to take breaks, practice mindfulness, and balance your study schedule with activities you enjoy.",
+        "content_2": "If you or your friends need someone to talk to, don't hesitate to reach out to the university's support services."
+      },
+      "art05": {
+        "title": "The Evolution of Language in the Digital Era",
+        "excerpt": "Explore how social media, memes, and internet slang are shaping the future of Thai and English.",
+        "author": "Linguistics Club",
+        "category": "Academic Articles",
+        "content_0": "The digital era has accelerated the evolution of language. Internet slang, abbreviations, and emojis have become integral to modern communication.",
+        "content_1": "Linguists observe that these changes reflect social adaptation and the need for fast, expressive digital interaction.",
+        "content_2": "Understanding these trends helps us adapt communication strategies in both personal and professional contexts."
+      },
+      "art06": {
+        "title": "Behind the Scenes of the Arts Open House 2026",
+        "excerpt": "Exclusive interviews with the student organizers who made this year's Open House a huge success.",
+        "author": "Saraniyakorn Reporter",
+        "category": "Campus Life",
+        "content_0": "This year's Arts Open House attracted thousands of high school students. The event showcased the diversity of our majors and active student clubs.",
+        "content_1": "Organizers spent months planning interactive booths, campus tours, and mock classes to give prospective students a taste of life at Arts Chula.",
+        "content_2": "A big thank you to all student volunteers who dedicated their time to make this event successful and memorable."
+      }
+    },
+    "saved_title": "Saved Articles & Info",
+    "search_saved_placeholder": "Search saved items...",
+    "filter": "Filter",
+    "filter_and_sort": "Filter & Sort Options",
+    "date_saved": "Date Saved",
+    "date_posted": "Date Posted",
+    "sort_newest": "Newest First",
+    "sort_oldest": "Oldest First",
+    "tab_articles": "Saved Articles",
+    "tab_internships": "Saved Internships",
+    "tab_reviews": "Saved Course Reviews",
+    "no_saved_articles": "No saved articles yet",
+    "no_saved_articles_desc": "Click the bookmark icon at the top right of any article card to save it here for later reading.",
+    "explore_articles": "Explore Articles",
+    "period_label": "Period: {{period}}",
+    "more_details": "View More Details",
+    "written_by_author": "Written by: {{author}}",
+    "published_at": "Published: {{date}}",
+    "read_full_review": "Read Full Review",
+    "go_to_articles": "Back to Main Articles",
+    "search_placeholder": "Search articles by title, content, or author...",
+    "clear_filters": "Clear All Filters",
+    "no_results_title": "No articles found",
+    "no_results_desc": "We couldn't find any articles matching \"{{query}}\". Try using different keywords.",
+    "categories": {
+      "all": "All Articles"
+    },
+    "written_by": "Written by {{author}}",
+    "published": "Published {{date}}",
+    "read_more": "Read More",
+    "saved_internships": {
+      "intern1": {
+        "role": "Content Marketing Intern",
+        "period": "June - August 2025",
+        "category": "Internship",
+        "author": "P'A, Arts 85"
+      },
+      "intern2": {
+        "role": "UX/UI Designer Intern",
+        "period": "June - July 2025",
+        "category": "Internship",
+        "author": "P'B, Arts 84"
+      }
+    },
+    "saved_reviews": {
+      "review1": {
+        "role": "Special English Translation",
+        "excerpt": "A popular course for those looking to hone their translation and critical reading skills in professional English contexts.",
+        "category": "Course Review",
+        "author": "English Major, Batch 86"
+      },
+      "review2": {
+        "role": "Western Civilization",
+        "excerpt": "Challenging but very rewarding and fun. The teachers are very caring and the curriculum offers extensive and deep historical knowledge.",
+        "category": "Course Review",
+        "author": "History Major, Batch 85"
+      }
+    },
+    "tags": {
+      "wfh": "WFH 100%",
+      "hybrid": "Hybrid",
+      "allowance": "Paid Allowance"
+    },
+    "detail": {
+      "not_found_title": "Article Not Found",
+      "not_found_desc": "The article you are trying to view might have been deleted or doesn't exist.",
+      "back_to_all": "Back to All Articles",
+      "back_to_articles": "Back to Articles",
+      "references": "References",
+      "read_more": "Read More"
+    }
+  },
+  "clubs": {
+    "section_title": "Faculty of Arts Clubs",
+    "section_desc": "Discover and learn about our diverse clubs",
+    "view_all": "View All Clubs",
+    "categories": {
+      "music_art_performance": "Music, Arts & Performance",
+      "sports_fitness": "Sports & Fitness",
+      "games_recreation": "Games & Recreation",
+      "academic_language": "Academic & Language"
+    }
+  },
+  "quick_access": {
+    "section_title": "Student Services",
+    "section_desc": "Quick shortcuts to all Faculty of Arts systems",
+    "manage_menu": "Manage Menu",
+    "add_shortcut": "Add Shortcut",
+    "menus": {
+      "credit_tracker_title": "Credit Tracker",
+      "credit_tracker_desc": "Track accumulated credits and plan course registration",
+      "professor_search_title": "Find a Professor",
+      "professor_search_desc": "Search for professor info at the Faculty of Arts",
+      "student_services_title": "Student Services",
+      "student_services_desc": "Various services for Faculty of Arts students",
+      "forms_title": "Documents & Forms",
+      "forms_desc": "Download important forms and documents for students",
+      "curriculum_title": "Curriculum",
+      "curriculum_desc": "Curriculum information and study plans for the Faculty of Arts",
+      "internship_review_title": "Internship Reviews",
+      "internship_review_desc": "Read internship experience reviews from senior Faculty of Arts students",
+      "articles_title": "Articles from Saraniyakorn Club",
+      "articles_desc": "Articles and knowledge from Saraniyakorn Club, Faculty of Arts",
+      "clubs_title": "Faculty of Arts Clubs",
+      "clubs_desc": "Get to know and join clubs at the Faculty of Arts",
+      "saved_title": "Saved Items",
+      "saved_desc": "Articles and services you have saved for later",
+      "credit_tracking_title": "Credit Tracking",
+      "credit_tracking_desc": "Track accumulated credits and plan course registration",
+      "yellow_card_title": "Yellow/Blue Card Online",
+      "yellow_card_desc": "Submit online course registration requests (Yellow/Blue card)",
+      "professor_name_search_title": "Find Professor by Name",
+      "professor_name_search_desc": "Search for contact info and professors across all departments",
+      "curriculum_departments_title": "Curriculum by Department",
+      "curriculum_departments_desc": "Curriculum and minor subject info for each department",
+      "scholarship_title": "Scholarships / Exchange",
+      "scholarship_desc": "Scholarship and student exchange program information",
+      "documents_forms_title": "Documents & Forms",
+      "documents_forms_desc": "Download documents, petitions, and important forms from the Faculty",
+      "umbrella_title": "Umbrella Lending Service",
+      "umbrella_desc": "Free umbrella lending service by the Student Committee (GOZ) when it rains",
+      "sanitary_pads_title": "Free Sanitary Pads",
+      "sanitary_pads_desc": "Free emergency sanitary pad boxes for students in Faculty restrooms",
+      "medicine_title": "Free Basic Medicine",
+      "medicine_desc": "Free basic medicines and first-aid supplies at the GOZ room",
+      "mindspace_title": "MindSpace",
+      "mindspace_desc": "A safe space for mental wellness and psychology counseling for CU students",
+      "health_center_title": "Health Services Center",
+      "health_center_desc": "Chulalongkorn University Health Services Center for basic medical care",
+      "sports_center_title": "CU Sports Center",
+      "sports_center_desc": "Sports facilities, fitness, and swimming pool services for students",
+      "mental_health_title": "Mental Health Assistant",
+      "mental_health_desc": "Resources and tools to support student mental health",
+      "cu_pop_bus_title": "CU POP BUS Schedule",
+      "cu_pop_bus_desc": "Check routes and schedules for the Chulalongkorn University shuttle bus",
+      "innovation_center_title": "Learning Innovation Center",
+      "innovation_center_desc": "Online learning resources and free courses for CU students"
+    },
+    "modal": {
+      "title": "Add Shortcut from System",
+      "select_label": "Select a service to add",
+      "preview_label": "Shortcut Preview",
+      "link_type_external": "External Link",
+      "link_type_internal": "Internal Page",
+      "cancel": "Cancel",
+      "add": "Add Shortcut",
+      "ok": "OK",
+      "empty_title": "You have added all available services",
+      "empty_desc": "There are no new services in the system that can be added at this time"
+    }
+  },
+  "help": {
+    "title": "Help",
+    "faq_title": "Frequently Asked Questions (FAQ)",
+    "search_placeholder": "Search",
+    "no_results": "No questions found matching your search",
+    "send_question_btn": "Send a Question",
+    "image_alt": "GOZ Help Services",
+    "categories": {
+      "all": "All",
+      "general": "General",
+      "registration": "Course Registration",
+      "tracker": "Academic Tracker",
+      "website": "About the Website"
+    },
+    "faq": {
+      "faq_1_question": "What student services does GOZ offer, and where can I access them",
+      "faq_1_answer": "GOZ offers umbrella lending, free emergency sanitary pads, and basic first-aid medicines. Students can contact the GOZ room on Floor M1 of the Mahachakri Sirindhorn Building, Faculty of Arts, Monday–Friday from 09:00 E7:00.",
+      "faq_2_question": "How can I check the courses in the Faculty of Arts curriculum",
+      "faq_2_answer": "Students can go to the \"Curriculum\" tab on the main navigation bar to view required courses, electives, and credit details for different course groups in the latest Bachelor of Arts program directly.",
+      "faq_3_question": "What is the Academic Tracker feature, and how does it calculate credits",
+      "faq_3_answer": "Academic Tracker is a personal tool that allows students to record courses they have completed. The system will automatically calculate accumulated credits, separating faculty-required courses, major-required courses, and free electives to verify whether a student has met the graduation requirements.",
+      "faq_4_question": "What should I do when I find a system error or want to report a bug on the website",
+      "faq_4_answer": "If you find a bug or incorrect information, you can click the \"Report Website Issue\" button at the bottom of the homepage, or press the \"Send Additional Questions\" button to contact the developers directly.",
+      "faq_5_question": "How can I follow news and the Faculty's event schedule",
+      "faq_5_answer": "Students can follow along via the \"Activity Calendar & Schedule\" on the homepage, which shows dates and times of various events with status tags (e.g., Today, Tomorrow, Important, Don't Forget) so students won't miss any important events."
+    },
+    "modal": {
+      "title": "Send Additional Questions",
+      "subtitle": "Enter your name, email, and your question to receive help from GOZ.",
+      "name_label": "Full Name",
+      "name_placeholder": "John Doe",
+      "email_label": "Email",
+      "email_placeholder": "student@chula.ac.th",
+      "question_label": "Question / Suggestion",
+      "question_placeholder": "Enter the details of your question or request...",
+      "submit_btn": "Send Message",
+      "success_title": "Message Sent!",
+      "success_subtitle": "We will get back to you as soon as possible"
+    }
+  },
+  "footer": {
+    "address": "Room 148, Floor M1, Mahachakri Sirindhorn Building\n254 Phayathai Road, Wang Mai\nPathum Wan, Bangkok 10330",
+    "social": {
+      "email": "artgoz@gmail.com",
+      "facebook": "Faculty of Arts Student Committee, Chulalongkorn University (GOZ)",
+      "instagram": "arts_goz",
+      "tiktok": "artsgoz"
+    },
+    "columns": {
+      "about_title": "About GOZ",
+      "about_link": "About GOZ",
+      "committee_link": "Committee & Members",
+      "services_title": "Student Services",
+      "services_link": "Services for Students",
+      "student_affairs_link": "Student Affairs",
+      "mental_health_link": "Mental Health",
+      "pr_title": "Public Relations",
+      "pr_schedule_link": "PR Schedule",
+      "pr_contact_link": "Contact GOZ PR",
+      "help_title": "Help / Complaints",
+      "help_faq_link": "Help / FAQ",
+      "complaint_link": "File a Complaint",
+      "activities_title": "Activities",
+      "news_link": "News / Events",
+      "articles_link": "Saraniyakorn Articles",
+      "clubs_link": "Faculty of Arts Clubs",
+      "website_title": "About the Website",
+      "privacy_link": "Terms & Privacy Policy",
+      "report_link": "Report a Website Issue",
+      "other_title": "Others",
+      "main_website_link": "Go to Main Website"
+    }
+  },
+  "yellow_card": {
+    "placeholder_subject": "Course Name",
+    "intro_thai_economy": "Introduction to Thai Economy",
+    "groups": {
+      "general": {
+        "g1": "1. General Education 12 Credits (Social Sciences, Humanities, Science & Math, Interdisciplinary)",
+        "g2": "2. Gen Ed Foreign Language Group 12 Credits",
+        "g3": "3. Gen Ed Special Group 6 Credits"
+      }
+    },
+    "grade_report": {
+      "unmark": "Mark as not taken",
+      "mark": "Mark as taken",
+      "term_year": "Term/Year",
+      "grade": "Grade"
+    },
+    "curriculum_table": {
+      "completed_progress": "Completed {{completed}} / {{required}} Credits",
+      "empty_group": "No registered courses. (Click plus button to add course)"
+    },
+    "gpa_table": {
+      "title": "GPA Table",
+      "warning_note": "Note: You can verify this information on the reg chula website",
+      "col_remark": "Remarks",
+      "term_first_placeholder": "  1. First Semester / 25..........",
+      "term_second_placeholder": "  1. Second Semester / 25..........",
+      "term_first_prefix": "  1. First Semester / {{year}}",
+      "term_second_prefix": "  1. Second Semester / {{year}}",
+      "term_summer_prefix": "  1. Summer Semester / {{year}}"
+    },
+    "profile_form": {
+      "edit": "Edit",
+      "name_label": "Full Name",
+      "student_id_label": "Student ID",
+      "advisor_label": "Advisor",
+      "address_label": "Address",
+      "phone_label": "Phone Number",
+      "student_info_label": "Student Info",
+      "student_id_short": "Student ID",
+      "no_minor": "None"
+    },
+    "action_bar": {
+      "import_btn": "Import from Credit Tracking",
+      "process_btn": "Process Data"
+    },
+    "advisor_modal": {
+      "warning_title": "Notification",
+      "warning_desc": "The information entered in this online Yellow Card system will be sent to your advisor. If you wish to simulate course planning or calculate credits for yourself, please go to the Credit Tracking page.",
+      "confirm_send": "Confirm and Submit Yellow Card",
+      "go_to_tracker": "Go to Credit Tracking",
+      "continue_filling": "Continue filling Yellow Card (not for tracking)"
+    },
+    "state": {
+      "no_tracker_data": "No registration plan data found in Credit Tracking. Please plan your courses in Credit Tracking first.",
+      "import_success": "Course registration imported from Credit Tracking successfully!",
+      "import_error": "An error occurred while importing data.",
+      "save_success": "Your data has been saved and submitted to your advisor successfully!"
+    },
+    "warning_banner": {
+      "message": "Note: For correct information, you can check your registration details on the <a>reg chula website <icon/></a>"
+    },
+    "footer": {
+      "disclaimer": "This Yellow Card is not the university's main registration system.",
+      "confirm_save": "Confirm and Save"
+    },
+    "title": "Record of Course Registration and Academic Performance, 129-153 Credits (Revised Curriculum 2023)",
+    "pdpa": {
+      "title": "Privacy Consent Notice (PDPA)",
+      "desc1": "The Personal Data Protection Act (PDPA) protects your personal information and establishes standards for data security. We require your explicit consent to use your data for the specified purposes.",
+      "desc2": "We collect and process your personal information, including your name, student ID, email address, major, minor, and registered courses. Your consent is required to submit this form.",
+      "agree": "I acknowledge and agree",
+      "submit": "Confirm"
+    }
+  },
+  "clubs": {
+    "page_title": "Faculty of Arts Clubs",
+    "page_desc": "Discover and join various active clubs in the Faculty of Arts.",
+    "view_all": "View All Clubs",
+    "section_title": "Clubs at Faculty of Arts",
+    "section_desc": "Discover and explore active student clubs in our faculty",
+    "categories": {
+      "music_art_drama": "Music, Arts & Drama",
+      "sports_exercise": "Sports & Exercise",
+      "games_recreation": "Games & Recreation",
+      "academic_languages": "Academics & Languages"
+    },
+    "detail": {
+      "title_suffix": "{{name}} Club",
+      "about_title": "About {{name}}",
+      "what_we_do": "What We Do",
+      "contacts": "Our Contact Channels",
+      "fb_prefix": "Arts {{name}}",
+      "activities": "Club Activities",
+      "achievements": "Club Achievements",
+      "see_more": "See More",
+      "show_less": "Show Less",
+      "default_activities_desc": "We are a student club under the {{category}} category, Faculty of Arts, Chulalongkorn University. Founded to bring together students with shared interests to create activities, exchange knowledge, and relax from intensive classes.",
+      "default_act01_title": "Weekly Practice Sessions of {{name}} Club",
+      "default_act01_desc": "Weekly gatherings to practice, develop skills, and build relationships among members, preparing for exhibitions and faculty sports/arts events.\n\nWe organize activities every week in a friendly, fun, and stress-free atmosphere. Join us anytime, regardless of prior experience!",
+      "default_act02_title": "Introductory Workshops for Fellow Students",
+      "default_act02_desc": "Special workshops and seminars designed to introduce our club's activities to non-members and interested students.\n\nHeld once per semester, we consistently receive positive feedback from Faculty of Arts students thanks to the dedication of our club members.",
+      "default_ach01_title": "Welcoming New Students (Arts Open House)",
+      "default_ach01_sub": "Faculty of Arts, Chulalongkorn University",
+      "default_ach01_desc": "Highlighting our club's activities and members' experiences to welcome new freshmen, successfully attracting massive interest.",
+      "default_ach02_title": "Annual Exhibition and Club Showcase",
+      "default_ach02_sub": "Lawn in front of Faculty of Engineering (Joint Event)",
+      "default_ach02_desc": "Showcasing our annual achievements in joint university/faculty events, promoting friendship and the Faculty of Arts image."
+    },
+    "mock": {
+      "club01": {
+        "name": "Artsband",
+        "desc": "International music club for music lovers and performances"
+      },
+      "club02": {
+        "name": "Aksara Watit",
+        "desc": "Thai classical music and string instrument club, preserving cultural heritage"
+      },
+      "club03": {
+        "name": "Arts Rumthai",
+        "desc": "Thai classical dance club of the Faculty of Arts"
+      },
+      "club04": {
+        "name": "Ballroom Dance Club",
+        "desc": "Social dance club for health, friendship, and working out with style",
+        "about": "Are you tired of intensive studying in Arts Chula? Our club invites everyone to shake hips and dance to forget EastCiv, WestCiv, Reasoning, EngII, or whatever else hurts your soul. Join us now!",
+        "activities_text": "Tired of studying? Our club invites everyone to dance and have fun to forget EastCiv, WestCiv, Reasoning, Eng II, or whatever affects your mental health. Come join our ballroom dance family!",
+        "act01": {
+          "title": "Insane 1,000-Hour Continuous Social Dance",
+          "desc": "Through hardship and joy, dance takes us beyond limits. No matter how much it hurts, the music keeps us going. We dance to express, not to impress. Join our journey!"
+        },
+        "act02": {
+          "title": "Insane 1,000-Hour Continuous Social Dance",
+          "desc": "Why remember the sadness when we can dance the night away. Every beat is a new beginning, every move is a story untold. Find your rhythm in our club!"
+        },
+        "ach01": {
+          "title": "Award Title",
+          "sub": "subheading (Location, Award)",
+          "desc": "Summary of achievements won through hard training and outstanding talent in national contests."
+        },
+        "ach02": {
+          "title": "Award Title",
+          "sub": "subheading (Location, Award)",
+          "desc": "Highlights of our special performance on University Day, bringing smiles and impressions to the audience."
+        },
+        "ach03": {
+          "title": "Award Title",
+          "sub": "subheading (Location, Award)",
+          "desc": "Basic social dancing workshop for the general public, promoting health and wellness."
+        },
+        "ach04": {
+          "title": "Award Title",
+          "sub": "subheading (Location, Award)",
+          "desc": "In-club sports competition promoting healthy lifestyles and strong bonds between members."
+        }
+      },
+      "club05": {
+        "name": "Cheerleaders",
+        "desc": "Cheerleaders and cheer-leading club for various faculty events and sports games"
+      },
+      "club06": {
+        "name": "Running Club",
+        "desc": "Running club for running lovers and health promotion events at all levels"
+      },
+      "club07": {
+        "name": "Girl Futsal",
+        "desc": "Faculty of Arts girl futsal team, practicing and playing friendly matches"
+      },
+      "club08": {
+        "name": "Volleyball Club",
+        "desc": "Volleyball club for volleyball players, aiming for friendship and contests"
+      },
+      "club09": {
+        "name": "Badminton Club",
+        "desc": "Faculty of Arts badminton club, gathering to play for health"
+      },
+      "club10": {
+        "name": "Swimming Club",
+        "desc": "Club for swimming enthusiasts and basic swimming skills coaching"
+      },
+      "club11": {
+        "name": "Taekwondo Club",
+        "desc": "Taekwondo martial arts club, focusing on discipline and self-defense"
+      },
+      "club12": {
+        "name": "Basketball Club",
+        "desc": "Basketball club practicing, competing, and exercising together"
+      },
+      "club13": {
+        "name": "Shooting Club",
+        "desc": "Shooting sports club, focusing on concentration and precision safely"
+      },
+      "club14": {
+        "name": "Bodybuilding Club",
+        "desc": "Club for fitness and muscle building enthusiasts"
+      },
+      "club15": {
+        "name": "Fencing Club",
+        "desc": "Fencing sports club, developing agility and quick movement"
+      },
+      "club16": {
+        "name": "Petanque Club",
+        "desc": "Petanque sports club, focusing on focus and throwing skills"
+      },
+      "club17": {
+        "name": "Hockey Club",
+        "desc": "Hockey sports club, practicing and learning teamwork with fun"
+      },
+      "club18": {
+        "name": "Boxing Club",
+        "desc": "Boxing club training basic boxing skills for exercise and self-defense"
+      },
+      "club19": {
+        "name": "Football Club",
+        "desc": "Football club for students who love playing soccer and inter-color games"
+      },
+      "club20": {
+        "name": "Tennis Club",
+        "desc": "Tennis club for beginners and general players for friendship"
+      },
+      "club21": {
+        "name": "Table Tennis Club",
+        "desc": "Table tennis club, practicing reflexes and exercising"
+      },
+      "club22": {
+        "name": "E-Sports Club",
+        "desc": "E-sports club for gamers, sharing techniques and competing"
+      },
+      "club23": {
+        "name": "Board Games Club",
+        "desc": "Chess, checkers, and board game club for brain training and planning"
+      },
+      "club24": {
+        "name": "History Club",
+        "desc": "Club for students interested in history, art, culture, and archaeology"
+      },
+      "club25": {
+        "name": "Thai Language Club",
+        "desc": "Thai language preservation and promotion club"
+      },
+      "club26": {
+        "name": "Eastern Languages Club",
+        "desc": "Club to study and share eastern languages and cultures deeply"
+      }
+    }
+  },
+  "banners": {
+    "cta_label": "Explore Website",
+    "banner01": {
+      "title": "Arts Chula Student Portal",
+      "subtitle": "Faculty of Arts Student Information Portal",
+      "description": "Complete tools and services for academic and university life. Easy access to registration, archives, and forms in one place.",
+      "tag": "Main Services"
+    },
+    "banner02": {
+      "title": "Academic Calendar",
+      "subtitle": "Schedules and Event Calendar",
+      "description": "Never miss important schedules. Track semester terms, exams, course registration dates, and extra-curricular activities.",
+      "tag": "Important Dates"
+    },
+    "banner03": {
+      "title": "Clubs & Communities",
+      "subtitle": "Student Clubs & Activities",
+      "description": "Discover new interests and develop extra-curricular skills. Enjoy activities from various student clubs and meet friends.",
+      "tag": "Club Activities"
+    },
+    "default": {
+      "tag": "News"
+    }
+  },
+  "about": {
+    "title": "Faculty of Arts Student Committee (GOZ)",
+    "sub_title": "GOZ Student Portal",
+    "description": "We are a student committee that facilitates academic resources, student welfare, and activities for Arts students. Our vision and policies for academic year 2025 are as follows:",
+    "logo_alt": "GOZ Logo",
+    "info_and_docs": "Information and Downloads",
+    "vision_title": "Vision",
+    "vision_points": [
+      "Organize activities that align more with the interests of students within the faculty, and increase external activities in collaboration with other faculties while preserving the unique identity of the Faculty of Arts.",
+      "Create a safe and comfortable working environment where members can communicate and express their opinions equally with open minds.",
+      "Serve as the hub and voice for the ultimate benefit of all Faculty of Arts students."
+    ],
+    "policy_title": "Policy",
+    "policy_points": [
+      "Provide opportunities for students to express their opinions.",
+      "Create a positive working environment.",
+      "Represent and protect students' rights and welfare in the faculty.",
+      "Support organizing activities beneficial to students to prepare them for their future.",
+      "Prioritize the mental health of all GOZ members and Faculty of Arts students."
+    ],
+    "download_title": "Document Downloads",
+    "download_btn": "Download",
+    "download_flowchart_title": "GOZ Disbursement Regulations",
+    "download_flowchart_btn": "Download Disbursement Process Chart",
+    "download_forms": {
+      "form1": {
+        "name": "Project Approval Form",
+        "desc": "Used to propose activity projects to the student committee for project and budget approval."
+      },
+      "form2": {
+        "name": "GOZ Disbursement Claim Form",
+        "desc": "Used to request reimbursement of expenses according to approved receipts."
+      },
+      "form3": {
+        "name": "Financial Regulation Handbook for Students",
+        "desc": "Summary of guidelines, rules, and price evaluation criteria for GOZ reimbursement claims."
+      },
+      "form4": {
+        "name": "Subcommittee Application Form",
+        "desc": "Application form for selecting subcommittee members for various departments."
+      }
+    }
+  },
+  "credit_tracking": {
+    "title": "Academic Tracker",
+    "subtitle": "Track accumulated credits and plan course registration",
+    "total": "Total",
+    "profile": {
+      "major_label": "Major",
+      "select_major": "Select Major",
+      "minor_label": "Minor",
+      "select_minor": "Select Minor",
+      "curriculum_label": "Curriculum",
+      "select_curriculum": "Select Curriculum",
+      "fill_info": "Please set up your academic profile to begin tracking.",
+      "submit": "Start Tracking",
+      "error_major": "Please select a major.",
+      "error_minor": "Please select a minor.",
+      "error_curriculum": "Please select a curriculum."
+    },
+    "majors": {
+      "default": "Not Specified",
+      "english": "English",
+      "thai": "Thai",
+      "history": "History",
+      "philosophy": "Philosophy",
+      "geography": "Geography"
+    },
+    "minors": {
+      "default": "Not Specified",
+      "none": "None"
+    },
+    "curriculums": {
+      "cur2565": "Curriculum 2022 (B.A.)",
+      "cur2568": "Curriculum 2025 (B.A.)"
+    },
+    "pdpa": {
+      "title": "Terms of Use & Privacy Consent (PDPA)",
+      "desc1": "Academic Tracker is a simulator tool developed to help students plan their studies. The information calculated by this system is an initial simulation and does not replace official records from the Office of the Registrar (Reg Chula).",
+      "desc2": "By clicking agree, you acknowledge that you are responsible for verifying your graduation status with your advisor and the university's official regulations.",
+      "agree": "I understand and accept the terms of service",
+      "submit": "Confirm"
+    },
+    "navbar": {
+      "curriculum": "Curriculum Structure",
+      "planner": "Study Planner",
+      "summary": "Summary Report"
+    },
+    "categories": {
+      "basic": "Arts Foundation",
+      "general": "General Education",
+      "free": "Free Electives",
+      "major": "Major Courses",
+      "minor": "Minor Courses"
+    },
+    "curriculum": {
+      "title": "Curriculum Structure (129-153 Credits)",
+      "general_ed": "General Education (GenEd)",
+      "specific_ed": "Specific Education (Major/Minor)",
+      "free_choice": "Free Electives",
+      "general_sub1": "General Group",
+      "general_sub2": "Foreign Language",
+      "general_sub3": "Special Group",
+      "basic_arts": "Arts Core",
+      "english_major_detail": "English Major (48 Credits)",
+      "other_majors_detail": "Other Majors (48 Credits)",
+      "general_12_credits": "12 Credits (Soc/Hum/Sci/Inter)",
+      "basic_arts_detail": "27 Credits (9 Courses)",
+      "major_range_detail": "48 Credits",
+      "minor_18_credits": "18 Credits",
+      "other_major_credits": "48 Credits (Major Specific)",
+      "req_details_desc": "Summary of requirements and current progress for graduation in this major.",
+      "col_component": "Curriculum Component",
+      "col_credits": "Required Credits",
+      "col_details": "Condition Details",
+      "major_title": "Major Courses",
+      "major_details": "Specific rules apply based on department guidance",
+      "specific_courses": "Specific Major Courses",
+      "basic_courses": "Basic Foundation Courses",
+      "specialized_courses": "Specialized Electives",
+      "minor_title": "Minor Courses",
+      "minor_name": "Studying Minor in {{name}}",
+      "minor_desc_empty": "Select a minor subject to track progress",
+      "warning_note": "Note: Please cross-check course codes and criteria with your official curriculum handbook and department announcements.",
+      "credits_val": "{{count}} Credits",
+      "specific_credits_detail": "93 Credits (Arts Core + Major + Minor)"
+    },
+    "planner": {
+      "title": "Registration & Graduation Plan",
+      "desc": "Simulate your semester schedule. Drag subjects to organize your study plan and check credit completion.",
+      "confirm_info": "Confirm Plan",
+      "fill_alert": "Please enter the subject code, name, and credits.",
+      "success_banner": "Study plan simulated successfully! Go to the Summary tab to view your report.",
+      "btn_cancel": "Cancel",
+      "btn_delete": "Delete",
+      "custom_remark": "Self-added subject",
+      "col_code": "Code",
+      "col_name": "Subject Name",
+      "col_credits": "Credits",
+      "placeholder_code": "e.g. 2206212",
+      "placeholder_name": "e.g. Information Landscape"
+    },
+    "summary": {
+      "save_image_success": "Summary report printed successfully!",
+      "save_image_btn": "Print Report",
+      "unsaved_label": "Draft (Unsaved)",
+      "saved_time_label": "Last simulated: {{time}}",
+      "title": "Credit Tracking Summary",
+      "completed_credits": "Completed required credits for this category",
+      "missing_credits": "Missing {{count}} credits to complete this category",
+      "completed_courses_label": "Completed Courses by Category",
+      "no_courses_in_category": "No courses registered in this category"
+    },
+    "subjects": {
+      "b1": "English I",
+      "b2": "English II",
+      "b3": "Introduction to Translation",
+      "b4": "Thai Usage",
+      "b5": "Intro to Literature",
+      "b6": "Eastern Civilization",
+      "b7": "Western Civilization",
+      "g1": "Foundation English I",
+      "g2": "Reasoning",
+      "g3": "Critical Reading",
+      "g4": "Science and Technology in Modern World",
+      "m1": "English Phonetics",
+      "m2": "English Grammar",
+      "m3": "English Syntax",
+      "m4": "English Semantics",
+      "m5": "English Literature",
+      "m6": "Shakespeare",
+      "mn1": "Introduction to Linguistics",
+      "mn2": "Sociolinguistics",
+      "mn3": "Psycholinguistics",
+      "f1": "Introduction to Japanese",
+      "f2": "Introduction to Korean"
+    }
+  },
+  "student_services": {
+    "title": "Student Services",
+    "desc": "Various services for Faculty of Arts students",
+    "search_placeholder": "Search services...",
+    "search_results_for": "Search results for \"",
+    "items_count": "items",
+    "no_results": "No results found matching your search",
+    "clear_search": "Clear Search",
+    "modal_ok": "OK",
+    "location_label": "Location",
+    "location_label_pads": "Pickup Location",
+    "time_label": "Service Hours",
+    "time_label_medicine": "Medicine Service Hours",
+    "rules_label": "Borrow & Return Rules",
+    "rules_label_pads": "Eligibility & Conditions",
+    "umbrella": {
+      "modal_title": "Umbrella Lending Service",
+      "modal_desc": "Free umbrella lending service provided by the Student Committee (GOZ) when it rains. Students can request and return umbrellas at the specified location.",
+      "location": "GOZ Room, Mahachakri Sirindhorn Building, Floor M1",
+      "time": "Monday - Friday, 09:00 - 17:00",
+      "rule1": "Present student ID card or show your student profile screen to verify identity.",
+      "rule2": "Limit of 1 umbrella per person. Please return it within 3 business days.",
+      "rule3": "Late return or loss will be subject to Student Committee regulations."
+    },
+    "pads": {
+      "modal_title": "Free Emergency Sanitary Pads",
+      "modal_desc": "Emergency sanitary pads provided for students in need, set up inside restrooms across the Faculty of Arts as part of student welfare.",
+      "location": "Female Restrooms, Mahachakri Sirindhorn Building, Floors 1, 3, 5, and Borommarajakumari Building",
+      "rule1": "Grab instantly for emergency use with no charges.",
+      "rule2": "Please take only as needed for your immediate situation.",
+      "rule3": "If the box is empty, feel free to notify any GOZ committee member to refill."
+    },
+    "medicine": {
+      "modal_title": "Free Basic Medicine & First-Aid",
+      "modal_desc": "Free basic household medicines and first-aid supplies for students experiencing mild symptoms or illness during study hours.",
+      "location": "GOZ Room, Mahachakri Sirindhorn Building, Floor M1",
+      "meds_label": "Available Basic Medicines",
+      "meds_list": "Paracetamol, Antihistamine, Antacid, Stomach mixture, basic bandages & wound cleaning kits",
+      "time": "Monday - Friday, 09:00 - 17:00"
+    },
+    "sidebar": {
+      "all": "All Services",
+      "general": "General Services",
+      "academic": "Academic Services",
+      "learning": "Learning Support",
+      "kos": "GOZ Welfare (KOS)",
+      "mental": "Mental Wellness",
+      "university": "University Central Services"
+    },
+    "categories": {
+      "general": {
+        "title": "General Services",
+        "subtitle": "News, events, and daily convenience utilities"
+      },
+      "academic": {
+        "title": "Academic Services",
+        "subtitle": "Tracking systems, planning, and professor contact details"
+      },
+      "learning": {
+        "title": "Learning Support",
+        "subtitle": "Libraries, portals, and online learning archives"
+      },
+      "kos": {
+        "title": "GOZ Welfare (KOS)",
+        "subtitle": "Welfare lending programs run directly by the Student Committee"
+      },
+      "mental": {
+        "title": "Mental Wellness",
+        "subtitle": "Safe spaces and counseling support systems for students"
+      },
+      "university": {
+        "title": "University Central Services",
+        "subtitle": "Central systems, transport, and sports facilities of Chulalongkorn University"
+      }
+    },
+    "bento": {
+      "recommended_clubs": "Recommended Clubs for You",
+      "drama_club": "Drama Club",
+      "music_club": "Music Club",
+      "magazine_club": "Magazine Club",
+      "joined_count": "150+ students joined",
+      "view_all_clubs": "View All Clubs",
+      "online_course": "Quota & Course Registration System",
+      "submit_blue_card": "Submit Yellow/Blue Card Petition",
+      "advisor_approved": "Advisor Approved",
+      "processing_registrar": "Processing by Office of Registrar",
+      "pending": "Processing",
+      "submit_request": "Fill Quota Application Form",
+      "health_nursing": "Health & First-Aid Services",
+      "open_hours": "Open Mon-Fri, 08:00 - 16:00",
+      "location_chula9": "Chamchuri 9 Building, 2nd Floor",
+      "emergency_hotline": "24H Emergency Hotline",
+      "visit_website": "Visit Official Website",
+      "collected_credits": "Earned 77% credits",
+      "required_credits": "out of 129 credits",
+      "umbrellas_available": "Umbrellas available",
+      "kos_room": "Pickup at GOZ Room, Floor M1",
+      "borrow_umbrella_online": "Reserve Umbrella Online",
+      "new_update": "New Update",
+      "recent_article": "Latest: Tips for Preparing Final Exams",
+      "read_time": "5 min read",
+      "general_form": "General Request",
+      "withdraw_form": "Course Withdrawal Form (W)",
+      "download": "Download",
+      "mental_health": "Mental Wellness",
+      "today_quote": "Quote of the Day",
+      "quote_content": "\"Happiness does not depend on what we have, but on how we view things and do what we love fully every single day.\"",
+      "book_consultation": "Book Psychologist Session",
+      "service_label": "Submenu",
+      "saved": {
+        "title": "Saved Items",
+        "desc": "Check your saved articles & pages"
+      },
+      "professors": {
+        "title": "Find a Professor",
+        "desc": "Contact info of all departments"
+      },
+      "curriculum": {
+        "title": "Arts Curriculum",
+        "desc": "Check study plans and required courses"
+      },
+      "scholarships": {
+        "title": "Scholarships",
+        "desc": "Scholarships & student exchange news"
+      },
+      "pads": {
+        "title": "Pad Welfare",
+        "desc": "Free sanitary pads dispenser cabinets"
+      },
+      "medicine": {
+        "title": "First Aid Cabinet",
+        "desc": "Access basic medicines for students"
+      },
+      "sports": {
+        "title": "CU Sports Center",
+        "desc": "Book sports court & fitness memberships"
+      },
+      "mental_tips": {
+        "title": "Wellness Tips",
+        "desc": "Mental health tips & support channels"
+      },
+      "popbus": {
+        "title": "CU POP Bus",
+        "desc": "POP Bus maps and timing schedules"
+      },
+      "learning_center": {
+        "title": "Learning Innovation",
+        "desc": "Free online courses & archives"
+      }
+    }
+  },
+  "curriculum_page": {
+    "section_title": "Majors & Curriculums",
+    "section_desc": "Undergraduate curriculum structures, credit requirements, tuition fees, and admission criteria at the Faculty of Arts, Chula.",
+    "select_major_label": "Select Major Program",
+    "download_pdf": "Download Curriculum (PDF)",
+    "total_credits_label": "Total Credits Required:",
+    "credits": "Credits",
+    "duration_label": "Study Duration:",
+    "duration_val": "4 Years",
+    "tab_about": "About Curriculum",
+    "tab_structure": "Structure",
+    "tab_tuition": "Tuition Fees",
+    "tab_admission": "Admission",
+    "tuition_rates": "Tuition Rates by Program",
+    "tuition_regular": "Bachelor of Arts (B.A.) - Regular Program",
+    "tuition_regular_desc": "Taught primarily in Thai. Students choose their specific major in the second year.",
+    "tuition_international": "BALAC - International Program",
+    "tuition_international_desc": "Bachelor of Arts in Language and Culture. Taught entirely in English, focusing on global affairs and culture.",
+    "tuition_thai_national": "Thai Students:",
+    "tuition_thai_national_val": "22,000 THB / Semester",
+    "tuition_thai_national_balac_val": "85,000 THB / Semester",
+    "tuition_inter_national": "International Students:",
+    "tuition_inter_national_val": "40,000 THB / Semester",
+    "tuition_inter_national_balac_val": "140,000 THB / Semester",
+    "admission_title": "Admission Criteria & Target Scores",
+    "admission_desc": "Details regarding undergraduate admission criteria at the Faculty of Arts, Chulalongkorn University.",
+    "visit_mytcas_btn": "Check Criteria on myTCAS",
+    "structure_faculty_core": "Faculty Core Courses",
+    "structure_faculty_core_desc": "Foundational courses required for all Arts students to develop deep understanding of humanities (e.g. Literary Criticism, Western/Eastern Civilizations).",
+    "structure_major_courses": "Major/Minor/Double Major Courses",
+    "structure_major_courses_desc": "Specialized courses in your chosen major to build expert knowledge and professional competencies.",
+    "structure_gen_ed": "General Education (GenEd)",
+    "structure_gen_ed_desc": "Interdisciplinary courses from outside the faculty that promote life-long learning, scientific reasoning, and social awareness.",
+    "admission": {
+      "tcas_round1": "Round 1: Portfolio",
+      "tcas_round1_desc": "Based on academic achievements, language proficiency certifications, and social/community activities.",
+      "tcas_round2": "Round 2: Quota",
+      "tcas_round2_desc": "For outstanding students from regional areas or language collaboration programs.",
+      "tcas_round3": "Round 3: Admission",
+      "tcas_round3_desc": "Evaluated using TGAT and A-Level exam scores based on the specific weighting of the faculty.",
+      "requirements_title": "Basic Admission Requirements",
+      "gpa_req": "Minimum GPAX of 2.75 or equivalent",
+      "tgas_req": "TGAT and/or A-Level scores as specified by the faculty"
+    },
+    "majors": {
+      "thai": {
+        "title": "Thai Language Major",
+        "description": "Deep dive into Thai language structures, literature, and culture. Focuses on critical literary analysis, linguistics, and creative communications.",
+        "requirements": "High school diploma or equivalent. Passionate about Thai language, classical and modern literature, and creative content creation."
+      },
+      "english": {
+        "title": "English Major",
+        "description": "Develops advanced English communication skills, critical analysis of Western literature, linguistics, and cultural studies. Tailored for global careers.",
+        "requirements": "High school diploma or equivalent. Meets minimum English proficiency test score requirements as declared by the university."
+      },
+      "history": {
+        "title": "History Major",
+        "description": "Systematic study of Thai and world history. Learn how to critically analyze, interpret, and evaluate historical records and primary source materials.",
+        "requirements": "High school diploma or equivalent. Passionate about historical research, archives, and possesses strong critical thinking skills."
+      },
+      "geography": {
+        "title": "Geography & Geoinformatics Major",
+        "description": "Examines human-environment interactions through spatial analysis. Gain hands-on experience in GIS (Geographic Information Systems) and remote sensing.",
+        "requirements": "High school diploma or equivalent. Interested in maps, environmental studies, resource management, and computer geoinformatics."
+      },
+      "philosophy": {
+        "title": "Philosophy Major",
+        "description": "Study Eastern and Western philosophical traditions. Focuses on critical thinking, ethical analysis, logic, and debates on contemporary global issues.",
+        "requirements": "High school diploma or equivalent. Enjoys reading, logical reasoning, and open-minded discussions on diverse points of view."
+      },
+      "information": {
+        "title": "Information Studies Major",
+        "description": "Study library sciences, information architecture, metadata curation, and data analytics to drive knowledge management in the digital age.",
+        "requirements": "High school diploma or equivalent. Passionate about digital technologies, data curation, and organizational analytics."
+      },
+      "french": {
+        "title": "French Major",
+        "description": "Mastery of the French language, Francophone literature, and cultural history to foster careers in diplomacy, translation, and international trade.",
+        "requirements": "High school diploma or equivalent. French language proficiency background as specified in university guidelines."
+      },
+      "german": {
+        "title": "German Major",
+        "description": "Deep study of German language systems, European history, and advanced communication skills tailored for global business and translation sectors.",
+        "requirements": "High school diploma or equivalent. Strong interest in European languages, cultures, and global commerce."
+      },
+      "japanese": {
+        "title": "Japanese Major",
+        "description": "Advanced Japanese linguistics, modern literature, and historical studies designed for international corporate operations and cultural exchanges.",
+        "requirements": "High school diploma or equivalent. Meets minimum Japanese language requirements or standardized test criteria."
+      },
+      "chinese": {
+        "title": "Chinese Major",
+        "description": "Acquire professional fluency in Chinese. Studies classical and modern literature, history, and economic relations in the East Asian region.",
+        "requirements": "High school diploma or equivalent. Meets specified Chinese language test criteria as declared."
+      },
+      "pali": {
+        "title": "Pali and Sanskrit Major",
+        "description": "Exploration of ancient Indo-Aryan languages, Buddhist scriptures, and comparative linguistics to research historical philosophies and heritage.",
+        "requirements": "High school diploma or equivalent. Passionate about classical linguistic structures, texts, and archeology."
+      },
+      "spanish": {
+        "title": "Spanish Major",
+        "description": "Fluency in Spanish alongside literature and social histories of Spain and Latin America. Prepares graduates for international development roles.",
+        "requirements": "High school diploma or equivalent. Enthusiastic about global foreign languages and multilingual relations."
+      },
+      "italian": {
+        "title": "Italian Major",
+        "description": "Mastery of Italian communication, art history, fashion industries, food cultures, and literature to build careers in creative industries.",
+        "requirements": "High school diploma or equivalent. Passionate about art history, European heritage, and creative design industries."
+      },
+      "korean": {
+        "title": "Korean Major",
+        "description": "Focuses on Korean linguistics, modern media industries, pop cultures, and history. Prepares graduates for roles in international media and relations.",
+        "requirements": "High school diploma or equivalent. Standardized Korean proficiency test results as required."
+      },
+      "arabic": {
+        "title": "Arabic Major",
+        "description": "Mastery of Arabic language alongside cultural histories of the Middle East, preparing graduates for aviation, embassy, and corporate roles.",
+        "requirements": "High school diploma or equivalent. Interested in Middle Eastern languages, history, and international relations."
+      },
+      "south_asian": {
+        "title": "South Asian Languages Major",
+        "description": "Study of Hindi, regional histories, and Indian socio-political systems to enable trade, diplomacy, and cultural exchanges.",
+        "requirements": "High school diploma or equivalent. Passionate about commercial trade and relations in the South Asian region."
+      },
+      "balac": {
+        "title": "Language and Culture (BALAC)",
+        "description": "International program focusing on cultural studies, critical media analysis, and comparative languages, tailored for global creative leadership.",
+        "requirements": "High school diploma or equivalent. Standardized English proficiency test scores (TOEFL, IELTS, CU-TEP) meeting faculty requirements."
+      }
+    },
+    "tuition_details": {
+      "regular": {
+        "sem_regular": "Regular Semester: 22,000 THB",
+        "sem_summer": "Summer Semester: 5,250 THB",
+        "sem_inter": "Regular Semester (International Students): 40,000 THB"
+      },
+      "balac": {
+        "sem_thai": "Regular Semester (Thai Students): 85,000 THB",
+        "sem_inter": "Regular Semester (International Students): 140,000 THB",
+        "sem_summer": "Summer Semester: 22,500 THB"
+      }
+    },
+    "subjects": {
+      "b1111": "2201111 English I 3 (3-0-6)",
+      "b1112": "2201112 English II 3 (3-0-6)",
+      "b1121": "2201121 Literary Criticism 3 (3-0-6)",
+      "b1122": "2201122 Eastern Civilization 3 (3-0-6)",
+      "b1211": "2201211 Western Civilization 3 (3-0-6)",
+      "b1221": "2201221 Art of Writing 3 (3-0-6)",
+      "g227": "2201227* Thai Language for Careers in Digital Age 3 (3-0-6)",
+      "g105": "2206105* Living with Information in Digital Age 3 (3-0-6)",
+      "g261": "2206261* Principles of Management for the Humanities 3 (3-0-6)",
+      "g261n": "2209261 Basic Programming for Natural Language Processing 3 (3-0-6)"
+    }
+  },
+  "internships": {
+    "no_results": "No results found",
+    "sort": {
+      "label": "Sort by",
+      "newest": "Newest",
+      "oldest": "Oldest"
+    },
+    "filter": {
+      "all": "All"
+    },
+    "tags": {
+      "japanese": "Japanese",
+      "chinese": "Chinese",
+      "spanish": "Spanish",
+      "french": "French",
+      "korean": "Korean",
+      "german": "German",
+      "english": "English"
+    },
+    "open": {
+      "title": "Find Internships\nfor Students",
+      "search_placeholder": "Search jobs",
+      "listing_title": "Currently Open Internships",
+      "pos1": "Japanese-Thai Translator",
+      "co1": "Tokyo International Co., Ltd.",
+      "detail1": "Looking for interns with Japanese proficiency at N2 level or above to translate documents and coordinate with Japanese clients.",
+      "pos2": "Spanish Interpreter",
+      "co2": "Embassy of Spain in Thailand",
+      "detail2": "Seeking interns with excellent Spanish skills to assist with translation and guest reception services.",
+      "pos3": "Chinese Language Assistant",
+      "co3": "CPM Logistics Co., Ltd.",
+      "detail3": "Looking for Mandarin-proficient students to collaborate with the marketing team and communicate with Chinese partners.",
+      "pos4": "French Content Analyst",
+      "co4": "Digital Media Solution Co., Ltd.",
+      "detail4": "Seeking interns who can fluently read and analyze French content to support international marketing efforts.",
+      "pos5": "Korean Content Assistant",
+      "co5": "K-Wave Media Co., Ltd.",
+      "detail5": "Accepting students interested in Korean media who can translate dialogues and subtitles.",
+      "pos6": "German Linguistics Assistant",
+      "co6": "Goethe-Institut Thailand",
+      "detail6": "Accepting interns to assist in teaching and developing German language learning materials."
+    },
+    "reviews": {
+      "title": "Internship Reviews",
+      "search_placeholder": "Search reviews",
+      "listing_title": "Reviews from Alumni",
+      "pos1": "Document Translator",
+      "co1": "Tokyo International Co., Ltd.",
+      "excerpt1": "I learned how to work in a truly professional environment. The supervisor was very kind and gave detailed guidance. The Japanese skills I studied were used every single day. Highly recommended for those wanting Japanese business experience.",
+      "author1": "3rd Year Japanese Major",
+      "date1": "Jun 2025",
+      "pos2": "Chinese Department Assistant",
+      "co2": "CPM Logistics Co., Ltd.",
+      "excerpt2": "A great experience. I got to practice speaking and writing Chinese in real situations. The main job was translating documents and communicating with Chinese clients.",
+      "author2": "4th Year Chinese Major",
+      "date2": "May 2025",
+      "pos3": "Freelance Interpreter",
+      "co3": "Embassy of Spain in Thailand",
+      "excerpt3": "I experienced real diplomatic work, which deepened my understanding of embassy operations and Spanish culture. My Spanish skills improved noticeably.",
+      "author3": "3rd Year Spanish Major",
+      "date3": "Apr 2025",
+      "pos4": "Communications Assistant",
+      "co4": "Digital Media Solution Co., Ltd.",
+      "excerpt4": "Great working atmosphere and friendly colleagues. I got to practice French writing to communicate with international clients.",
+      "author4": "4th Year French Major",
+      "date4": "Mar 2025",
+      "pos5": "Production Assistant",
+      "co5": "K-Wave Media Co., Ltd.",
+      "excerpt5": "So fun! I got to translate Korean subtitles and learn how the Korean entertainment industry works. My listening skills improved a lot.",
+      "author5": "3rd Year Korean Major",
+      "date5": "Feb 2025",
+      "pos6": "German Teaching Assistant",
+      "co6": "Goethe-Institut Thailand",
+      "excerpt6": "I helped plan lessons and produce learning materials. This experience confirmed that I want to work in education.",
+      "author6": "4th Year German Major",
+      "date6": "Jan 2025"
+    }
+  }
+}
+
+

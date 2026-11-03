@@ -1,0 +1,16 @@
+{
+  "name": "@artsgoz/design-system",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "@artsgoz/source": "./src/index.tsx",
+      "default": "./src/index.tsx"
+    }
+  },
+  "dependencies": {
+    "lucide-react": "^1.16.0"
+  }
+}

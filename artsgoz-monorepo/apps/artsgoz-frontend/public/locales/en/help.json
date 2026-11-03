@@ -1,0 +1,40 @@
+{
+  "title": "Help",
+  "faq_title": "Frequently Asked Questions (FAQ)",
+  "search_placeholder": "Search",
+  "no_results": "No questions found matching your search",
+  "send_question_btn": "Send a Question",
+  "image_alt": "GOZ Help Services",
+  "categories": {
+    "all": "All",
+    "general": "General",
+    "registration": "Course Registration",
+    "tracker": "Academic Tracker",
+    "website": "About the Website"
+  },
+  "faq": {
+    "faq_1_question": "What student services does GOZ offer, and where can I access them",
+    "faq_1_answer": "GOZ offers umbrella lending, free emergency sanitary pads, and basic first-aid medicines. Students can contact the GOZ room on Floor M1 of the Mahachakri Sirindhorn Building, Faculty of Arts, Monday–Friday from 09:00 E7:00.",
+    "faq_2_question": "How can I check the courses in the Faculty of Arts curriculum",
+    "faq_2_answer": "Students can go to the \"Curriculum\" tab on the main navigation bar to view required courses, electives, and credit details for different course groups in the latest Bachelor of Arts program directly.",
+    "faq_3_question": "What is the Academic Tracker feature, and how does it calculate credits",
+    "faq_3_answer": "Academic Tracker is a personal tool that allows students to record courses they have completed. The system will automatically calculate accumulated credits, separating faculty-required courses, major-required courses, and free electives to verify whether a student has met the graduation requirements.",
+    "faq_4_question": "What should I do when I find a system error or want to report a bug on the website",
+    "faq_4_answer": "If you find a bug or incorrect information, you can click the \"Report Website Issue\" button at the bottom of the homepage, or press the \"Send Additional Questions\" button to contact the developers directly.",
+    "faq_5_question": "How can I follow news and the Faculty's event schedule",
+    "faq_5_answer": "Students can follow along via the \"Activity Calendar & Schedule\" on the homepage, which shows dates and times of various events with status tags (e.g., Today, Tomorrow, Important, Don't Forget) so students won't miss any important events."
+  },
+  "modal": {
+    "title": "Send Additional Questions",
+    "subtitle": "Enter your name, email, and your question to receive help from GOZ.",
+    "name_label": "Full Name",
+    "name_placeholder": "John Doe",
+    "email_label": "Email",
+    "email_placeholder": "student@chula.ac.th",
+    "question_label": "Question / Suggestion",
+    "question_placeholder": "Enter the details of your question or request...",
+    "submit_btn": "Send Message",
+    "success_title": "Message Sent!",
+    "success_subtitle": "We will get back to you as soon as possible"
+  }
+}

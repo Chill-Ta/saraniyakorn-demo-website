@@ -1,0 +1,84 @@
+{
+  "no_results": "No results found",
+  "sort": {
+    "label": "Sort by",
+    "newest": "Newest",
+    "oldest": "Oldest"
+  },
+  "filter": {
+    "all": "All"
+  },
+  "tags": {
+    "japanese": "Japanese",
+    "chinese": "Chinese",
+    "spanish": "Spanish",
+    "french": "French",
+    "korean": "Korean",
+    "german": "German",
+    "english": "English"
+  },
+  "open": {
+    "title": "Find Internships\nfor Students",
+    "search_placeholder": "Search jobs",
+    "listing_title": "Currently Open Internships",
+    "pos1": "Japanese-Thai Translator",
+    "co1": "Tokyo International Co., Ltd.",
+    "detail1": "Looking for interns with Japanese proficiency at N2 level or above to translate documents and coordinate with Japanese clients.",
+    "pos2": "Spanish Interpreter",
+    "co2": "Embassy of Spain in Thailand",
+    "detail2": "Seeking interns with excellent Spanish skills to assist with translation and guest reception services.",
+    "pos3": "Chinese Language Assistant",
+    "co3": "CPM Logistics Co., Ltd.",
+    "detail3": "Looking for Mandarin-proficient students to collaborate with the marketing team and communicate with Chinese partners.",
+    "pos4": "French Content Analyst",
+    "co4": "Digital Media Solution Co., Ltd.",
+    "detail4": "Seeking interns who can fluently read and analyze French content to support international marketing efforts.",
+    "pos5": "Korean Content Assistant",
+    "co5": "K-Wave Media Co., Ltd.",
+    "detail5": "Accepting students interested in Korean media who can translate dialogues and subtitles.",
+    "pos6": "German Linguistics Assistant",
+    "co6": "Goethe-Institut Thailand",
+    "detail6": "Accepting interns to assist in teaching and developing German language learning materials."
+  },
+  "reviews": {
+    "title": "Internship Reviews",
+    "search_placeholder": "Search reviews",
+    "listing_title": "Reviews from Alumni",
+    "pos1": "Document Translator",
+    "co1": "Tokyo International Co., Ltd.",
+    "excerpt1": "I learned how to work in a truly professional environment. The supervisor was very kind and gave detailed guidance. The Japanese skills I studied were used every single day. Highly recommended for those wanting Japanese business experience.",
+    "author1": "3rd Year Japanese Major",
+    "date1": "Jun 2025",
+    "pos2": "Chinese Department Assistant",
+    "co2": "CPM Logistics Co., Ltd.",
+    "excerpt2": "A great experience. I got to practice speaking and writing Chinese in real situations. The main job was translating documents and communicating with Chinese clients.",
+    "author2": "4th Year Chinese Major",
+    "date2": "May 2025",
+    "pos3": "Freelance Interpreter",
+    "co3": "Embassy of Spain in Thailand",
+    "excerpt3": "I experienced real diplomatic work, which deepened my understanding of embassy operations and Spanish culture. My Spanish skills improved noticeably.",
+    "author3": "3rd Year Spanish Major",
+    "date3": "Apr 2025",
+    "pos4": "Communications Assistant",
+    "co4": "Digital Media Solution Co., Ltd.",
+    "excerpt4": "Great working atmosphere and friendly colleagues. I got to practice French writing to communicate with international clients.",
+    "author4": "4th Year French Major",
+    "date4": "Mar 2025",
+    "pos5": "Production Assistant",
+    "co5": "K-Wave Media Co., Ltd.",
+    "excerpt5": "So fun! I got to translate Korean subtitles and learn how the Korean entertainment industry works. My listening skills improved a lot.",
+    "author5": "3rd Year Korean Major",
+    "date5": "Feb 2025",
+    "pos6": "German Teaching Assistant",
+    "co6": "Goethe-Institut Thailand",
+    "excerpt6": "I helped plan lessons and produce learning materials. This experience confirmed that I want to work in education.",
+    "author6": "4th Year German Major",
+    "date6": "Jan 2025"
+  },
+  "quick_access": {
+    "menus": {
+      "internship_review_title": "Internship Reviews",
+      "internship_review_desc": "Read experience reviews from alumni and senior students"
+    }
+  }
+}

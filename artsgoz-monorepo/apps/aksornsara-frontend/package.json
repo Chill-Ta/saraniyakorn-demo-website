@@ -1,0 +1,8 @@
+{
+  "name": "@artsgoz/aksornsara-frontend",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@artsgoz/design-system": "workspace:*"
+  }
+}

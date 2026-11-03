@@ -1,0 +1,124 @@
+{
+  "home": {
+    "student_services_title": "Student Services",
+    "student_services_desc": "Quick shortcuts to all Faculty of Arts systems in one place",
+    "manage_menu": "Manage Menu",
+    "add_shortcut": "Add Shortcut",
+    "done": "Done"
+  },
+  "banners": {
+    "cta_label": "Explore Website",
+    "banner01": {
+      "title": "Arts Chula Student Portal",
+      "subtitle": "Faculty of Arts Student Information Portal",
+      "description": "Complete tools and services for academic and university life. Easy access to registration, archives, and forms in one place.",
+      "tag": "Main Services"
+    },
+    "banner02": {
+      "title": "Academic Calendar",
+      "subtitle": "Schedules and Event Calendar",
+      "description": "Never miss important schedules. Track semester terms, exams, course registration dates, and extra-curricular activities.",
+      "tag": "Important Dates"
+    },
+    "banner03": {
+      "title": "Clubs & Communities",
+      "subtitle": "Student Clubs & Activities",
+      "description": "Discover new interests and develop extra-curricular skills. Enjoy activities from various student clubs and meet friends.",
+      "tag": "Club Activities"
+    },
+    "default": {
+      "tag": "News"
+    }
+  },
+  "agenda": {
+    "title": "Activity Calendar & Schedule",
+    "description": "Follow news, events, and important schedules at the Faculty of Arts",
+    "upcoming_title": "Upcoming Events",
+    "view_all": "View All",
+    "month_label": "Aug 2026",
+    "events": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "important": "Important",
+      "dont_forget": "Don't Forget",
+      "submit_proposal": "Submit Project Proposal",
+      "national_seminar": "National Academic Seminar",
+      "internship_orientation": "Summer Internship Orientation",
+      "committee_meeting": "Department Student Committee Meeting",
+      "national_seminar_full": "National Academic Seminar, Faculty of Arts",
+      "faculty_committee_meeting": "Faculty Student Committee Meeting"
+    },
+    "months": {
+      "mar": "Mar",
+      "apr": "Apr"
+    }
+  },
+  "quick_access": {
+    "section_title": "Student Services",
+    "section_desc": "Quick shortcuts to all Faculty of Arts systems",
+    "manage_menu": "Manage Menu",
+    "add_shortcut": "Add Shortcut",
+    "menus": {
+      "credit_tracker_title": "Credit Tracker",
+      "credit_tracker_desc": "Track accumulated credits and plan course registration",
+      "professor_search_title": "Find a Professor",
+      "professor_search_desc": "Search for professor info at the Faculty of Arts",
+      "student_services_title": "Student Services",
+      "student_services_desc": "Various services for Faculty of Arts students",
+      "forms_title": "Documents & Forms",
+      "forms_desc": "Download important forms and documents for students",
+      "curriculum_title": "Curriculum",
+      "curriculum_desc": "Curriculum information and study plans for the Faculty of Arts",
+      "internship_review_title": "Internship Reviews",
+      "internship_review_desc": "Read internship experience reviews from senior Faculty of Arts students",
+      "articles_title": "Articles from Saraniyakorn Club",
+      "articles_desc": "Articles and knowledge from Saraniyakorn Club, Faculty of Arts",
+      "clubs_title": "Faculty of Arts Clubs",
+      "clubs_desc": "Get to know and join clubs at the Faculty of Arts",
+      "saved_title": "Saved Items",
+      "saved_desc": "Articles and services you have saved for later",
+      "credit_tracking_title": "Credit Tracking",
+      "credit_tracking_desc": "Track accumulated credits and plan course registration",
+      "yellow_card_title": "Yellow/Blue Card Online",
+      "yellow_card_desc": "Submit online course registration requests (Yellow/Blue card)",
+      "professor_name_search_title": "Find Professor by Name",
+      "professor_name_search_desc": "Search for contact info and professors across all departments",
+      "curriculum_departments_title": "Curriculum by Department",
+      "curriculum_departments_desc": "Curriculum and minor subject info for each department",
+      "scholarship_title": "Scholarships / Exchange",
+      "scholarship_desc": "Scholarship and student exchange program information",
+      "documents_forms_title": "Documents & Forms",
+      "documents_forms_desc": "Download documents, petitions, and important forms from the Faculty",
+      "umbrella_title": "Umbrella Lending Service",
+      "umbrella_desc": "Free umbrella lending service by the Student Committee (GOZ) when it rains",
+      "sanitary_pads_title": "Free Sanitary Pads",
+      "sanitary_pads_desc": "Free emergency sanitary pad boxes for students in Faculty restrooms",
+      "medicine_title": "Free Basic Medicine",
+      "medicine_desc": "Free basic medicines and first-aid supplies at the GOZ room",
+      "mindspace_title": "MindSpace",
+      "mindspace_desc": "A safe space for mental wellness and psychology counseling for CU students",
+      "health_center_title": "Health Services Center",
+      "health_center_desc": "Chulalongkorn University Health Services Center for basic medical care",
+      "sports_center_title": "CU Sports Center",
+      "sports_center_desc": "Sports facilities, fitness, and swimming pool services for students",
+      "mental_health_title": "Mental Health Assistant",
+      "mental_health_desc": "Resources and tools to support student mental health",
+      "cu_pop_bus_title": "CU POP BUS Schedule",
+      "cu_pop_bus_desc": "Check routes and schedules for the Chulalongkorn University shuttle bus",
+      "innovation_center_title": "Learning Innovation Center",
+      "innovation_center_desc": "Online learning resources and free courses for CU students"
+    },
+    "modal": {
+      "title": "Add Shortcut from System",
+      "select_label": "Select a service to add",
+      "preview_label": "Shortcut Preview",
+      "link_type_external": "External Link",
+      "link_type_internal": "Internal Page",
+      "cancel": "Cancel",
+      "add": "Add Shortcut",
+      "ok": "OK",
+      "empty_title": "You have added all available services",
+      "empty_desc": "There are no new services in the system that can be added at this time"
+    }
+  }
+}

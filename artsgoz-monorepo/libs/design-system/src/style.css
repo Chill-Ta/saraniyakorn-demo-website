@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+@import './lib/design-system.css';
+
+@source "./**/*.tsx";
+

@@ -1,0 +1,36 @@
+steps:
+  - name: hashicorp/terraform:1.9
+    entrypoint: sh
+    dir: ${_TF_ROOT}
+    args:
+      - -c
+      - |
+        set -eu
+        terraform init -input=false \
+          -backend-config="bucket=${_STATE_BUCKET}" \
+          -backend-config="prefix=${_STATE_PREFIX}"
+        terraform plan -input=false \
+          -var-file="${_TF_VAR_FILE}" \
+          -out=tfplan
+        terraform show -no-color tfplan > tfplan.txt
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: sh
+    dir: ${_TF_ROOT}
+    args:
+      - -c
+      - |
+        set -eu
+        gcloud storage cp tfplan tfplan.txt "gs://${_PLAN_BUCKET}/${COMMIT_SHA}/"
+
+substitutions:
+  _ENVIRONMENT: ''
+  _PLAN_BUCKET: ''
+  _PROJECT_ID: ''
+  _STATE_BUCKET: ''
+  _STATE_PREFIX: ''
+  _TF_ROOT: infra/terraform/environment
+  _TF_VAR_FILE: terraform.tfvars.example
+
+options:
+  logging: CLOUD_LOGGING_ONLY

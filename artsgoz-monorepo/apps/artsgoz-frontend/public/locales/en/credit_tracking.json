@@ -1,0 +1,214 @@
+{
+  "title": "Academic Tracker",
+  "subtitle": "Track accumulated credits and plan course registration",
+  "total": "Total",
+  "profile": {
+    "major_label": "Major",
+    "select_major": "Select Major",
+    "minor_label": "Minor",
+    "select_minor": "Select Minor",
+    "curriculum_label": "Curriculum",
+    "select_curriculum": "Select Curriculum",
+    "fill_info": "Please set up your academic profile to begin tracking.",
+    "submit": "Start Tracking",
+    "error_major": "Please select a major.",
+    "error_minor": "Please select a minor.",
+    "error_curriculum": "Please select a curriculum."
+  },
+  "majors": {
+    "default": "Not Specified",
+    "english": "English",
+    "thai": "Thai",
+    "history": "History",
+    "philosophy": "Philosophy",
+    "geography": "Geography"
+  },
+  "minors": {
+    "default": "Not Specified",
+    "none": "None",
+    "vietnamese": "Vietnamese Minor",
+    "arabic": "Arabic Minor",
+    "portuguese": "Portuguese Minor",
+    "linguistics": "Linguistics Minor",
+    "comparative_literature": "Comparative Literature Minor",
+    "khmer": "Khmer Minor",
+    "editorial_studies": "Editorial Studies Minor",
+    "thai": "Thai Minor",
+    "english": "English Minor",
+    "history": "History Minor",
+    "geography": "Geography Minor",
+    "information_studies": "Information Studies Minor",
+    "philosophy": "Philosophy Minor",
+    "dramatic_arts": "Dramatic Arts Minor",
+    "south_asian_languages": "South Asian Languages Minor",
+    "chinese": "Chinese Minor",
+    "japanese": "Japanese Minor",
+    "korean": "Korean Minor",
+    "french": "French Minor",
+    "german": "German Minor",
+    "spanish": "Spanish Minor",
+    "italian": "Italian Minor",
+    "russian": "Russian Minor",
+    "world_literature": "World Literature Minor"
+  },
+  "curriculums": {
+    "cur2565": "Curriculum 2022 (B.A.)",
+    "cur2568": "Curriculum 2025 (B.A.)"
+  },
+  "pdpa": {
+    "title": "Terms of Use & Privacy Consent (PDPA)",
+    "desc1": "Academic Tracker is a simulator tool developed to help students plan their studies. The information calculated by this system is an initial simulation and does not replace official records from the Office of the Registrar (Reg Chula).",
+    "desc2": "By clicking agree, you acknowledge that you are responsible for verifying your graduation status with your advisor and the university's official regulations.",
+    "agree": "I understand and accept the terms of service",
+    "submit": "Confirm"
+  },
+  "navbar": {
+    "curriculum": "Curriculum Structure",
+    "planner": "Study Planner",
+    "summary": "Summary Report"
+  },
+  "categories": {
+    "basic": "Arts Foundation",
+    "general": "General Education",
+    "free": "Free Electives",
+    "major": "Major Courses",
+    "minor": "Minor Courses"
+  },
+  "curriculum": {
+    "title": "Curriculum Structure (129-153 Credits)",
+    "general_ed": "General Education (GenEd)",
+    "specific_ed": "Specific Education (Major/Minor)",
+    "free_choice": "Free Electives",
+    "general_sub1": "General Group",
+    "general_sub2": "Foreign Language",
+    "general_sub3": "Special Group",
+    "basic_arts": "Arts Core",
+    "english_major_detail": "English Major (48 Credits)",
+    "other_majors_detail": "Other Majors (48 Credits)",
+    "general_12_credits": "12 Credits (Soc/Hum/Sci/Inter)",
+    "basic_arts_detail": "27 Credits (9 Courses)",
+    "major_range_detail": "48 Credits",
+    "minor_18_credits": "18 Credits",
+    "other_major_credits": "48 Credits (Major Specific)",
+    "req_details_desc": "Summary of requirements and current progress for graduation in this major.",
+    "col_component": "Curriculum Component",
+    "col_credits": "Required Credits",
+    "col_details": "Condition Details",
+    "major_title": "Major Courses",
+    "major_details": "Specific rules apply based on department guidance",
+    "specific_courses": "Specific Major Courses",
+    "basic_courses": "Basic Foundation Courses",
+    "specialized_courses": "Specialized Electives",
+    "minor_title": "Minor Courses",
+    "minor_name": "Studying Minor in {{name}}",
+    "minor_desc_empty": "Select a minor subject to track progress",
+    "warning_note": "Note: Please cross-check course codes and criteria with your official curriculum handbook and department announcements.",
+    "credits_val": "{{count}} Credits",
+    "specific_credits_detail": "93 Credits (Arts Core + Major + Minor)"
+  },
+  "planner": {
+    "title": "Registration & Graduation Plan",
+    "desc": "Simulate your semester schedule. Drag subjects to organize your study plan and check credit completion.",
+    "confirm_info": "Confirm Plan",
+    "fill_alert": "Please enter the subject code, name, and credits.",
+    "success_banner": "Study plan simulated successfully! Go to the Summary tab to view your report.",
+    "btn_cancel": "Cancel",
+    "btn_delete": "Delete",
+    "custom_remark": "Self-added subject",
+    "col_code": "Code",
+    "col_name": "Subject Name",
+    "col_credits": "Credits",
+    "placeholder_code": "e.g. 2206212",
+    "placeholder_name": "e.g. Information Landscape",
+    "empty_group": "No registered courses in this group.",
+    "add_course_title": "Add Custom Course",
+    "selected_group_label": "Selected Group",
+    "course_code_label": "Course Code",
+    "course_name_th_label": "Course Name (Thai)",
+    "semester_label": "Semester",
+    "semesters": {
+      "1": "Year 1 Term 1",
+      "2": "Year 1 Term 2",
+      "3": "Year 2 Term 1",
+      "4": "Year 2 Term 2",
+      "5": "Year 3 Term 1",
+      "6": "Year 3 Term 2",
+      "7": "Year 4 Term 1",
+      "8": "Year 4 Term 2"
+    },
+    "cancel": "Cancel",
+    "save": "Save Course",
+    "confirm_modal_title": "Confirm Registration Plan",
+    "confirm_modal_desc": "Are you sure you want to save this simulation plan? You can check your progress in the Summary tab.",
+    "confirm": "Confirm Plan",
+    "total_credits": "Total {{credits}} Credits",
+    "groups": {
+      "basic": {
+        "g1": "Group 1: Thai Language & Literature",
+        "g2": "Group 2: Foreign Language",
+        "g3": "Group 3: Humanities",
+        "g4": "Group 4: Social Sciences",
+        "g5": "Group 5: Science & Math"
+      },
+      "general": {
+        "g1": "General Education Courses"
+      },
+      "free": {
+        "g1": "Free Elective Courses"
+      },
+      "major": {
+        "g1": "1. Core Required Courses (18 Credits)",
+        "g2": "2. Specific Major Electives (12 Credits)",
+        "g3": "3. Specialized Major Electives (18 Credits)"
+      },
+      "minor": {
+        "g1": "1. Minor Required Courses (12 Credits)",
+        "g2": "2. Minor Elective Courses (6 Credits)"
+      }
+    },
+    "subheads": {
+      "general": "General Education subjects chosen from University/Faculty GenEd categories.",
+      "free": "Elective courses chosen from any department across the university."
+    },
+    "instructions": {
+      "basic1": "Note: Students must select basic foundation courses according to faculty requirements.",
+      "basic2": "Please verify pre-requisites with your advisor."
+    }
+  },
+
+  "summary": {
+    "save_image_success": "Summary report printed successfully!",
+    "save_image_btn": "Print Report",
+    "unsaved_label": "Draft (Unsaved)",
+    "saved_time_label": "Last simulated: {{time}}",
+    "title": "Credit Tracking Summary",
+    "completed_credits": "Completed required credits for this category",
+    "missing_credits": "Missing {{count}} credits to complete this category",
+    "completed_courses_label": "Completed Courses by Category",
+    "no_courses_in_category": "No courses registered in this category"
+  },
+  "subjects": {
+    "b1": "English I",
+    "b2": "English II",
+    "b3": "Introduction to Translation",
+    "b4": "Thai Usage",
+    "b5": "Intro to Literature",
+    "b6": "Eastern Civilization",
+    "b7": "Western Civilization",
+    "g1": "Foundation English I",
+    "g2": "Reasoning",
+    "g3": "Critical Reading",
+    "g4": "Science and Technology in Modern World",
+    "m1": "English Phonetics",
+    "m2": "English Grammar",
+    "m3": "English Syntax",
+    "m4": "English Semantics",
+    "m5": "English Literature",
+    "m6": "Shakespeare",
+    "mn1": "Introduction to Linguistics",
+    "mn2": "Sociolinguistics",
+    "mn3": "Psycholinguistics",
+    "f1": "Introduction to Japanese",
+    "f2": "Introduction to Korean"
+  }
+}

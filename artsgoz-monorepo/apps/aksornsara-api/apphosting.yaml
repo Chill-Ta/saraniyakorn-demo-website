@@ -1,0 +1,7 @@
+scripts:
+  buildCommand: pnpm exec nx build @artsgoz/aksornsara-api
+  runCommand: node apps/aksornsara-api/dist/main.js
+
+runConfig:
+  minInstances: 0
+  memoryMiB: 1024

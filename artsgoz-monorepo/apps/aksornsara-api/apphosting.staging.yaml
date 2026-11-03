@@ -1,0 +1,6 @@
+env:
+  - variable: APP_ENV
+    value: staging
+    availability:
+      - BUILD
+      - RUNTIME

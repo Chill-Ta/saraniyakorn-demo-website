@@ -1,0 +1,48 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About GOZ",
+    "student_services": "Student Services",
+    "curriculum": "Curriculum",
+    "help": "Help",
+    "internships": "Internships",
+    "internships_dropdown_review": "Internship Reviews",
+    "internships_dropdown_open": "Currently Open",
+    "account": "Account",
+    "search_placeholder": "Search",
+    "language": "EN"
+  },
+  "footer": {
+    "address": "Room 148, Floor M1, Mahachakri Sirindhorn Building\n254 Phayathai Road, Wang Mai\nPathum Wan, Bangkok 10330",
+    "social": {
+      "email": "artgoz@gmail.com",
+      "facebook": "Faculty of Arts Student Committee, Chulalongkorn University (GOZ)",
+      "instagram": "arts_goz",
+      "tiktok": "artsgoz"
+    },
+    "columns": {
+      "about_title": "About GOZ",
+      "about_link": "About GOZ",
+      "committee_link": "Committee & Members",
+      "services_title": "Student Services",
+      "services_link": "Services for Students",
+      "student_affairs_link": "Student Affairs",
+      "mental_health_link": "Mental Health",
+      "pr_title": "Public Relations",
+      "pr_schedule_link": "PR Schedule",
+      "pr_contact_link": "Contact GOZ PR",
+      "help_title": "Help / Complaints",
+      "help_faq_link": "Help / FAQ",
+      "complaint_link": "File a Complaint",
+      "activities_title": "Activities",
+      "news_link": "News / Events",
+      "articles_link": "Saraniyakorn Articles",
+      "clubs_link": "Faculty of Arts Clubs",
+      "website_title": "About the Website",
+      "privacy_link": "Terms & Privacy Policy",
+      "report_link": "Report a Website Issue",
+      "other_title": "Others",
+      "main_website_link": "Go to Main Website"
+    }
+  }
+}

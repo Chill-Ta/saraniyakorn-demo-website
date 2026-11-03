@@ -1,0 +1,43 @@
+{
+  "title": "Faculty of Arts Student Committee (GOZ)",
+  "sub_title": "GOZ Student Portal",
+  "description": "We are a student committee that facilitates academic resources, student welfare, and activities for Arts students. Our vision and policies for academic year 2025 are as follows:",
+  "logo_alt": "GOZ Logo",
+  "info_and_docs": "Information and Downloads",
+  "vision_title": "Vision",
+  "vision_points": [
+    "Organize activities that align more with the interests of students within the faculty, and increase external activities in collaboration with other faculties while preserving the unique identity of the Faculty of Arts.",
+    "Create a safe and comfortable working environment where members can communicate and express their opinions equally with open minds.",
+    "Serve as the hub and voice for the ultimate benefit of all Faculty of Arts students."
+  ],
+  "policy_title": "Policy",
+  "policy_points": [
+    "Provide opportunities for students to express their opinions.",
+    "Create a positive working environment.",
+    "Represent and protect students' rights and welfare in the faculty.",
+    "Support organizing activities beneficial to students to prepare them for their future.",
+    "Prioritize the mental health of all GOZ members and Faculty of Arts students."
+  ],
+  "download_title": "Document Downloads",
+  "download_btn": "Download",
+  "download_flowchart_title": "GOZ Disbursement Regulations",
+  "download_flowchart_btn": "Download Disbursement Process Chart",
+  "download_forms": {
+    "form1": {
+      "name": "Project Approval Form",
+      "desc": "Used to propose activity projects to the student committee for project and budget approval."
+    },
+    "form2": {
+      "name": "GOZ Disbursement Claim Form",
+      "desc": "Used to request reimbursement of expenses according to approved receipts."
+    },
+    "form3": {
+      "name": "Financial Regulation Handbook for Students",
+      "desc": "Summary of guidelines, rules, and price evaluation criteria for GOZ reimbursement claims."
+    },
+    "form4": {
+      "name": "Subcommittee Application Form",
+      "desc": "Application form for selecting subcommittee members for various departments."
+    }
+  }
+}

@@ -1,0 +1,135 @@
+import { Article } from './types';
+import ArticleBannerMock from '../../assets/ArticleBannerMock.jpg';
+
+export const AKSORNSARA_CATEGORIES = [
+  'categories.all',
+  'categories.general',
+  'categories.literature',
+  'categories.society',
+  'categories.festival',
+];
+
+export const SARANIYAKORN_CATEGORIES = AKSORNSARA_CATEGORIES;
+
+export const MOCK_ARTICLES: Article[] = [
+  {
+    id: 'art-01',
+    title: 'mock.art01.title',
+    excerpt: 'mock.art01.excerpt',
+    imageUrl: ArticleBannerMock,
+    date: '14/02/69',
+    href: '/articles/art-01',
+    author: 'mock.art01.author',
+    category: 'categories.literature',
+    content: [
+      'mock.art01.content_0',
+      'mock.art01.content_1',
+      'mock.art01.content_2',
+    ],
+  },
+  {
+    id: 'art-02',
+    title: 'mock.art02.title',
+    excerpt: 'mock.art02.excerpt',
+    imageUrl: ArticleBannerMock,
+    date: '10/02/69',
+    href: '/articles/art-02',
+    author: 'mock.art02.author',
+    category: 'categories.general',
+    content: [
+      'mock.art02.content_0',
+      'mock.art02.content_1',
+      'mock.art02.content_2',
+    ],
+  },
+  {
+    id: 'art-03',
+    title: 'mock.art03.title',
+    excerpt: 'mock.art03.excerpt',
+    imageUrl: ArticleBannerMock,
+    date: '05/02/69',
+    href: '/articles/art-03',
+    author: 'mock.art03.author',
+    category: 'categories.literature',
+    content: [
+      'mock.art03.content_0',
+      'mock.art03.content_1',
+      'mock.art03.content_2',
+    ],
+  },
+  {
+    id: 'art-04',
+    title: 'mock.art04.title',
+    excerpt: 'mock.art04.excerpt',
+    imageUrl: ArticleBannerMock,
+    date: '28/01/69',
+    href: '/articles/art-04',
+    author: 'mock.art04.author',
+    category: 'categories.society',
+    content: [
+      'mock.art04.content_0',
+      'mock.art04.content_1',
+      'mock.art04.content_2',
+    ],
+  },
+  {
+    id: 'art-05',
+    title: 'mock.art05.title',
+    excerpt: 'mock.art05.excerpt',
+    imageUrl: ArticleBannerMock,
+    date: '20/01/69',
+    href: '/articles/art-05',
+    author: 'mock.art05.author',
+    category: 'categories.festival',
+    content: [
+      'mock.art05.content_0',
+      'mock.art05.content_1',
+      'mock.art05.content_2',
+    ],
+  },
+  {
+    id: 'art-06',
+    title: 'mock.art06.title',
+    excerpt: 'mock.art06.excerpt',
+    imageUrl: ArticleBannerMock,
+    date: '15/01/69',
+    href: '/articles/art-06',
+    author: 'mock.art06.author',
+    category: 'categories.literature',
+    content: [
+      'mock.art06.content_0',
+      'mock.art06.content_1',
+      'mock.art06.content_2',
+    ],
+  },
+  {
+    id: 'art-07',
+    title: 'mock.art07.title',
+    excerpt: 'mock.art07.excerpt',
+    imageUrl: ArticleBannerMock,
+    date: '10/01/69',
+    href: '/articles/art-07',
+    author: 'mock.art07.author',
+    category: 'categories.society',
+    content: [
+      'mock.art07.content_0',
+      'mock.art07.content_1',
+      'mock.art07.content_2',
+    ],
+  },
+  {
+    id: 'art-08',
+    title: 'mock.art08.title',
+    excerpt: 'mock.art08.excerpt',
+    imageUrl: ArticleBannerMock,
+    date: '01/01/69',
+    href: '/articles/art-08',
+    author: 'mock.art08.author',
+    category: 'categories.festival',
+    content: [
+      'mock.art08.content_0',
+      'mock.art08.content_1',
+      'mock.art08.content_2',
+    ],
+  },
+];

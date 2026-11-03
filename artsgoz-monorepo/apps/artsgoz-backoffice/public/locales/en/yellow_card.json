@@ -1,0 +1,108 @@
+{
+  "placeholder_subject": "Course Name",
+  "intro_thai_economy": "Introduction to Thai Economy",
+  "groups": {
+    "general": {
+      "g1": "1. General Education 12 Credits (Social Sciences, Humanities, Science & Math, Interdisciplinary)",
+      "g2": "2. Gen Ed Foreign Language Group 12 Credits",
+      "g3": "3. Gen Ed Special Group 6 Credits"
+    }
+  },
+  "grade_report": {
+    "unmark": "Mark as not taken",
+    "mark": "Mark as taken",
+    "term_year": "Term/Year",
+    "grade": "Grade"
+  },
+  "curriculum_table": {
+    "completed_progress": "Completed {{completed}} / {{required}} Credits",
+    "empty_group": "No registered courses. (Click plus button to add course)"
+  },
+  "gpa_table": {
+    "title": "GPA Table",
+    "warning_note": "Note: You can verify this information on the reg chula website",
+    "col_remark": "Remarks",
+    "term_first_placeholder": "  1. First Semester / 25..........",
+    "term_second_placeholder": "  1. Second Semester / 25..........",
+    "term_first_prefix": "  1. First Semester / {{year}}",
+    "term_second_prefix": "  1. Second Semester / {{year}}",
+    "term_summer_prefix": "  1. Summer Semester / {{year}}"
+  },
+  "profile_form": {
+    "edit": "Edit",
+    "name_label": "Full Name",
+    "student_id_label": "Student ID",
+    "advisor_label": "Advisor",
+    "address_label": "Address",
+    "phone_label": "Phone Number",
+    "student_info_label": "Student Info",
+    "student_id_short": "Student ID",
+    "no_minor": "None"
+  },
+  "action_bar": {
+    "import_btn": "Import from Credit Tracking",
+    "process_btn": "Process Data"
+  },
+  "advisor_modal": {
+    "warning_title": "Notification",
+    "warning_desc": "The information entered in this online Yellow Card system will be sent to your advisor. If you wish to simulate course planning or calculate credits for yourself, please go to the Credit Tracking page.",
+    "confirm_send": "Confirm and Submit Yellow Card",
+    "go_to_tracker": "Go to Credit Tracking",
+    "continue_filling": "Continue filling Yellow Card (not for tracking)"
+  },
+  "state": {
+    "no_tracker_data": "No registration plan data found in Credit Tracking. Please plan your courses in Credit Tracking first.",
+    "import_success": "Course registration imported from Credit Tracking successfully!",
+    "import_error": "An error occurred while importing data.",
+    "save_success": "Your data has been saved and submitted to your advisor successfully!"
+  },
+  "warning_banner": {
+    "message": "Note: For correct information, you can check your registration details on the <a>reg chula website <icon/></a>"
+  },
+  "footer": {
+    "disclaimer": "This Yellow Card is not the university's main registration system.",
+    "confirm_save": "Confirm and Save"
+  },
+  "title": "Record of Course Registration and Academic Performance, 129-153 Credits (Revised Curriculum 2023)",
+  "pdpa": {
+    "title": "Privacy Consent Notice (PDPA)",
+    "desc1": "The Personal Data Protection Act (PDPA) protects your personal information and establishes standards for data security. We require your explicit consent to use your data for the specified purposes.",
+    "desc2": "We collect and process your personal information, including your name, student ID, email address, major, minor, and registered courses. Your consent is required to submit this form.",
+    "agree": "I acknowledge and agree",
+    "submit": "Confirm"
+  },
+  "credit_tracking": {
+    "categories": {
+      "basic": "Arts Foundation",
+      "general": "General Education",
+      "free": "Free Electives",
+      "major": "Major Courses",
+      "minor": "Minor Courses"
+    },
+    "planner": {
+      "instructions": {
+        "basic1": "Note: Students must select basic foundation courses according to faculty requirements.",
+        "basic2": "Please verify pre-requisites with your advisor."
+      },
+      "col_code": "Code",
+      "col_name": "Subject Name",
+      "col_credits": "Credits",
+      "add_course_title": "Add Course",
+      "btn_delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "total_credits": "Total {{credits}} Credits"
+    },
+    "profile": {
+      "major_label": "Major",
+      "minor_label": "Minor",
+      "curriculum_label": "Curriculum"
+    },
+    "majors": {
+      "default": "Not Specified"
+    },
+    "curriculum": {
+      "title": "Curriculum Structure (129-153 Credits)"
+    }
+  }
+}

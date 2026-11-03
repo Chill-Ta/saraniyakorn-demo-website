@@ -1,0 +1,14 @@
+{
+  "name": "@artsgoz/artsgoz-backoffice",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@artsgoz/design-system": "workspace:*",
+    "@artsgoz/yellow-card-shared": "workspace:*",
+    "@tiptap/extension-image": "^3.32.2",
+    "@tiptap/extension-link": "^3.32.2",
+    "@tiptap/extension-underline": "^3.32.2",
+    "@tiptap/react": "^3.32.2",
+    "@tiptap/starter-kit": "^3.32.2"
+  }
+}

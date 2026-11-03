@@ -1,0 +1,203 @@
+{
+  "title": "Student Services",
+  "desc": "Various services for Faculty of Arts students",
+  "search_placeholder": "Search services...",
+  "search_results_for": "Search results for \"",
+  "items_count": "items",
+  "no_results": "No results found matching your search",
+  "clear_search": "Clear Search",
+  "modal_ok": "OK",
+  "location_label": "Location",
+  "location_label_pads": "Pickup Location",
+  "time_label": "Service Hours",
+  "time_label_medicine": "Medicine Service Hours",
+  "rules_label": "Borrow & Return Rules",
+  "rules_label_pads": "Eligibility & Conditions",
+  "umbrella": {
+    "modal_title": "Umbrella Lending Service",
+    "modal_desc": "Free umbrella lending service provided by the Student Committee (GOZ) when it rains. Students can request and return umbrellas at the specified location.",
+    "location": "GOZ Room, Mahachakri Sirindhorn Building, Floor M1",
+    "time": "Monday - Friday, 09:00 - 17:00",
+    "rule1": "Present student ID card or show your student profile screen to verify identity.",
+    "rule2": "Limit of 1 umbrella per person. Please return it within 3 business days.",
+    "rule3": "Late return or loss will be subject to Student Committee regulations."
+  },
+  "pads": {
+    "modal_title": "Free Emergency Sanitary Pads",
+    "modal_desc": "Emergency sanitary pads provided for students in need, set up inside restrooms across the Faculty of Arts as part of student welfare.",
+    "location": "Female Restrooms, Mahachakri Sirindhorn Building, Floors 1, 3, 5, and Borommarajakumari Building",
+    "rule1": "Grab instantly for emergency use with no charges.",
+    "rule2": "Please take only as needed for your immediate situation.",
+    "rule3": "If the box is empty, feel free to notify any GOZ committee member to refill."
+  },
+  "medicine": {
+    "modal_title": "Free Basic Medicine & First-Aid",
+    "modal_desc": "Free basic household medicines and first-aid supplies for students experiencing mild symptoms or illness during study hours.",
+    "location": "GOZ Room, Mahachakri Sirindhorn Building, Floor M1",
+    "meds_label": "Available Basic Medicines",
+    "meds_list": "Paracetamol, Antihistamine, Antacid, Stomach mixture, basic bandages & wound cleaning kits",
+    "time": "Monday - Friday, 09:00 - 17:00"
+  },
+  "sidebar": {
+    "all": "All Services",
+    "general": "General Services",
+    "academic": "Academic Services",
+    "learning": "Learning Support",
+    "kos": "GOZ Welfare (GOZ)",
+    "mental": "Mental Wellness",
+    "university": "University Central Services"
+  },
+  "categories": {
+    "general": {
+      "title": "General Services",
+      "subtitle": "News, events, and daily convenience utilities"
+    },
+    "academic": {
+      "title": "Academic Services",
+      "subtitle": "Tracking systems, planning, and professor contact details"
+    },
+    "learning": {
+      "title": "Learning Support",
+      "subtitle": "Libraries, portals, and online learning archives"
+    },
+    "kos": {
+      "title": "GOZ Welfare (GOZ)",
+      "subtitle": "Welfare lending programs run directly by the Student Committee"
+    },
+    "mental": {
+      "title": "Mental Wellness",
+      "subtitle": "Safe spaces and counseling support systems for students"
+    },
+    "university": {
+      "title": "University Central Services",
+      "subtitle": "Central systems, transport, and sports facilities of Chulalongkorn University"
+    }
+  },
+  "bento": {
+    "recommended_clubs": "Recommended Clubs for You",
+    "drama_club": "Drama Club",
+    "music_club": "Music Club",
+    "magazine_club": "Magazine Club",
+    "joined_count": "150+ students joined",
+    "view_all_clubs": "View All Clubs",
+    "online_course": "Quota & Course Registration System",
+    "submit_blue_card": "Submit Yellow/Blue Card Petition",
+    "advisor_approved": "Advisor Approved",
+    "processing_registrar": "Processing by Office of Registrar",
+    "pending": "Processing",
+    "submit_request": "Fill Quota Application Form",
+    "health_nursing": "Health & First-Aid Services",
+    "open_hours": "Open Mon-Fri, 08:00 - 16:00",
+    "location_chula9": "Chamchuri 9 Building, 2nd Floor",
+    "emergency_hotline": "24H Emergency Hotline",
+    "visit_website": "Visit Official Website",
+    "collected_credits": "Earned 77% credits",
+    "required_credits": "out of 129 credits",
+    "umbrellas_available": "Umbrellas available",
+    "kos_room": "Pickup at GOZ Room, Floor M1",
+    "borrow_umbrella_online": "Reserve Umbrella Online",
+    "new_update": "New Update",
+    "recent_article": "Latest: Tips for Preparing Final Exams",
+    "read_time": "5 min read",
+    "general_form": "General Request",
+    "withdraw_form": "Course Withdrawal Form (W)",
+    "download": "Download",
+    "mental_health": "Mental Wellness",
+    "today_quote": "Quote of the Day",
+    "quote_content": "\"Happiness does not depend on what we have, but on how we view things and do what we love fully every single day.\"",
+    "book_consultation": "Book Psychologist Session",
+    "service_label": "Submenu",
+    "saved": {
+      "title": "Saved Items",
+      "desc": "Check your saved articles & pages"
+    },
+    "professors": {
+      "title": "Find a Professor",
+      "desc": "Contact info of all departments"
+    },
+    "curriculum": {
+      "title": "Arts Curriculum",
+      "desc": "Check study plans and required courses"
+    },
+    "scholarships": {
+      "title": "Scholarships",
+      "desc": "Scholarships & student exchange news"
+    },
+    "pads": {
+      "title": "Pad Welfare",
+      "desc": "Free sanitary pads dispenser cabinets"
+    },
+    "medicine": {
+      "title": "First Aid Cabinet",
+      "desc": "Access basic medicines for students"
+    },
+    "sports": {
+      "title": "CU Sports Center",
+      "desc": "Book sports court & fitness memberships"
+    },
+    "mental_tips": {
+      "title": "Wellness Tips",
+      "desc": "Mental health tips & support channels"
+    },
+    "popbus": {
+      "title": "CU POP Bus",
+      "desc": "POP Bus maps and timing schedules"
+    },
+    "learning_center": {
+      "title": "Learning Innovation",
+      "desc": "Free online courses & archives"
+    }
+  },
+  "documents": {
+    "title": "Document Download & Forms",
+    "search_placeholder": "Search forms or documents...",
+    "filter_label": "Filter Status",
+    "no_results_title": "No documents found",
+    "no_results_desc": "Try searching with a different document name or keyword",
+    "status": {
+      "failed": "Urgent",
+      "pending": "Pending",
+      "neutral": "General"
+    },
+    "download_label": "Download document",
+    "bookmark_label": "Bookmark document",
+    "unbookmark_label": "Remove bookmark"
+  },
+  "professors": {
+    "title": "Faculty & Professors Directory",
+    "search_placeholder": "Search professor by name, department...",
+    "search_btn": "Search",
+    "filter_btn": "Filter Department",
+    "department_label": "Department",
+    "status_label": "Status",
+    "no_results": "No professors found",
+    "back": "Back to list",
+    "abbreviation_label": "Abbreviation",
+    "department_agency_label": "Department / Affiliation",
+    "location_label": "Office Location",
+    "achievements_label": "Research & Achievements",
+    "qualifications_label": "Education & Qualifications",
+    "courses_label": "Taught Courses",
+    "departments": {
+      "all": "All Departments",
+      "library_science": "Department of Library Science",
+      "thai": "Department of Thai",
+      "english": "Department of English",
+      "history": "Department of History",
+      "philosophy": "Department of Philosophy",
+      "french": "Department of French",
+      "drama": "Department of Dramatic Arts",
+      "geography": "Department of Geography",
+      "german": "Department of German",
+      "spanish": "Department of Spanish",
+      "psychology": "Department of Psychology",
+      "chinese": "Department of Chinese"
+    },
+    "status": {
+      "all": "All Statuses",
+      "government_officer": "Civil Servant",
+      "university_employee": "University Employee",
+      "temporary_employee": "Temporary Employee"
+    }
+  }
+}

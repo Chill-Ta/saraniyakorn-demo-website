@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+@import 'tailwindcss';
+@import '../../../libs/design-system/src/lib/design-system.css';
+
+/* nx-tailwind-sources:start */
+@source "../../../libs/design-system";
+@source "../../../libs/yellow-card-shared";
+/* nx-tailwind-sources:end */
+
+/* Font */
+@theme {
+  --font-maintenance: 'Google Sans', sans-serif;
+}
+

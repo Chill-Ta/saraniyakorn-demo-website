@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/artsgoz-frontend"
+    },
+    {
+      "path": "./apps/aksornsara-frontend"
+    },
+    {
+      "path": "./apps/aksornsara-api-e2e"
+    },
+    {
+      "path": "./apps/aksornsara-api"
+    },
+    {
+      "path": "./libs/base-components"
+    },
+    {
+      "path": "./apps/artsgoz-backoffice"
+    }
+  ]
+}

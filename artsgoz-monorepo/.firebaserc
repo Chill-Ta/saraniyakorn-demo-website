@@ -1,0 +1,75 @@
+{
+  "projects": {
+    "default": "chula-artsgoz-website",
+    "artsgoz-develop": "artsgoz-artsgoz-web-develop",
+    "aksornsara-develop": "artsgoz-aksornsara-web-develop",
+    "artsgoz-staging": "artsgoz-artsgoz-web-staging",
+    "aksornsara-staging": "artsgoz-aksornsara-web-staging",
+    "artsgoz-prod": "artsgoz-artsgoz-web-prod",
+    "aksornsara-prod": "artsgoz-aksornsara-web-prod"
+  },
+  "targets": {
+    "chula-artsgoz-website": {
+      "hosting": {
+        "artsgoz-frontend": [
+          "artsgoz-frontend"
+        ],
+        "artsgoz-backoffice": [
+          "artsgoz-backoffice"
+        ]
+      }
+    },
+    "artsgoz-artsgoz-web-develop": {
+      "hosting": {
+        "artsgoz-frontend": [
+          "artsgoz-artsgoz-web-frontend-develop"
+        ],
+        "artsgoz-backoffice": [
+          "artsgoz-artsgoz-web-backoffice-develop"
+        ]
+      }
+    },
+    "artsgoz-aksornsara-web-develop": {
+      "hosting": {
+        "aksornsara-frontend": [
+          "artsgoz-aksornsara-web-frontend-develop-85a05"
+        ]
+      }
+    },
+    "artsgoz-artsgoz-web-staging": {
+      "hosting": {
+        "artsgoz-frontend": [
+          "artsgoz-artsgoz-web-frontend-staging"
+        ],
+        "artsgoz-backoffice": [
+          "artsgoz-artsgoz-web-backoffice-staging"
+        ]
+      }
+    },
+    "artsgoz-aksornsara-web-staging": {
+      "hosting": {
+        "aksornsara-frontend": [
+          "artsgoz-aksornsara-web-frontend-staging"
+        ]
+      }
+    },
+    "artsgoz-artsgoz-web-prod": {
+      "hosting": {
+        "artsgoz-frontend": [
+          "artsgoz-artsgoz-web-frontend-prod"
+        ],
+        "artsgoz-backoffice": [
+          "artsgoz-artsgoz-web-backoffice-prod"
+        ]
+      }
+    },
+    "artsgoz-aksornsara-web-prod": {
+      "hosting": {
+        "aksornsara-frontend": [
+          "artsgoz-aksornsara-web-frontend-prod"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

@@ -1,0 +1,35 @@
+{
+  "hosting": [
+    {
+      "target": "artsgoz-frontend",
+      "public": "apps/artsgoz-frontend/dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [{ "source": "**", "destination": "/index.html" }]
+    },
+    {
+      "target": "artsgoz-backoffice",
+      "public": "apps/artsgoz-backoffice/dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [{ "source": "**", "destination": "/index.html" }]
+    },
+    {
+      "target": "aksornsara-frontend",
+      "public": "apps/aksornsara-frontend/dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [{ "source": "**", "destination": "/index.html" }]
+    }
+  ],
+  "apphosting": [
+    {
+      "backendId": "aksornsara-api",
+      "rootDir": "apps/aksornsara-api",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ]
+    }
+  ]
+}

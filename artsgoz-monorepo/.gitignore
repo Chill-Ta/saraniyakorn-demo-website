@@ -1,0 +1,75 @@
+# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# compiled output
+dist
+tmp
+out-tsc
+*.tsbuildinfo
+
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+.nx/cache
+.nx/workspace-data
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
+
+# Next.js
+.next
+out
+test-output
+vite.config.*.timestamp*
+
+# Environment variables (contains secrets like Figma API token)
+.env
+.env.local
+.env.*.local
+# Firebase local cache
+.firebase/
+.vercel
+
+# Terraform local data and state
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+infra/terraform/bootstrap/.terraform.lock.hcl
+infra/terraform/bootstrap/*/backend.tf
+tfplan
+
+# Nx cache and internal worker files
+.nx/
+.nx-cli/
+
+# Standard node/pnpm fields
+node_modules/
+.pnpm-store/

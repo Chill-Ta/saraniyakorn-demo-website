@@ -1,0 +1,10 @@
+{
+  "tailwindCSS.experimental.configFile": {
+    "apps/artsgoz-frontend/src/styles.css": "apps/artsgoz-frontend/src/**",
+    "apps/artsgoz-backoffice/src/styles.css": [
+      "apps/artsgoz-backoffice/src/**",
+      "libs/base-components/src/**"
+    ],
+    "apps/aksornsara-frontend/src/styles.css": "apps/aksornsara-frontend/src/**"
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "section_title": "Articles from Saraniyakorn Club",
+  "section_desc": "Latest news, articles, and stories from Saraniyakorn Club, Faculty of Arts",
+  "view_all": "View All Articles",
+  "drag": "drag",
+  "dragging": "dragging",
+  "mock": {
+    "art01": {
+      "title": "Love Cats Most in the World <3",
+      "excerpt": "A heartwarming tale of cat lovers within the Faculty of Arts campus bringing positive energy every day.",
+      "author": "Cat Human",
+      "category": "Literature & Short Stories",
+      "content_0": "Cats are not merely pets; they are companions who fill our daily lives with warmth. For students of the Faculty of Arts, gentle purrs and playful glances are the best remedy for exhaustion from studying and exams.",
+      "content_1": "The story of cats around the Tewalai has a long and fond history. Be it the ginger cat resting under Borommaratchakumari Building or the calico cat greeting visitors at the student courtyard, they always bring smiles to passersby.",
+      "content_2": "The love we give to them teaches us kindness, patience, and simple happiness found in each new morning. May everyone have warm and joyful moments with their beloved feline companions."
+    },
+    "art02": {
+      "title": "Feline Journeys in Arts Chula",
+      "excerpt": "Campus lore and delightful daily moments with our beloved resident cats.",
+      "author": "Saraniyakorn Team",
+      "category": "General Category",
+      "content_0": "Every corner of the Faculty of Arts campus is watched over by our four-legged friends. Watching them bask in the sun brings true tranquility.",
+      "content_1": "Many students carry treats to share love with these friendly residents, turning these memories into some of the most cherished times of university life.",
+      "content_2": "We encourage everyone to look after the well-being of all animals on campus with kindness and gentleness."
+    },
+    "art03": {
+      "title": "Decoding Literature: Contemporary Short Stories",
+      "excerpt": "Fresh perspectives on interpreting contemporary short fiction and the charm of prose.",
+      "author": "Literature Society",
+      "category": "Literature & Short Stories",
+      "content_0": "Contemporary literature reflects the emotions and thoughts of modern society, woven into profound expressions.",
+      "content_1": "Close reading unlocks deep emotional and psychological layers within the characters.",
+      "content_2": "Join us as we explore the beauty of literary art in this featured article."
+    },
+    "art04": {
+      "title": "Politics in Thai Literature: 21st Century Perspectives",
+      "excerpt": "Examining classical Thai literature through political and socio-cultural lenses.",
+      "author": "Academic Affairs GOZ",
+      "category": "Society & Politics",
+      "content_0": "Thai literature is not merely aesthetic beauty, but also reflects power dynamics and social discourses across eras.",
+      "content_1": "Contemporary analysis helps us understand ideological origins and governance traditions.",
+      "content_2": "This offers key insights bridging heritage to current global developments."
+    },
+    "art05": {
+      "title": "Loy Krathong Festival and Tewalai Heritage",
+      "excerpt": "Memories of the full moon night beneath the shadows of the historic Tewalai.",
+      "author": "Arts & Culture Club",
+      "category": "Important Festivals",
+      "content_0": "On the night of the full moon, the campus shines with candles and warm camaraderie.",
+      "content_1": "The festival is a meaningful occasion to give thanks and share goodwill among students.",
+      "content_2": "While time changes, our cultural bonds and cherished traditions remain as radiant as ever."
+    },
+    "art06": {
+      "title": "Springtime Poetry Under Jamjuree Trees",
+      "excerpt": "Verses of renewal and ambition as blossom season arrives on campus.",
+      "author": "The Ghost Writer",
+      "category": "Literature & Short Stories",
+      "content_0": "As gentle breezes whisper through the campus trees, fresh leaves herald new beginnings.",
+      "content_1": "This poem is written to inspire every student pursuing their academic and creative dreams.",
+      "content_2": "May every step on your journey blossom with hope and inspiration."
+    },
+    "art07": {
+      "title": "Language, Power, and Social Evolution",
+      "excerpt": "Exploring the role of language in driving human rights and social awareness.",
+      "author": "Linguistics Club",
+      "category": "Society & Politics",
+      "content_0": "Language is more than communication; it is a catalyst creating and shaping reality.",
+      "content_1": "Evolving speech patterns today reflect growing consciousness of diversity and fundamental rights.",
+      "content_2": "Conscious expression marks the first step toward building an inclusive and empathetic community."
+    },
+    "art08": {
+      "title": "Welcoming Freshmen: Memories and Enduring Friendship",
+      "excerpt": "Reflections on the first days stepping into the Faculty of Arts family.",
+      "author": "GOZ PR Team",
+      "category": "Important Festivals",
+      "content_0": "Harmonious cheers and warm greetings from senior students form unforgettable memories.",
+      "content_1": "Our faculty welcoming activities focus on camaraderie, warmth, and supportive mentorship.",
+      "content_2": "Welcome all freshers into our vibrant home where we grow together."
+    }
+  },
+  "saved_title": "Saved Articles & Info",
+  "search_saved_placeholder": "Search saved items...",
+  "filter": "Filter",
+  "filter_and_sort": "Filter & Sort Options",
+  "date_saved": "Date Saved",
+  "date_posted": "Date Posted",
+  "sort_newest": "Newest First",
+  "sort_oldest": "Oldest First",
+  "tab_articles": "Saved Articles",
+  "tab_internships": "Saved Internships",
+  "tab_reviews": "Saved Course Reviews",
+  "no_saved_articles": "No saved articles yet",
+  "no_saved_articles_desc": "Click the bookmark icon at the top right of any article card to save it here for later reading.",
+  "explore_articles": "Explore Articles",
+  "period_label": "Period: {{period}}",
+  "more_details": "View More Details",
+  "written_by_author": "Written by: {{author}}",
+  "published_at": "Published: {{date}}",
+  "read_full_review": "Read Full Review",
+  "go_to_articles": "Back to Main Articles",
+  "search_placeholder": "Search articles",
+  "clear_filters": "Clear All Filters",
+  "no_results_title": "No articles found",
+  "no_results_desc": "We couldn't find any articles matching \"{{query}}\". Try using different keywords.",
+  "categories": {
+    "all": "All Categories",
+    "general": "General Category",
+    "literature": "Literature & Short Stories",
+    "society": "Society & Politics",
+    "festival": "Important Festivals"
+  },
+  "written_by": "Written by {{author}}",
+  "published": "Published {{date}}",
+  "read_more": "Read More",
+  "saved_internships": {
+    "intern1": {
+      "role": "Content Marketing Intern",
+      "period": "June - August 2025",
+      "category": "Internship",
+      "author": "P'A, Arts 85"
+    },
+    "intern2": {
+      "role": "UX/UI Designer Intern",
+      "period": "June - July 2025",
+      "category": "Internship",
+      "author": "P'B, Arts 84"
+    }
+  },
+  "saved_reviews": {
+    "review1": {
+      "role": "Special English Translation",
+      "excerpt": "A popular course for those looking to hone their translation and critical reading skills in professional English contexts.",
+      "category": "Course Review",
+      "author": "English Major, Batch 86"
+    },
+    "review2": {
+      "role": "Western Civilization",
+      "excerpt": "Challenging but very rewarding and fun. The teachers are very caring and the curriculum offers extensive and deep historical knowledge.",
+      "category": "Course Review",
+      "author": "History Major, Batch 85"
+    }
+  },
+  "tags": {
+    "wfh": "WFH 100%",
+    "hybrid": "Hybrid",
+    "allowance": "Paid Allowance"
+  },
+  "detail": {
+    "not_found_title": "Article Not Found",
+    "not_found_desc": "The article you are trying to view might have been deleted or doesn't exist.",
+    "back_to_all": "Back to All Articles",
+    "back_to_articles": "Back to Articles",
+    "references": "References",
+    "read_more": "Read More"
+  }
+}

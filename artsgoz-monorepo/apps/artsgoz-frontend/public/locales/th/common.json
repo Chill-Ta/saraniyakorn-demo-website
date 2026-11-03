@@ -1,0 +1,48 @@
+{
+  "navbar": {
+    "home": "หน้าหลัก",
+    "about": "เกี่ยวกับ ก.อศ.",
+    "student_services": "บริการนิสิต",
+    "curriculum": "หลักสูตร",
+    "help": "ช่วยเหลือ",
+    "internships": "ฝึกงาน",
+    "internships_dropdown_review": "รีวิวฝึกงาน",
+    "internships_dropdown_open": "เปิดรับอยู่",
+    "account": "บัญชี",
+    "search_placeholder": "ค้นหา",
+    "language": "TH"
+  },
+  "footer": {
+    "address": "ห้อง 148 ชั้น M1 อาคารมหาจักรีสิรินธร\n254 ถนนพญาไท แขวงวังใหม่\nเขตปทุมวัน กรุงเทพมหานคร 10330",
+    "social": {
+      "email": "artgoz@gmail.com",
+      "facebook": "คณะกรรมการนิสิตอักษรศาสตร์ จุฬาฯ ก.อศ.",
+      "instagram": "arts_goz",
+      "tiktok": "artsgoz"
+    },
+    "columns": {
+      "about_title": "เกี่ยวกับ ก.อศ.",
+      "about_link": "เกี่ยวกับ ก.อศ.",
+      "committee_link": "คณะกรรมการและสมาชิก",
+      "services_title": "บริการนิสิต",
+      "services_link": "บริการสำหรับนิสิต",
+      "student_affairs_link": "งานกิจการนิสิต",
+      "mental_health_link": "สุขภาพจิต",
+      "pr_title": "ฝ่ายประชาสัมพันธ์",
+      "pr_schedule_link": "ตารางงานประชาสัมพันธ์",
+      "pr_contact_link": "ติดต่องานประชาสัมพันธ์ ก.อศ.",
+      "help_title": "ช่วยเหลือ/ร้องเรียน",
+      "help_faq_link": "ช่วยเหลือ/FAQ",
+      "complaint_link": "ร้องเรียนปัญหา",
+      "activities_title": "กิจกรรม",
+      "news_link": "ข่าวสาร/กิจกรรม",
+      "articles_link": "บทความสาราณียกร",
+      "clubs_link": "ชมรมในคณะอักษรศาสตร์",
+      "website_title": "เกี่ยวกับเว็บไซต์",
+      "privacy_link": "ข้อกำหนดและนโยบายความเป็นส่วนตัว",
+      "report_link": "แจ้งปัญหาใช้งานเว็บไซต์",
+      "other_title": "อื่น ๆ",
+      "main_website_link": "เข้าสู่เว็บไซต์หลัก"
+    }
+  }
+}
