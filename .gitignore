@@ -43,3 +43,4 @@ Thumbs.db
 # Docker volumes & local uploads
 uploads/
 backend_uploads/
+
