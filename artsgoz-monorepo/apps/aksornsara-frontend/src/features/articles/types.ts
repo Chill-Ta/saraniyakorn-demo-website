@@ -6,6 +6,7 @@ export interface ArticleSummary {
   author: string;
   excerpt: string;
   category: string;
+  tags?: string[];
   url: string;
   readTime: string;
   imageUrl?: string;

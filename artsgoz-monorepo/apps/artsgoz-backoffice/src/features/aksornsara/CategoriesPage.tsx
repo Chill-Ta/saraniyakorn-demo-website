@@ -1,70 +1,53 @@
-import { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { AksornsaraLayout } from './AksornsaraLayout';
+import { articlesService } from './services/articlesService';
 
-interface CategoryItem {
-  name: string;
-  pct: number;
-  count: number;
-  bar_color?: string;
-  dot_color?: string;
-  barColor?: string;
-  dotColor?: string;
-}
-
-interface TrendingArticle {
-  title: string;
-  views: string;
-  author: string;
-}
-
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api').replace(/\/$/, '');
-
-const DEFAULT_COLORS = [
-  { bar: '#CA5582', dot: '#CA5582' },
-  { bar: '#DE5D8F', dot: '#DE5D8F' },
-  { bar: '#E57DA5', dot: '#E57DA5' },
-  { bar: '#E992B4', dot: '#E992B4' },
-  { bar: '#F0B4CB', dot: '#F0B4CB' },
-  { bar: '#F5CDDC', dot: '#F5CDDC' },
-  { bar: '#FCEFF4', dot: '#FCEFF4' },
-];
+const CATEGORY_COLORS: Record<string, { barColor: string; dotColor: string }> = {
+  วรรณกรรม: { barColor: '#CA5582', dotColor: '#CA5582' },
+  วิจารณ์:  { barColor: '#DE5D8F', dotColor: '#DE5D8F' },
+  ศิลปะ:    { barColor: '#E57DA5', dotColor: '#E57DA5' },
+  ปรัชญา:   { barColor: '#E992B4', dotColor: '#E992B4' },
+  ภาษา:     { barColor: '#F0B4CB', dotColor: '#F0B4CB' },
+  วัฒนธรรม: { barColor: '#F5CDDC', dotColor: '#F5CDDC' },
+  ทั่วไป:   { barColor: '#FCEFF4', dotColor: '#E992B4' },
+};
 
 export function CategoriesPage() {
-  const [categories, setCategories] = useState<CategoryItem[]>([]);
-  const [trendingArticles, setTrendingArticles] = useState<TrendingArticle[]>([]);
-  const [totalCategories, setTotalCategories] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
+  const [version, setVersion] = useState(0);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(`${API_BASE}/v1/dashboard/categories`, {
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer mock.jwt.admin',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data) {
-          setTotalCategories(data.total_categories_count ?? (data.categories ? data.categories.length : 0));
-          if (Array.isArray(data.categories)) {
-            setCategories(data.categories);
-          }
-          if (Array.isArray(data.trending_articles)) {
-            setTrendingArticles(data.trending_articles);
-          }
-        }
-      })
-      .catch((err) => {
-        console.warn('Failed to load categories from database', err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    articlesService.syncWithApi();
+    return articlesService.subscribe(() => setVersion((v) => v + 1));
   }, []);
 
+  const allArticles = useMemo(() => articlesService.getAll(), [version]);
+  const metrics = useMemo(() => articlesService.getMetrics(), [version]);
+
+  // Real categories data
+  const categoriesList = useMemo(() => {
+    return metrics.categoryData.map((c) => {
+      const colors = CATEGORY_COLORS[c.name] || { barColor: '#E992B4', dotColor: '#E992B4' };
+      return {
+        name: c.name,
+        count: c.count,
+        views: c.views,
+        pct: c.pct,
+        barColor: colors.barColor,
+        dotColor: colors.dotColor,
+      };
+    });
+  }, [metrics]);
+
+  // Real top-performing articles
+  const trendingArticles = useMemo(() => {
+    return [...allArticles]
+      .sort((a, b) => (b.views || 0) - (a.views || 0))
+      .slice(0, 4);
+  }, [allArticles]);
+
   const CIRCUMFERENCE = 326.7;
-  let accumulatedPct = 0;
 
   return (
     <AksornsaraLayout>
@@ -89,14 +72,14 @@ export function CategoriesPage() {
 
           {/* ════ LEFT CARD: Category Count Circle on LEFT, Bars on RIGHT ════ */}
           <div
-            className="flex-1 flex flex-col sm:flex-row items-center justify-between w-full"
+            className="shrink-0 flex flex-col md:flex-row items-center justify-between w-full lg:w-[540px]"
             style={{
               minHeight: 608,
               borderRadius: 24,
               border: '1px solid #D4C2C2',
               backgroundColor: '#FFFFFF',
               boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.03)',
-              padding: '24px 28px',
+              padding: '28px',
               gap: 28,
             }}
           >
@@ -118,30 +101,31 @@ export function CategoriesPage() {
                   stroke="#E5EEFF"
                   strokeWidth="16"
                 />
-                {/* Dynamic Segments matching real category percentages */}
-                {categories.map((cat, idx) => {
-                  const segLength = (CIRCUMFERENCE * (cat.pct || 0)) / 100;
-                  const offset = -(CIRCUMFERENCE * accumulatedPct) / 100;
-                  accumulatedPct += (cat.pct || 0);
-                  const color = cat.bar_color || cat.barColor || DEFAULT_COLORS[idx % DEFAULT_COLORS.length].bar;
-
-                  if (cat.pct <= 0) return null;
-                  return (
-                    <circle
-                      key={cat.name}
-                      cx="63"
-                      cy="62.5"
-                      r="52"
-                      fill="none"
-                      stroke={color}
-                      strokeWidth="16"
-                      strokeDasharray={`${segLength} ${CIRCUMFERENCE}`}
-                      strokeDashoffset={offset}
-                      transform="rotate(-90 63 62.5)"
-                    />
-                  );
-                })}
+                {/* Dynamically calculate segments */}
+                {(() => {
+                  let accumulatedPct = 0;
+                  return categoriesList.map((cat) => {
+                    const strokeDash = (CIRCUMFERENCE * cat.pct) / 100;
+                    const strokeOffset = -(CIRCUMFERENCE * accumulatedPct) / 100;
+                    accumulatedPct += cat.pct;
+                    return (
+                      <circle
+                        key={cat.name}
+                        cx="63"
+                        cy="62.5"
+                        r="52"
+                        fill="none"
+                        stroke={cat.barColor}
+                        strokeWidth="16"
+                        strokeDasharray={`${strokeDash} ${CIRCUMFERENCE}`}
+                        strokeDashoffset={`${strokeOffset}`}
+                        transform="rotate(-90 63 62.5)"
+                      />
+                    );
+                  });
+                })()}
               </svg>
+
               {/* Center Donut Label */}
               <div className="flex flex-col items-center justify-center text-center z-10">
                 <span
@@ -152,101 +136,104 @@ export function CategoriesPage() {
                     lineHeight: '38px',
                   }}
                 >
-                  {totalCategories}
+                  {metrics.totalCategories}
                 </span>
                 <span
-                  className="font-medium text-[#504444]"
+                  className="font-bold text-[#504444]"
                   style={{
-                    fontFamily: 'Loma, sans-serif',
-                    fontSize: 12,
-                    lineHeight: '12px',
+                    fontFamily: 'ChulaCharasNew, sans-serif',
+                    fontSize: 13,
+                    lineHeight: '14px',
                   }}
                 >
-                  หมวดหมู่
+                  หมวดหมู่หลัก
                 </span>
               </div>
             </div>
 
             {/* Category Breakdown Bars */}
-            <div className="flex flex-col flex-1 w-full" style={{ gap: 16 }}>
-              {isLoading ? (
-                <div className="text-center py-8 text-gray-400 font-serif">กำลังโหลดข้อมูล...</div>
-              ) : categories.length === 0 ? (
-                <div className="text-center py-8 text-gray-400 font-serif">ไม่พบหมวดหมู่ในฐานข้อมูล</div>
-              ) : (
-                categories.map((cat, idx) => {
-                  const barColor = cat.bar_color || cat.barColor || DEFAULT_COLORS[idx % DEFAULT_COLORS.length].bar;
-                  const dotColor = cat.dot_color || cat.dotColor || DEFAULT_COLORS[idx % DEFAULT_COLORS.length].dot;
-                  return (
-                    <div key={cat.name} className="flex flex-col" style={{ gap: 4 }}>
-                      <div className="flex items-center justify-between" style={{ height: 25 }}>
-                        <div className="flex items-center" style={{ gap: 8 }}>
-                          <div
-                            style={{
-                              width: 12,
-                              height: 12,
-                              borderRadius: 9999,
-                              backgroundColor: dotColor,
-                              flexShrink: 0,
-                            }}
-                          />
-                          <span
-                            className="font-bold text-[#121C28]"
-                            style={{
-                              fontFamily: 'ChulaCharasNew, sans-serif',
-                              fontSize: 18,
-                              lineHeight: '24px',
-                            }}
-                          >
-                            {cat.name}
-                          </span>
-                        </div>
-                        <span
-                          className="font-bold text-[#121C28]"
-                          style={{
-                            fontFamily: 'ChulaCharasNew, sans-serif',
-                            fontSize: 18,
-                            lineHeight: '24px',
-                          }}
-                        >
-                          {cat.pct}%
-                        </span>
-                      </div>
+            <div className="flex flex-col flex-1 w-full" style={{ gap: 14 }}>
+              {categoriesList.map((cat) => (
+                <div
+                  key={cat.name}
+                  onClick={() => navigate(`/aksornsara/published-articles`)}
+                  className="flex flex-col cursor-pointer group hover:opacity-90 transition-opacity"
+                  style={{ gap: 4 }}
+                >
+                  <div className="flex items-center justify-between" style={{ height: 25 }}>
+                    <div className="flex items-center" style={{ gap: 8 }}>
                       <div
                         style={{
-                          width: '100%',
-                          height: 8,
+                          width: 12,
+                          height: 12,
                           borderRadius: 9999,
-                          backgroundColor: '#E5EEFF',
-                          overflow: 'hidden',
+                          backgroundColor: cat.dotColor,
+                          flexShrink: 0,
+                        }}
+                      />
+                      <span
+                        className="font-bold text-[#121C28] group-hover:text-[#DE5D8F] transition-colors"
+                        style={{
+                          fontFamily: 'ChulaCharasNew, sans-serif',
+                          fontSize: 18,
+                          lineHeight: '24px',
                         }}
                       >
-                        <div
-                          style={{
-                            width: `${Math.min(100, Math.max(2, cat.pct))}%`,
-                            height: 8,
-                            borderRadius: 9999,
-                            backgroundColor: barColor,
-                          }}
-                        />
-                      </div>
+                        {cat.name}
+                      </span>
                     </div>
-                  );
-                })
-              )}
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="text-gray-500 font-serif"
+                        style={{ fontSize: 13 }}
+                      >
+                        {cat.count} บทความ
+                      </span>
+                      <span
+                        className="font-bold text-[#121C28] min-w-[36px] text-right"
+                        style={{
+                          fontFamily: 'ChulaCharasNew, sans-serif',
+                          fontSize: 16,
+                          lineHeight: '24px',
+                        }}
+                      >
+                        {cat.pct}%
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: '100%',
+                      height: 8,
+                      borderRadius: 9999,
+                      backgroundColor: '#E5EEFF',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: `${Math.max(5, cat.pct)}%`,
+                        height: 8,
+                        borderRadius: 9999,
+                        backgroundColor: cat.barColor,
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* ════ RIGHT CARD: Trending List Card ════ */}
+          {/* ════ RIGHT CARD: Trending Real Articles ════ */}
           <div
-            className="flex flex-col w-full lg:w-[435px]"
+            className="flex flex-col w-full lg:w-[460px]"
             style={{
               minHeight: 608,
               borderRadius: 24,
               border: '1px solid #D4C2C2',
               backgroundColor: '#FFFFFF',
               boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.03)',
-              padding: 24,
+              padding: 28,
             }}
           >
             {/* Card Header */}
@@ -266,55 +253,40 @@ export function CategoriesPage() {
 
             {/* Articles List Container */}
             <div className="flex flex-col">
-              {isLoading ? (
-                <div className="text-center py-8 text-gray-400 font-serif">กำลังโหลดข้อมูล...</div>
-              ) : trendingArticles.length === 0 ? (
-                <div className="text-center py-12 text-gray-400 font-serif">
-                  ยังไม่มีบทความยอดนิยม
-                </div>
-              ) : (
-                trendingArticles.map((article, idx) => (
-                  <div
-                    key={idx}
-                    className="flex flex-col cursor-pointer hover:opacity-80 transition-opacity"
+              {trendingArticles.map((article, idx) => (
+                <div
+                  key={article.id}
+                  onClick={() => navigate(`/aksornsara/create?id=${article.id}`)}
+                  className="flex flex-col cursor-pointer hover:bg-[#FFF9FB] p-3 rounded-[12px] transition-all group"
+                  style={{
+                    marginBottom: idx < trendingArticles.length - 1 ? 12 : 0,
+                  }}
+                >
+                  <p
+                    className="font-bold text-[#121C28] group-hover:text-[#DE5D8F] transition-colors"
                     style={{
-                      width: '100%',
-                      minHeight: 80,
-                      borderRadius: 12,
-                      border: 'none',
-                      padding: '8px 0',
-                      marginBottom: idx < trendingArticles.length - 1 ? 16 : 0,
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontSize: 17,
+                      lineHeight: '24px',
+                      margin: 0,
+                      minHeight: 48,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
                     }}
+                    title={article.title}
                   >
-                    <p
-                      className="font-bold text-[#121C28]"
-                      style={{
-                        fontFamily: 'ChulaCharasNew, sans-serif',
-                        fontSize: 18,
-                        lineHeight: '24px',
-                        margin: 0,
-                        minHeight: 48,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {article.title}
-                    </p>
-                    <div className="flex items-center justify-between" style={{ marginTop: 8 }}>
-                      <div className="flex items-center" style={{ gap: 6 }}>
-                        <span
-                          className="font-bold text-[#504444]"
-                          style={{
-                            fontFamily: 'ChulaCharasNew, sans-serif',
-                            fontSize: 14,
-                            lineHeight: '20px',
-                          }}
-                        >
-                          👁 {article.views}
-                        </span>
-                      </div>
+                    {article.title}
+                  </p>
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="px-2 py-0.5 rounded-[6px] font-sans font-normal text-[11px] text-[#DE5D8F] bg-[#FCEFF4]"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        {article.category}
+                      </span>
                       <span
                         className="font-bold text-[#504444]"
                         style={{
@@ -323,12 +295,18 @@ export function CategoriesPage() {
                           lineHeight: '20px',
                         }}
                       >
-                        {article.author}
+                        👁 {article.views?.toLocaleString()} ครั้ง
                       </span>
                     </div>
+                    <span
+                      className="text-[#6D6D6D] font-serif truncate max-w-[150px] text-[13px]"
+                      title={article.author}
+                    >
+                      โดย {article.author}
+                    </span>
                   </div>
-                ))
-              )}
+                </div>
+              ))}
             </div>
           </div>
 

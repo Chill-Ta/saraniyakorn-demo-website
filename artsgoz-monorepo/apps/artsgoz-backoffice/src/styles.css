@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
 @import 'tailwindcss';
 @import '../../../libs/design-system/src/lib/design-system.css';
@@ -10,5 +11,20 @@
 /* Font */
 @theme {
   --font-maintenance: 'Google Sans', sans-serif;
+  --font-inter: 'Inter', 'Noto Sans Thai', sans-serif;
+  --font-chula: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', sans-serif;
+  --font-serif: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', serif;
+  --font-sans: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', sans-serif;
 }
 
+body, button, input, select, textarea {
+  font-family: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', sans-serif;
+}
+
+.font-chula {
+  font-family: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+}

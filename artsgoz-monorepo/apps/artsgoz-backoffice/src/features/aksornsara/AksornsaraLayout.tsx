@@ -76,9 +76,9 @@ function SidebarContent({ onItemClick }: SidebarContentProps) {
   return (
     <div className="flex flex-col h-full justify-between" style={{ fontFamily: 'ChulaCharasNew, sans-serif' }}>
       <div className="flex flex-col" style={{ gap: 42 }}>
-        {/* Brand — full word บทความอักษรสาร all equal */}
+        {/* Brand — บทความสารา / ณียากร */}
         <div
-          className="flex items-center px-6 cursor-pointer select-none"
+          className="flex flex-col justify-center px-6 cursor-pointer select-none"
           style={{ height: 46 }}
           onClick={() => {
             navigate('/aksornsara');
@@ -86,16 +86,26 @@ function SidebarContent({ onItemClick }: SidebarContentProps) {
           }}
         >
           <span
-            className="font-bold text-black"
+            className="font-bold text-[#1A1C1C]"
             style={{
               fontFamily: 'ChulaCharasNew, sans-serif',
               fontSize: 22,
-              lineHeight: '30px',
-              color: '#1A1C1C',
+              lineHeight: '24px',
               whiteSpace: 'nowrap',
             }}
           >
-            บทความสาราณียากร
+            บทความสารา
+          </span>
+          <span
+            className="font-bold text-[#545455]"
+            style={{
+              fontFamily: 'ChulaCharasNew, sans-serif',
+              fontSize: 14,
+              lineHeight: '16px',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            ณียากร
           </span>
         </div>
 
@@ -310,36 +320,51 @@ export function AksornsaraLayout({
 
       {/* ── Main Content Area ── */}
       <div className="flex-1 overflow-y-auto min-w-0 bg-white">
-        {/* Topbar: Return Button + Search Bar */}
+        {/* Topbar: Return Button + Search Bar + Profile */}
         {(showBackButton || showTopSearchBar) && (
           <div
-            className="flex items-center gap-3 md:gap-4 px-4 md:px-10 pt-4 md:pt-6"
+            className="flex items-center justify-between gap-3 md:gap-4 px-4 md:px-10 pt-4 md:pt-6"
           >
-            {showBackButton && (
-              <button
-                type="button"
-                onClick={onBack || (() => navigate('/aksornsara'))}
-                className="hidden md:flex items-center justify-center cursor-pointer shrink-0 transition-colors hover:bg-[#FCEFF4]"
-                style={{
-                  width: 41,
-                  height: 41,
-                  borderRadius: 9999,
-                  border: '1px solid #D6C1C7',
-                  backgroundColor: '#FFFFFF',
-                }}
-                title="ย้อนกลับ"
-              >
-                <ChevronLeft size={20} color="#1A1C1C" strokeWidth={2} />
-              </button>
-            )}
+            <div className="flex items-center gap-3 md:gap-4 flex-1 max-w-[645px]">
+              {showBackButton && (
+                <button
+                  type="button"
+                  onClick={onBack || (() => navigate('/aksornsara'))}
+                  className="hidden md:flex items-center justify-center cursor-pointer shrink-0 transition-opacity hover:opacity-70 bg-transparent border-none p-0"
+                  style={{
+                    width: 24,
+                    height: 24,
+                  }}
+                  title="ย้อนกลับ"
+                >
+                  <ChevronLeft size={24} color="#1A1C1C" strokeWidth={2} />
+                </button>
+              )}
 
-            {showTopSearchBar && (
-              <TopSearchBar
-                value={searchValue}
-                onChange={onSearchChange}
-                placeholder={searchPlaceholder}
+              {showTopSearchBar && (
+                <TopSearchBar
+                  value={searchValue}
+                  onChange={onSearchChange}
+                  placeholder={searchPlaceholder}
+                />
+              )}
+            </div>
+
+            {/* Profile Avatar */}
+            <div
+              className="hidden md:flex items-center justify-center shrink-0 cursor-pointer overflow-hidden"
+              style={{
+                width: 32,
+                height: 32,
+                border: '1px solid rgba(214, 193, 199, 0.3)',
+                borderRadius: 12,
+                backgroundColor: '#FFFFFF',
+              }}
+            >
+              <div
+                className="w-[28px] h-[28px] rounded-[10px] bg-[#F5CDDC] flex items-center justify-center"
               />
-            )}
+            </div>
           </div>
         )}
 

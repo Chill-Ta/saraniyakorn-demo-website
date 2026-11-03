@@ -1,14 +1,12 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import {
   Search,
   Download,
   SlidersHorizontal,
-  PenSquare,
-  ExternalLink,
   ChevronLeft,
   ChevronRight,
-  Plus,
+  X,
 } from 'lucide-react';
 import { AksornsaraLayout } from './AksornsaraLayout';
 import { articlesService } from './services/articlesService';
@@ -24,27 +22,28 @@ function RadioOption({ label, checked, onChange }: RadioOptionProps) {
   return (
     <div
       onClick={onChange}
-      className="flex items-center gap-2 cursor-pointer transition-colors select-none group"
+      className="flex items-center gap-2.5 cursor-pointer select-none group py-1"
     >
       <div
-        className="w-3.5 h-3.5 rounded-full flex items-center justify-center transition-all shrink-0"
+        className="w-4 h-4 rounded-full flex items-center justify-center transition-all shrink-0"
         style={{
-          border: '1.5px solid #DE5D8F',
+          border: '1.5px solid #E992B4',
           backgroundColor: '#FFFFFF',
         }}
       >
         {checked && (
           <div
-            className="w-1.5 h-1.5 rounded-full"
-            style={{ backgroundColor: '#DE5D8F' }}
+            className="w-2 h-2 rounded-full"
+            style={{ backgroundColor: '#E992B4' }}
           />
         )}
       </div>
       <span
-        className="text-[#404041] group-hover:text-[#1A1C1C] transition-colors font-serif"
+        className="transition-colors text-[#404041] group-hover:text-[#1A1C1C]"
         style={{
-          fontSize: 14,
-          lineHeight: '18px',
+          fontFamily: 'ChulaCharasNew, sans-serif',
+          fontSize: 16,
+          lineHeight: '22px',
         }}
       >
         {label}
@@ -53,75 +52,127 @@ function RadioOption({ label, checked, onChange }: RadioOptionProps) {
   );
 }
 
+function formatThaiShortDate(dateStr?: string): string {
+  if (!dateStr) return '1 ม.ค. 69';
+  if (/ม\.ค\.|ก\.พ\.|มี\.ค\.|เม\.ย\.|พ\.ค\.|มิ\.ย\.|ก\.ค\.|ส\.ค\.|ก\.ย\.|ต\.ค\.|พ\.ย\.|ธ\.ค\./.test(dateStr)) {
+    return dateStr;
+  }
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) {
+    return dateStr;
+  }
+  const thaiMonths = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+  const day = d.getDate();
+  const month = thaiMonths[d.getMonth()];
+  const year = (d.getFullYear() + 543) % 100;
+  return `${day} ${month} ${year}`;
+}
+
+const CATEGORY_OPTIONS = [
+  'ทั้งหมด',
+  'ศิลปะ',
+  'วรรณกรรม',
+  'ภาษา',
+  'วัฒนธรรม',
+  'ปรัชญา',
+  'วิจารณ์',
+  'ทั่วไป',
+];
+
+const SORT_OPTIONS: { id: string; label: string }[] = [
+  { id: 'newest', label: 'ล่าสุดก่อน' },
+  { id: 'oldest', label: 'เก่าที่สุดก่อน' },
+  { id: 'views-most', label: 'ยอดเข้าชมมากสุด' },
+  { id: 'views-least', label: 'ยอดเข้าชมน้อยสุด' },
+  { id: 'title-asc', label: 'ชื่อ (ก-ฮ)' },
+];
+
 export function PublishedArticlesPage() {
-  const [search, setSearch] = useState('');
+  const [topSearch, setTopSearch] = useState('');
   const [localSearch, setLocalSearch] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
 
-  // Filter States
+  // Filter & Sort States
   const [selectedCategory, setSelectedCategory] = useState<string>('ทั้งหมด');
-  const [selectedStatus, setSelectedStatus] = useState<string | null>('เผยแพร่แล้ว');
-
-  // Sorting States
-  const [titleSort, setTitleSort] = useState<'asc' | 'desc' | null>(null);
-  const [authorSort, setAuthorSort] = useState<'asc' | 'desc' | null>(null);
-  const [dateSort, setDateSort] = useState<'newest' | 'oldest' | null>('newest');
-  const [viewsSort, setViewsSort] = useState<'most' | 'least' | null>(null);
+  const [selectedSort, setSelectedSort] = useState<string>('newest');
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 12;
+  const ITEMS_PER_PAGE = 8;
 
   const navigate = useNavigate();
+  const filterRef = useRef<HTMLDivElement>(null);
 
-  // Load from service & sync from backend
-  const [articlesList, setArticlesList] = useState(() => articlesService.getAll());
+  // Close filter popover on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setFilterOpen(false);
+      }
+    }
+    if (filterOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [filterOpen]);
+
+  const [version, setVersion] = useState(0);
 
   useEffect(() => {
-    articlesService.syncFromBackend().then((items) => {
-      setArticlesList(items);
-    });
+    articlesService.syncWithApi();
+    return articlesService.subscribe(() => setVersion((v) => v + 1));
   }, []);
 
-  const categories = useMemo(() => {
-    const set = new Set(articlesList.map((a) => a.category).filter(Boolean));
-    return ['ทั้งหมด', ...Array.from(set)];
-  }, [articlesList]);
+  // Load articles
+  const articlesList = useMemo(() => articlesService.getAll(), [version]);
 
   // Combined search term
-  const effectiveSearch = (localSearch || search).trim().toLowerCase();
+  const effectiveSearch = (localSearch || topSearch).trim().toLowerCase();
+
+  const displayCategory = (cat?: string) => {
+    if (!cat) return 'ทั่วไป';
+    return cat.replace(/^ปี\s*/, '');
+  };
 
   // Filter & Sort
   const filtered = useMemo(() => {
     return articlesList
       .filter((article) => {
+        // Category check
+        const cleanCat = displayCategory(article.category);
         const matchesCategory =
           selectedCategory === 'ทั้งหมด' ||
+          cleanCat === selectedCategory ||
           article.category === selectedCategory;
 
-        const matchesStatus =
-          !selectedStatus || article.status === selectedStatus;
-
+        // Search check
         const matchesSearch =
           !effectiveSearch ||
           article.title.toLowerCase().includes(effectiveSearch) ||
           article.author.toLowerCase().includes(effectiveSearch) ||
-          article.category.toLowerCase().includes(effectiveSearch);
+          cleanCat.toLowerCase().includes(effectiveSearch);
 
-        return matchesCategory && matchesStatus && matchesSearch;
+        return matchesCategory && matchesSearch;
       })
       .sort((a, b) => {
-        if (titleSort === 'asc') return a.title.localeCompare(b.title, 'th');
-        if (titleSort === 'desc') return b.title.localeCompare(a.title, 'th');
-        if (authorSort === 'asc') return a.author.localeCompare(b.author, 'th');
-        if (authorSort === 'desc') return b.author.localeCompare(a.author, 'th');
-        if (viewsSort === 'most') return (b.views || 0) - (a.views || 0);
-        if (viewsSort === 'least') return (a.views || 0) - (b.views || 0);
-        if (dateSort === 'newest') return b.id.localeCompare(a.id);
-        if (dateSort === 'oldest') return a.id.localeCompare(b.id);
-        return 0;
+        if (selectedSort === 'title-asc') {
+          return a.title.localeCompare(b.title, 'th');
+        }
+        if (selectedSort === 'views-most') {
+          return (b.views || 0) - (a.views || 0);
+        }
+        if (selectedSort === 'views-least') {
+          return (a.views || 0) - (b.views || 0);
+        }
+        if (selectedSort === 'oldest') {
+          return a.id.localeCompare(b.id);
+        }
+        // Default newest
+        return b.id.localeCompare(a.id);
       });
-  }, [articlesList, selectedCategory, selectedStatus, effectiveSearch, titleSort, authorSort, viewsSort, dateSort]);
+  }, [articlesList, selectedCategory, effectiveSearch, selectedSort]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginatedArticles = useMemo(() => {
@@ -131,13 +182,9 @@ export function PublishedArticlesPage() {
 
   const handleClearFilters = () => {
     setSelectedCategory('ทั้งหมด');
-    setSelectedStatus('เผยแพร่แล้ว');
-    setTitleSort(null);
-    setAuthorSort(null);
-    setDateSort('newest');
-    setViewsSort(null);
+    setSelectedSort('newest');
     setLocalSearch('');
-    setSearch('');
+    setTopSearch('');
     setCurrentPage(1);
   };
 
@@ -152,70 +199,83 @@ export function PublishedArticlesPage() {
 
   return (
     <AksornsaraLayout
-      showBackButton={false}
-      searchValue={search}
+      showBackButton={true}
+      searchValue={topSearch}
       onSearchChange={(val) => {
-        setSearch(val);
+        setTopSearch(val);
         setCurrentPage(1);
       }}
-      searchPlaceholder="ค้นหาบทความ..."
+      searchPlaceholder="ค้นหา..."
     >
-      <div className="w-full flex flex-col gap-6" style={{ maxWidth: 1040 }}>
-        {/* ── Page Title & Action Bar ── */}
+      <div className="w-full flex flex-col gap-6" style={{ maxWidth: 980 }}>
+        {/* ── Page Header: Title + Export Button ── */}
         <div className="flex items-center justify-between flex-wrap gap-4">
-          <div>
-            <h1
-              className="font-bold text-[#1A1C1C] text-[32px] md:text-[44px] leading-tight m-0 font-serif"
-            >
-              Published Articles
-            </h1>
-            <p className="text-gray-500 font-serif text-[15px] m-0 mt-1">
-              บทความที่เผยแพร่แล้วทั้งหมด ({filtered.length} รายการ)
-            </p>
-          </div>
+          <h1
+            style={{
+              fontFamily: 'ChulaCharasNew, sans-serif',
+              fontWeight: 700,
+              fontSize: 48,
+              lineHeight: '64px',
+              color: '#1A1C1C',
+              margin: 0,
+            }}
+          >
+            บทความที่เผยแพร่แล้ว
+          </h1>
 
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => navigate('/aksornsara/create')}
-              className="flex items-center gap-2 text-white font-bold cursor-pointer border-none shadow-sm hover:opacity-90 active:scale-95 transition-all font-serif"
+          <button
+            type="button"
+            onClick={handleExportData}
+            className="flex items-center justify-center cursor-pointer transition-transform hover:opacity-90 active:scale-95 border-none"
+            style={{
+              width: 129,
+              height: 40,
+              backgroundColor: '#E992B4',
+              borderRadius: 9999,
+              boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.05)',
+              padding: '8px 24px',
+              gap: 6,
+            }}
+          >
+            <Download size={14} color="#FFFFFF" strokeWidth={2.5} />
+            <span
               style={{
+                fontFamily: 'ChulaCharasNew, sans-serif',
+                fontWeight: 700,
                 fontSize: 14,
-                backgroundColor: '#DE5D8F',
-                borderRadius: 9999,
-                height: 42,
-                padding: '0 24px',
+                lineHeight: '20px',
+                color: '#FFFFFF',
               }}
             >
-              <Plus size={18} />
-              <span>สร้างบทความใหม่</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleExportData}
-              className="flex items-center gap-1.5 text-[#404041] font-bold cursor-pointer border border-[#DFDFE0] bg-white hover:bg-gray-50 active:scale-95 transition-all font-serif"
-              style={{
-                fontSize: 13,
-                borderRadius: 9999,
-                height: 42,
-                padding: '0 20px',
-              }}
-            >
-              <Download size={14} />
-              <span>ส่งออกข้อมูล</span>
-            </button>
-          </div>
+              ส่งออกข้อมูล
+            </span>
+          </button>
         </div>
 
-        {/* ── Toolbar: Search & Filter ── */}
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          {/* Local Search Input */}
+        {/* ── Controls (Search & Filter) ── */}
+        <div
+          className="w-full flex items-center justify-between gap-4"
+          style={{
+            height: 81,
+            backgroundColor: '#FFFFFF',
+            border: '1px solid #D9E3F4',
+            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.03)',
+            borderRadius: 8,
+            padding: '16px 20px',
+          }}
+        >
+          {/* Search Input Pill */}
           <div
-            className="flex items-center gap-2.5 bg-white rounded-[9999px] border border-[#DFDFE0] px-4 py-2.5 shadow-xs"
-            style={{ width: 280 }}
+            className="flex-1 flex items-center justify-between"
+            style={{
+              height: 41,
+              backgroundColor: '#FFFFFF',
+              border: '2px solid #8B8B8C',
+              borderRadius: 9999,
+              padding: '0 24px',
+              gap: 16,
+            }}
           >
-            <Search size={16} color="#8B8B8C" />
             <input
               type="text"
               value={localSearch}
@@ -223,49 +283,79 @@ export function PublishedArticlesPage() {
                 setLocalSearch(e.target.value);
                 setCurrentPage(1);
               }}
-              placeholder="ค้นหาชื่อ, ผู้แต่ง, หมวดหมู่"
-              className="border-none outline-none bg-transparent w-full text-[14px] text-[#1A1C1C] font-serif"
+              placeholder="ค้นหาบทความ..."
+              className="w-full bg-transparent border-none outline-none"
+              style={{
+                fontFamily: 'ChulaCharasNew, sans-serif',
+                fontWeight: 400,
+                fontSize: 20,
+                lineHeight: '28px',
+                color: '#1A1C1C',
+              }}
             />
+            <Search size={20} color="#33363F" strokeWidth={2} style={{ flexShrink: 0 }} />
           </div>
 
-          {/* Filter Button & Popup */}
-          <div className="relative">
+          {/* Filter Button & Popover */}
+          <div className="relative" ref={filterRef}>
             <button
               type="button"
               onClick={() => setFilterOpen((prev) => !prev)}
-              className="flex items-center gap-2 bg-white rounded-[9999px] border border-[#DFDFE0] px-4 py-2.5 text-[#404041] font-bold text-[14px] cursor-pointer hover:bg-gray-50 transition-colors shadow-xs font-serif"
+              className="flex items-center justify-center cursor-pointer transition-transform hover:opacity-90 active:scale-95"
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: '#E992B4',
+                borderRadius: 8,
+                border: 'none',
+              }}
+              title="ตัวกรองและเรียงลำดับ"
             >
-              <SlidersHorizontal size={16} />
-              <span>ตัวกรองและเรียงลำดับ</span>
+              <SlidersHorizontal size={20} color="#FFFFFF" strokeWidth={2} />
             </button>
 
-            {/* Filter Dropdown Popup */}
+            {/* Filter Popover (Figma node 8070-48917) */}
             {filterOpen && (
               <div
-                className="absolute right-0 top-full mt-2 bg-white rounded-[16px] border border-[#DFDFE0] shadow-xl p-6 z-40 flex flex-col gap-5"
-                style={{ width: 440 }}
+                className="absolute right-0 top-[calc(100%+10px)] bg-white rounded-[16px] border border-[#DFDFE0] shadow-2xl p-6 z-50 flex flex-col gap-5"
+                style={{ width: 420 }}
               >
+                {/* Popover Header */}
                 <div className="flex items-center justify-between border-b border-[#DFDFE0] pb-3">
-                  <span className="font-bold text-[#1A1C1C] text-[16px] font-serif">
-                    ตัวกรองบทความ
+                  <span
+                    className="font-bold text-[#1A1C1C]"
+                    style={{
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontSize: 18,
+                      lineHeight: '24px',
+                    }}
+                  >
+                    ตัวเลือกการกรองและจัดเรียง
                   </span>
                   <button
                     type="button"
                     onClick={() => setFilterOpen(false)}
-                    className="text-gray-400 hover:text-black border-none bg-transparent cursor-pointer font-bold"
+                    className="text-gray-400 hover:text-black border-none bg-transparent cursor-pointer p-1"
                   >
-                    ✕
+                    <X size={18} />
                   </button>
                 </div>
 
+                {/* Popover Content (2 Columns) */}
                 <div className="grid grid-cols-2 gap-6">
                   {/* Category Filter */}
-                  <div className="flex flex-col gap-2">
-                    <span className="font-bold text-[#1A1C1C] text-[15px] font-serif">
+                  <div className="flex flex-col gap-1.5">
+                    <span
+                      className="font-bold text-[#1A1C1C] mb-1"
+                      style={{
+                        fontFamily: 'ChulaCharasNew, sans-serif',
+                        fontSize: 16,
+                      }}
+                    >
                       หมวดหมู่
                     </span>
-                    <div className="flex flex-col gap-2 max-h-[160px] overflow-y-auto pr-1">
-                      {categories.map((cat) => (
+                    <div className="flex flex-col gap-1">
+                      {CATEGORY_OPTIONS.map((cat) => (
                         <RadioOption
                           key={cat}
                           label={cat}
@@ -280,58 +370,56 @@ export function PublishedArticlesPage() {
                   </div>
 
                   {/* Sort Options */}
-                  <div className="flex flex-col gap-2">
-                    <span className="font-bold text-[#1A1C1C] text-[15px] font-serif">
+                  <div className="flex flex-col gap-1.5">
+                    <span
+                      className="font-bold text-[#1A1C1C] mb-1"
+                      style={{
+                        fontFamily: 'ChulaCharasNew, sans-serif',
+                        fontSize: 16,
+                      }}
+                    >
                       เรียงตาม
                     </span>
-                    <div className="flex flex-col gap-2">
-                      <RadioOption
-                        label="ล่าสุดก่อน"
-                        checked={dateSort === 'newest'}
-                        onChange={() => {
-                          setDateSort('newest');
-                          setViewsSort(null);
-                        }}
-                      />
-                      <RadioOption
-                        label="เก่าที่สุดก่อน"
-                        checked={dateSort === 'oldest'}
-                        onChange={() => {
-                          setDateSort('oldest');
-                          setViewsSort(null);
-                        }}
-                      />
-                      <RadioOption
-                        label="ยอดเข้าชมมากสุด"
-                        checked={viewsSort === 'most'}
-                        onChange={() => {
-                          setViewsSort('most');
-                          setDateSort(null);
-                        }}
-                      />
-                      <RadioOption
-                        label="ชื่อ (A-Z)"
-                        checked={titleSort === 'asc'}
-                        onChange={() => {
-                          setTitleSort(titleSort === 'asc' ? null : 'asc');
-                        }}
-                      />
+                    <div className="flex flex-col gap-1">
+                      {SORT_OPTIONS.map((opt) => (
+                        <RadioOption
+                          key={opt.id}
+                          label={opt.label}
+                          checked={selectedSort === opt.id}
+                          onChange={() => {
+                            setSelectedSort(opt.id);
+                            setCurrentPage(1);
+                          }}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center border-t border-[#DFDFE0] pt-3">
+                {/* Popover Footer */}
+                <div className="flex justify-between items-center border-t border-[#DFDFE0] pt-4 mt-1">
                   <button
                     type="button"
                     onClick={handleClearFilters}
-                    className="text-gray-500 hover:text-[#DE5D8F] text-[13px] font-bold font-serif underline border-none bg-transparent cursor-pointer"
+                    className="text-[#545455] hover:text-[#E992B4] underline border-none bg-transparent cursor-pointer transition-colors"
+                    style={{
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 15,
+                    }}
                   >
                     ล้างค่าทั้งหมด
                   </button>
                   <button
                     type="button"
                     onClick={() => setFilterOpen(false)}
-                    className="px-4 py-1.5 rounded-[8px] bg-[#DE5D8F] text-white font-serif font-bold text-[13px] border-none cursor-pointer"
+                    className="px-5 py-1.5 rounded-[8px] text-white border-none cursor-pointer transition-opacity hover:opacity-90 active:scale-95"
+                    style={{
+                      backgroundColor: '#E992B4',
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 15,
+                    }}
                   >
                     นำไปใช้
                   </button>
@@ -341,37 +429,102 @@ export function PublishedArticlesPage() {
           </div>
         </div>
 
-        {/* ── Table Card ── */}
-        <div className="bg-white rounded-[16px] border border-[#DFDFE0] overflow-hidden shadow-xs">
+        {/* ── Data Table Card ── */}
+        <div
+          className="w-full bg-white overflow-hidden"
+          style={{
+            borderRadius: 8,
+            border: '1px solid #ECECEC',
+            boxShadow: '0px 2px 4px -2px rgba(0, 0, 0, 0.05), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          }}
+        >
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse" style={{ minWidth: 880 }}>
               <thead>
                 <tr
                   style={{
-                    borderBottom: '1px solid #DFDFE0',
+                    height: 50,
                     backgroundColor: '#F7F8F9',
+                    borderBottom: '1px solid #ECECEC',
                   }}
                 >
-                  <th className="py-4 px-6 font-bold text-[#1A1C1C] font-serif text-[15px] w-[36%]">
+                  <th
+                    className="px-6"
+                    style={{
+                      width: '36%',
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 20,
+                      lineHeight: '28px',
+                      color: '#1A1C1C',
+                    }}
+                  >
                     ชื่อบทความ
                   </th>
-                  <th className="py-4 px-4 font-bold text-[#1A1C1C] font-serif text-[15px]">
+                  <th
+                    className="px-4 text-center"
+                    style={{
+                      width: '14%',
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 20,
+                      lineHeight: '28px',
+                      color: '#1A1C1C',
+                    }}
+                  >
                     ผู้แต่ง
                   </th>
-                  <th className="py-4 px-4 font-bold text-[#1A1C1C] font-serif text-[15px]">
+                  <th
+                    className="px-4 text-center"
+                    style={{
+                      width: '13%',
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 20,
+                      lineHeight: '28px',
+                      color: '#1A1C1C',
+                    }}
+                  >
                     หมวดหมู่
                   </th>
-                  <th className="py-4 px-4 font-bold text-[#1A1C1C] font-serif text-[15px]">
+                  <th
+                    className="px-4 text-center"
+                    style={{
+                      width: '13%',
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 20,
+                      lineHeight: '28px',
+                      color: '#1A1C1C',
+                    }}
+                  >
                     สถานะ
                   </th>
-                  <th className="py-4 px-4 font-bold text-[#1A1C1C] font-serif text-[15px]">
+                  <th
+                    className="px-4 text-center"
+                    style={{
+                      width: '14%',
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 20,
+                      lineHeight: '28px',
+                      color: '#1A1C1C',
+                    }}
+                  >
                     วันที่เผยแพร่
                   </th>
-                  <th className="py-4 px-4 font-bold text-[#1A1C1C] font-serif text-[15px] text-center">
+                  <th
+                    className="px-6 text-center"
+                    style={{
+                      width: '10%',
+                      fontFamily: 'ChulaCharasNew, sans-serif',
+                      fontWeight: 700,
+                      fontSize: 20,
+                      lineHeight: '28px',
+                      color: '#1A1C1C',
+                    }}
+                  >
                     ยอดเข้าชม
-                  </th>
-                  <th className="py-4 px-6 font-bold text-[#1A1C1C] font-serif text-[15px] text-center">
-                    จัดการ
                   </th>
                 </tr>
               </thead>
@@ -380,22 +533,35 @@ export function PublishedArticlesPage() {
                   paginatedArticles.map((article) => (
                     <tr
                       key={article.id}
-                      className="hover:bg-[#FFF9FB] transition-colors border-b border-[#F0F0F0] last:border-none"
+                      onClick={() => navigate(`/aksornsara/create?id=${article.id}`)}
+                      className="hover:bg-[#FFF9FB] transition-colors border-b border-[#F0F0F0] last:border-none cursor-pointer"
+                      style={{ height: 60 }}
                     >
                       {/* Thumbnail + Title */}
-                      <td className="py-3.5 px-6">
-                        <div className="flex items-center gap-3">
+                      <td className="px-6 py-2">
+                        <div className="flex items-center gap-4">
                           <img
                             src={article.coverImage || article.imageUrl || articleThumbFallback}
                             alt={article.title}
-                            className="w-10 h-10 rounded-[6px] object-cover shrink-0 shadow-xs bg-gray-100 border border-gray-100"
+                            className="rounded-[4px] object-cover shrink-0"
+                            style={{
+                              width: 48,
+                              height: 48,
+                              backgroundColor: '#E2E2E2',
+                            }}
                             onError={(e) => {
                               e.currentTarget.src = articleThumbFallback;
                             }}
                           />
                           <span
-                            onClick={() => navigate(`/aksornsara/create?id=${article.id}`)}
-                            className="font-bold text-[#1A1C1C] hover:text-[#DE5D8F] cursor-pointer transition-colors font-serif text-[15px] leading-[20px] line-clamp-2"
+                            className="line-clamp-1"
+                            style={{
+                              fontFamily: 'ChulaCharasNew, sans-serif',
+                              fontWeight: 400,
+                              fontSize: 18,
+                              lineHeight: '24px',
+                              color: '#1A1C1C',
+                            }}
                             title={article.title}
                           >
                             {article.title}
@@ -404,67 +570,87 @@ export function PublishedArticlesPage() {
                       </td>
 
                       {/* Author */}
-                      <td className="py-3.5 px-4 font-serif text-[14px] text-[#1A1C1C]">
+                      <td
+                        className="px-4 py-2 text-center"
+                        style={{
+                          fontFamily: 'ChulaCharasNew, sans-serif',
+                          fontWeight: 400,
+                          fontSize: 18,
+                          lineHeight: '24px',
+                          color: '#1A1C1C',
+                        }}
+                      >
                         {article.author}
                       </td>
 
                       {/* Category */}
-                      <td className="py-3.5 px-4">
-                        <span className="inline-block px-2.5 py-1 rounded-[6px] font-serif font-bold text-[12px] text-[#DE5D8F] bg-[#FCEFF4] whitespace-nowrap">
-                          {article.category}
-                        </span>
+                      <td
+                        className="px-4 py-2 text-center"
+                        style={{
+                          fontFamily: 'ChulaCharasNew, sans-serif',
+                          fontWeight: 400,
+                          fontSize: 18,
+                          lineHeight: '24px',
+                          color: '#1A1C1C',
+                        }}
+                      >
+                        {displayCategory(article.category)}
                       </td>
 
                       {/* Status */}
-                      <td className="py-3.5 px-4">
-                        <span className="text-[13px] font-bold font-serif text-[#3D940B]">
-                          {article.status}
-                        </span>
+                      <td
+                        className="px-4 py-2 text-center"
+                        style={{
+                          fontFamily: 'ChulaCharasNew, sans-serif',
+                          fontWeight: 400,
+                          fontSize: 18,
+                          lineHeight: '24px',
+                          color: '#64A93C',
+                        }}
+                      >
+                        {article.status || 'เผยแพร่แล้ว'}
                       </td>
 
                       {/* Date */}
-                      <td className="py-3.5 px-4 font-serif text-[13px] text-gray-500 whitespace-nowrap">
-                        {article.publishedAt || article.date}
+                      <td
+                        className="px-4 py-2 text-center"
+                        style={{
+                          fontFamily: 'ChulaCharasNew, sans-serif',
+                          fontWeight: 400,
+                          fontSize: 18,
+                          lineHeight: '24px',
+                          color: '#1A1C1C',
+                        }}
+                      >
+                        {formatThaiShortDate(article.publishedAt || article.date)}
                       </td>
 
                       {/* Views */}
-                      <td className="py-3.5 px-4 text-center font-bold font-serif text-[14px] text-gray-800">
-                        {(article.views || 0).toLocaleString()}
-                      </td>
-
-                      {/* Actions */}
-                      <td className="py-3.5 px-6">
-                        <div className="flex items-center justify-center gap-2">
-                          <button
-                            type="button"
-                            onClick={() => navigate(`/aksornsara/create?id=${article.id}`)}
-                            className="p-1.5 rounded-[6px] hover:bg-[#FCEFF4] text-gray-500 hover:text-[#DE5D8F] transition-colors border-none bg-transparent cursor-pointer"
-                            title="แก้ไขบทความ"
-                          >
-                            <PenSquare size={16} />
-                          </button>
-
-                          <a
-                            href={
-                              article.url ||
-                              `${import.meta.env.VITE_AKSORNSARA_FRONTEND_URL || 'http://localhost:4201'}/articles/${article.id}?mock=${encodeURIComponent(
-                                JSON.stringify(article)
-                              )}`
-                            }
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-1.5 rounded-[6px] hover:bg-gray-100 text-gray-500 hover:text-black transition-colors"
-                            title="เปิดดูบทความ"
-                          >
-                            <ExternalLink size={16} />
-                          </a>
-                        </div>
+                      <td
+                        className="px-6 py-2 text-center"
+                        style={{
+                          fontFamily: 'ChulaCharasNew, sans-serif',
+                          fontWeight: 400,
+                          fontSize: 18,
+                          lineHeight: '24px',
+                          color: '#1A1C1C',
+                        }}
+                      >
+                        {(article.views ?? 0).toLocaleString()}
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={7} className="py-12 text-center text-gray-400 font-serif text-[16px]">
+                    <td
+                      colSpan={6}
+                      className="py-12 text-center"
+                      style={{
+                        fontFamily: 'ChulaCharasNew, sans-serif',
+                        fontSize: 18,
+                        color: '#99999A',
+                      }}
+                    >
                       ไม่พบบทความที่เผยแพร่แล้ว
                     </td>
                   </tr>
@@ -476,54 +662,75 @@ export function PublishedArticlesPage() {
 
         {/* ── Table Footer & Pagination ── */}
         <div
-          className="bg-white rounded-[16px] border border-[#DFDFE0] py-3.5 px-6 flex flex-wrap justify-between items-center shadow-xs gap-4"
+          className="w-full bg-white flex items-center justify-between gap-4 flex-wrap"
+          style={{
+            height: 57,
+            borderRadius: 8,
+            border: '1px solid #D9E3F4',
+            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+            padding: '16px 24px',
+          }}
         >
-          <span className="text-[#6D6D6D] text-[14px] font-bold font-serif">
-            แสดงทั้งหมด {filtered.length} บทความ (หน้า {currentPage} จาก {Math.max(1, totalPages)})
-          </span>
+          {/* Pagination buttons */}
+          <div className="flex items-center gap-1.5">
+            {totalPages > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="w-8 h-8 rounded-[6px] border border-[#DFDFE0] flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer bg-white"
+                >
+                  <ChevronLeft size={16} />
+                </button>
 
-          {totalPages > 1 && (
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="w-8 h-8 rounded-[6px] border border-[#DFDFE0] flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer bg-white"
-              >
-                <ChevronLeft size={16} />
-              </button>
-
-              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                let p = i + 1;
-                if (totalPages > 5 && currentPage > 3) {
-                  p = currentPage - 2 + i;
-                  if (p > totalPages) p = totalPages - 4 + i;
-                }
-                return (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => setCurrentPage(p)}
-                    className={`w-8 h-8 rounded-[6px] font-serif font-bold text-[13px] border cursor-pointer transition-colors ${currentPage === p
-                        ? 'bg-[#DE5D8F] text-white border-[#DE5D8F]'
-                        : 'bg-white text-gray-700 border-[#DFDFE0] hover:bg-gray-50'
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                  let p = i + 1;
+                  if (totalPages > 5 && currentPage > 3) {
+                    p = currentPage - 2 + i;
+                    if (p > totalPages) p = totalPages - 4 + i;
+                  }
+                  return (
+                    <button
+                      key={p}
+                      type="button"
+                      onClick={() => setCurrentPage(p)}
+                      className={`w-8 h-8 rounded-[6px] font-bold text-[14px] border cursor-pointer transition-colors ${
+                        currentPage === p
+                          ? 'bg-[#E992B4] text-white border-[#E992B4]'
+                          : 'bg-white text-gray-700 border-[#DFDFE0] hover:bg-gray-50'
                       }`}
-                  >
-                    {p}
-                  </button>
-                );
-              })}
+                      style={{ fontFamily: 'ChulaCharasNew, sans-serif' }}
+                    >
+                      {p}
+                    </button>
+                  );
+                })}
 
-              <button
-                type="button"
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                className="w-8 h-8 rounded-[6px] border border-[#DFDFE0] flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer bg-white"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          )}
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="w-8 h-8 rounded-[6px] border border-[#DFDFE0] flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer bg-white"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Total Count (Figma: ทั้งหมด 100 รายการ) */}
+          <span
+            style={{
+              fontFamily: 'ChulaCharasNew, sans-serif',
+              fontWeight: 700,
+              fontSize: 18,
+              lineHeight: '24px',
+              color: '#504444',
+            }}
+          >
+            ทั้งหมด {filtered.length} รายการ
+          </span>
         </div>
       </div>
     </AksornsaraLayout>

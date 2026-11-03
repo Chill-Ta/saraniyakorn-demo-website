@@ -5,6 +5,35 @@ import articlesDetailData from './data/articles-detail.json';
 
 export const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api').replace(/\/$/, '');
 
+export const AKSORNSARA_CATEGORIES = [
+  'all',
+  'ศิลปะ',
+  'วรรณกรรม',
+  'ภาษา',
+  'วัฒนธรรม',
+  'ปรัชญา',
+  'วิจารณ์',
+  'ทั่วไป',
+] as const;
+
+export const SARANIYAKORN_CATEGORIES = AKSORNSARA_CATEGORIES;
+
+export const AKSORNSARA_TAGS = [
+  'วรรณกรรม',
+  'ศิลปะ',
+  'ภาษา',
+  'วัฒนธรรม',
+  'ปรัชญา',
+  'วิจารณ์',
+  'ทั่วไป',
+  'การอ่าน',
+  'ดนตรี',
+  'จิตวิทยา',
+  'ภาพยนตร์',
+  'ประวัติศาสตร์',
+  'สาราณียกร',
+] as const;
+
 export const AKSORNSARA_YEARS = [
   'all',
   '2026',
@@ -14,9 +43,6 @@ export const AKSORNSARA_YEARS = [
   '2022',
   '2021',
 ] as const;
-
-export const AKSORNSARA_CATEGORIES = [...AKSORNSARA_YEARS];
-export const SARANIYAKORN_CATEGORIES = AKSORNSARA_CATEGORIES;
 
 export const getMockArticlesFromSession = (): ArticleDetail[] => {
   if (typeof window === 'undefined' || !window.sessionStorage) return [];
@@ -129,7 +155,8 @@ export const getArticlesSummaryList = (): ArticleSummary[] => {
     date: m.date || 'ปี 2026',
     author: m.author || 'ชมรมสาราณียกร',
     excerpt: m.excerpt,
-    category: m.category || '2026',
+    category: m.category || 'ทั่วไป',
+    tags: m.tags || ['ทั่วไป', 'สาราณียกร'],
     url: m.url || '',
     readTime: m.readTime || '5 นาที',
     imageUrl: m.imageUrl || m.coverImage || ArticleBannerMock,

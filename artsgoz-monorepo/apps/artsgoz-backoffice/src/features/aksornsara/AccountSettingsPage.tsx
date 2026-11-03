@@ -1,42 +1,20 @@
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, useRef, useMemo, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router';
 import {
   ChevronLeft,
   User,
   Shield,
   Pencil,
-  Settings as GearIcon,
   Check,
   Eye,
   EyeOff,
+  ChevronRight,
+  Plus,
 } from 'lucide-react';
 import { AksornsaraLayout } from './AksornsaraLayout';
+import { articlesService } from './services/articlesService';
 import catAvatar from '../../assets/cat_avatar.png';
 import articleThumb from '../../assets/article_thumb.png';
-
-interface PublishedArticle {
-  id: number;
-  title: string;
-  author: string;
-  category: string;
-  date: string;
-  views: number;
-}
-
-const PUBLISHED_ARTICLES: PublishedArticle[] = [
-  { id: 1, title: 'บทความ...', author: 'วู กานดา', category: 'ศิลปะ', date: '1 ม.ค. 69', views: 67 },
-  { id: 2, title: 'บทความ...', author: 'วู กานดา', category: 'ศิลปะ', date: '1 ม.ค. 69', views: 67 },
-  { id: 3, title: 'บทความ...', author: 'วู กานดา', category: 'ศิลปะ', date: '1 ม.ค. 69', views: 67 },
-  { id: 4, title: 'บทความ...', author: 'วู กานดา', category: 'ศิลปะ', date: '1 ม.ค. 69', views: 67 },
-  { id: 5, title: 'บทความ...', author: 'วู กานดา', category: 'ศิลปะ', date: '1 ม.ค. 69', views: 67 },
-  { id: 6, title: 'บทความ...', author: 'วู กานดา', category: 'ศิลปะ', date: '1 ม.ค. 69', views: 67 },
-  { id: 7, title: 'บทความ...', author: 'วู กานดา', category: 'ศิลปะ', date: '1 ม.ค. 69', views: 67 },
-];
-
-const DRAFT_ARTICLES: PublishedArticle[] = [
-  { id: 101, title: 'บทความ...', author: 'วู กานดา', category: 'ศิลปะ', date: '1 ม.ค. 69', views: 67 },
-  { id: 102, title: 'บทความ...', author: 'วู กานดา', category: 'ศิลปะ', date: '1 ม.ค. 69', views: 67 },
-];
 
 export function AccountSettingsPage() {
   const navigate = useNavigate();
@@ -46,6 +24,33 @@ export function AccountSettingsPage() {
 
   // Sub-filter inside My Articles: 'published' or 'draft' (Figma Nodes 6602:23431 vs 6602:23831)
   const [articleSubTab, setArticleSubTab] = useState<'published' | 'draft'>('published');
+  const [articlesPage, setArticlesPage] = useState(1);
+  const ITEMS_PER_PAGE = 8;
+
+  const [version, setVersion] = useState(0);
+
+  useEffect(() => {
+    articlesService.syncWithApi();
+    return articlesService.subscribe(() => setVersion((v) => v + 1));
+  }, []);
+
+  // Load real articles from articlesService
+  const allArticles = useMemo(() => articlesService.getAll(), [version]);
+  const publishedArticles = useMemo(
+    () => allArticles.filter((a) => a.status === 'เผยแพร่แล้ว'),
+    [allArticles]
+  );
+  const draftArticles = useMemo(
+    () => allArticles.filter((a) => a.status === 'ร่างบทความ'),
+    [allArticles]
+  );
+
+  const currentList = articleSubTab === 'published' ? publishedArticles : draftArticles;
+  const totalPages = Math.ceil(currentList.length / ITEMS_PER_PAGE) || 1;
+  const paginatedList = useMemo(() => {
+    const start = (articlesPage - 1) * ITEMS_PER_PAGE;
+    return currentList.slice(start, start + ITEMS_PER_PAGE);
+  }, [currentList, articlesPage]);
 
   // Profile states
   const [avatar, setAvatar] = useState<string>(catAvatar);
@@ -148,9 +153,9 @@ export function AccountSettingsPage() {
               style={{
                 fontFamily: 'ChulaCharasNew, sans-serif',
                 padding: '8px 16px',
-                backgroundColor: activeTab === 'profile' ? '#DE5D8F' : 'transparent',
-                color: activeTab === 'profile' ? '#FFFFFF' : '#DE5D8F',
-                boxShadow: activeTab === 'profile' ? '0 2px 4px rgba(222,93,143,0.2)' : 'none',
+                backgroundColor: activeTab === 'profile' ? '#E992B4' : 'transparent',
+                color: activeTab === 'profile' ? '#FFFFFF' : '#E992B4',
+                boxShadow: activeTab === 'profile' ? '0 2px 4px rgba(233,146,180,0.2)' : 'none',
               }}
             >
               Profile & Privacy
@@ -165,9 +170,9 @@ export function AccountSettingsPage() {
               style={{
                 fontFamily: 'ChulaCharasNew, sans-serif',
                 padding: '8px 16px',
-                backgroundColor: activeTab === 'articles' ? '#DE5D8F' : 'transparent',
-                color: activeTab === 'articles' ? '#FFFFFF' : '#DE5D8F',
-                boxShadow: activeTab === 'articles' ? '0 2px 4px rgba(222,93,143,0.2)' : 'none',
+                backgroundColor: activeTab === 'articles' ? '#E992B4' : 'transparent',
+                color: activeTab === 'articles' ? '#FFFFFF' : '#E992B4',
+                boxShadow: activeTab === 'articles' ? '0 2px 4px rgba(233,146,180,0.2)' : 'none',
               }}
             >
               All Articles
@@ -411,12 +416,12 @@ export function AccountSettingsPage() {
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="border-none cursor-pointer font-bold text-white transition-all hover:bg-[#CA5582] active:scale-95 shadow-sm"
+                className="border-none cursor-pointer font-bold text-white transition-opacity hover:opacity-90 active:scale-95 shadow-sm"
                 style={{
                   fontFamily: 'Inter, sans-serif',
                   padding: '10px 32px',
                   borderRadius: 10,
-                  backgroundColor: '#DE5D8F',
+                  backgroundColor: '#E992B4',
                   fontSize: 15,
                 }}
               >
@@ -536,11 +541,12 @@ export function AccountSettingsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {(articleSubTab === 'published' ? PUBLISHED_ARTICLES : DRAFT_ARTICLES).map(
-                    (item, idx, arr) => (
+                  {paginatedList.length > 0 ? (
+                    paginatedList.map((item, idx, arr) => (
                       <tr
                         key={item.id}
-                        className="hover:bg-[#FFF9FB] transition-colors"
+                        onClick={() => navigate(`/aksornsara/create?id=${item.id}`)}
+                        className="hover:bg-[#FFF9FB] transition-colors cursor-pointer"
                         style={{
                           borderBottom:
                             idx < arr.length - 1 ? '1px solid #F0F0F0' : 'none',
@@ -550,17 +556,21 @@ export function AccountSettingsPage() {
                         <td className="py-3.5 px-6">
                           <div className="flex items-center gap-3">
                             <img
-                              src={articleThumb}
+                              src={item.coverImage || item.imageUrl || articleThumb}
                               alt="thumb"
-                              className="w-9 h-9 rounded-[6px] object-cover shrink-0 shadow-xs"
+                              className="w-10 h-10 rounded-[6px] object-cover shrink-0 shadow-xs bg-gray-100 border border-gray-100"
+                              onError={(e) => {
+                                e.currentTarget.src = articleThumb;
+                              }}
                             />
                             <span
-                              className="font-bold text-[#1A1C1C] hover:text-[#DE5D8F] cursor-pointer transition-colors"
+                              className="font-bold text-[#1A1C1C] hover:text-[#DE5D8F] cursor-pointer transition-colors line-clamp-1"
                               style={{
                                 fontFamily: 'ChulaCharasNew, sans-serif',
                                 fontSize: 16,
                                 lineHeight: '20px',
                               }}
+                              title={item.title}
                             >
                               {item.title}
                             </span>
@@ -570,11 +580,12 @@ export function AccountSettingsPage() {
                         {/* Author */}
                         <td className="py-3.5 px-4">
                           <span
-                            className="text-[#1A1C1C]"
+                            className="text-[#1A1C1C] truncate max-w-[140px] block"
                             style={{
                               fontFamily: 'ChulaCharasNew, sans-serif',
                               fontSize: 15,
                             }}
+                            title={item.author}
                           >
                             {item.author}
                           </span>
@@ -583,68 +594,112 @@ export function AccountSettingsPage() {
                         {/* Category */}
                         <td className="py-3.5 px-4">
                           <span
-                            className="text-[#1A1C1C]"
-                            style={{
-                              fontFamily: 'ChulaCharasNew, sans-serif',
-                              fontSize: 15,
-                            }}
+                            className="inline-block px-2 py-0.5 rounded-[6px] font-sans font-normal text-[11px] text-[#DE5D8F] bg-[#FCEFF4]"
+                            style={{ fontFamily: "'Inter', sans-serif" }}
                           >
-                            {item.category}
+                            {item.category?.replace(/^ปี\s*/, '')}
                           </span>
                         </td>
 
                         {/* Published Date */}
                         <td className="py-3.5 px-4">
                           <span
-                            className="text-[#1A1C1C]"
+                            className="text-gray-500 whitespace-nowrap"
                             style={{
                               fontFamily: 'ChulaCharasNew, sans-serif',
-                              fontSize: 15,
+                              fontSize: 14,
                             }}
                           >
-                            {item.date}
+                            {item.publishedAt || item.date}
                           </span>
                         </td>
 
                         {/* Views */}
                         <td className="py-3.5 px-4">
                           <span
-                            className="text-[#1A1C1C] font-medium"
+                            className="text-[#1A1C1C] font-bold"
                             style={{
-                              fontFamily: 'Inter, sans-serif',
+                              fontFamily: 'ChulaCharasNew, sans-serif',
                               fontSize: 15,
                             }}
                           >
-                            {item.views}
+                            {(item.views || 0).toLocaleString()}
                           </span>
                         </td>
 
-                        {/* Action Icon: Settings Gear for published, Pencil for drafts */}
+                        {/* Action Icon */}
                         <td className="py-3.5 px-6 text-right">
-                          {articleSubTab === 'published' ? (
-                            <button
-                              type="button"
-                              className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#FCEFF4] text-[#1A1C1C] border-none bg-transparent cursor-pointer transition-colors"
-                              title="ตั้งค่าบทความ"
-                            >
-                              <GearIcon size={16} />
-                            </button>
-                          ) : (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/aksornsara/create?id=${item.id}`);
+                            }}
+                            className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#FCEFF4] text-[#1A1C1C] hover:text-[#DE5D8F] border-none bg-transparent cursor-pointer transition-colors"
+                            title="แก้ไขบทความ"
+                          >
+                            <Pencil size={15} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={6} className="py-12 text-center">
+                        <div className="flex flex-col items-center justify-center gap-2">
+                          <p className="text-gray-500 font-serif text-[15px] m-0">
+                            {articleSubTab === 'published'
+                              ? 'ไม่พบบทความที่เผยแพร่แล้ว'
+                              : 'ยังไม่มีบทความฉบับร่าง'}
+                          </p>
+                          {articleSubTab === 'draft' && (
                             <button
                               type="button"
                               onClick={() => navigate('/aksornsara/create')}
-                              className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#FCEFF4] text-[#1A1C1C] hover:text-[#DE5D8F] border-none bg-transparent cursor-pointer transition-colors"
-                              title="แก้ไขร่างบทความ"
+                              className="mt-2 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-white font-bold font-serif border-none cursor-pointer"
+                              style={{ backgroundColor: '#E992B4', fontSize: 13 }}
                             >
-                              <Pencil size={16} />
+                              <Plus size={14} />
+                              <span>สร้างบทความใหม่</span>
                             </button>
                           )}
-                        </td>
-                      </tr>
-                    )
+                        </div>
+                      </td>
+                    </tr>
                   )}
                 </tbody>
               </table>
+
+              {/* Pagination controls */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between px-6 py-3.5 border-t border-[#DFDFE0] bg-[#FAFAFA]">
+                  <span className="text-[13px] text-gray-500 font-serif">
+                    แสดง {paginatedList.length} จากทั้งหมด {currentList.length} รายการ
+                  </span>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      disabled={articlesPage === 1}
+                      onClick={() => setArticlesPage((p) => Math.max(1, p - 1))}
+                      className="px-2.5 py-1 rounded-[6px] border border-[#DFDFE0] bg-white text-gray-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50 cursor-pointer flex items-center"
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
+                    <span className="text-[13px] font-bold text-gray-700 font-serif px-2">
+                      {articlesPage} / {totalPages}
+                    </span>
+                    <button
+                      type="button"
+                      disabled={articlesPage === totalPages}
+                      onClick={() => setArticlesPage((p) => Math.min(totalPages, p + 1))}
+                      className="px-2.5 py-1 rounded-[6px] border border-[#DFDFE0] bg-white text-gray-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50 cursor-pointer flex items-center"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

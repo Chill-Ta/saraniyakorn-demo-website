@@ -9,8 +9,66 @@ import {
   MoreHorizontal,
   PenSquare,
 } from 'lucide-react';
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Cell,
+} from 'recharts';
 import { AksornsaraLayout } from './AksornsaraLayout';
 import { articlesService } from './services/articlesService';
+
+// ─── Chart Tooltip ─────────────────────────────────────────────────────────────
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    payload: {
+      month?: string;
+      monthFull?: string;
+      name?: string;
+      year?: string;
+      views?: number;
+      articleCount?: number;
+      count?: number;
+    };
+  }>;
+  label?: string;
+}
+
+function CustomChartTooltip({ active, payload, label }: CustomTooltipProps) {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    const title = data.monthFull || data.name || data.year || label || '';
+    const views = typeof data.views === 'number' ? data.views : 0;
+    const count = typeof data.articleCount === 'number' ? data.articleCount : data.count;
+
+    return (
+      <div
+        className="bg-white p-3 rounded-[10px] shadow-lg border border-[#F0B4CB]"
+        style={{ fontFamily: 'ChulaCharasNew, serif' }}
+      >
+        <p className="font-bold text-[#1A1C1C] text-[15px] m-0 mb-1">
+          {title}
+        </p>
+        <p className="text-[13px] text-[#DE5D8F] font-bold m-0 flex items-center gap-1.5">
+          <Eye size={14} />
+          <span>ยอดเข้าชม: {views.toLocaleString()} ครั้ง</span>
+        </p>
+        {typeof count === 'number' && (
+          <p className="text-[12px] text-[#6D6D6D] m-0 mt-0.5">
+            จำนวนบทความ: {count.toLocaleString()} บทความ
+          </p>
+        )}
+      </div>
+    );
+  }
+  return null;
+}
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -113,7 +171,7 @@ function TopCategoryCard({ totalCategories, onClick }: TopCategoryCardProps) {
           {totalCategories} หมวดหมู่
         </p>
         <div className="flex items-baseline gap-2 mt-1 flex-wrap font-serif">
-          <span className="font-bold text-[12px] text-[#CA5582]">ปี 2021 - 2026</span>
+          <span className="font-bold text-[12px] text-[#CA5582]">7 หมวดหมู่หลัก</span>
         </div>
       </div>
     </div>
@@ -124,17 +182,55 @@ function TopCategoryCard({ totalCategories, onClick }: TopCategoryCardProps) {
 
 export function AksornsaraPage() {
   const [search, setSearch] = useState('');
-  const BAR_MAX_H = 180;
+  const [chartMode, setChartMode] = useState<'monthly' | 'category' | 'year'>('monthly');
+  const [selectedYear, setSelectedYear] = useState<number | 'all'>(2026);
   const navigate = useNavigate();
 
-  // Load real metrics from articlesService & sync from backend API
-  const [metrics, setMetrics] = useState(() => articlesService.getMetrics());
+  const [version, setVersion] = useState(0);
 
   useEffect(() => {
-    articlesService.syncFromBackend().then(() => {
-      setMetrics(articlesService.getMetrics());
-    });
+    articlesService.syncWithApi();
+    return articlesService.subscribe(() => setVersion((v) => v + 1));
   }, []);
+
+  // Load real metrics from articlesService
+  const metrics = useMemo(() => {
+    return articlesService.getMetrics();
+  }, [version]);
+
+  // Load monthly views data from articlesService
+  const monthlyData = useMemo(() => {
+    return articlesService.getMonthlyViewsData(selectedYear);
+  }, [version, selectedYear]);
+
+  const currentChartData = useMemo(() => {
+    if (chartMode === 'monthly') {
+      return monthlyData.map((m) => ({
+        label: m.month,
+        views: m.views,
+        count: m.articleCount,
+        monthFull: m.monthFull,
+      }));
+    }
+    if (chartMode === 'category') {
+      return metrics.categoryData.map((c) => ({
+        label: c.name,
+        views: c.views,
+        count: c.count,
+        monthFull: `หมวดหมู่: ${c.name}`,
+      }));
+    }
+    return metrics.yearlyData.map((y) => ({
+      label: y.year,
+      views: y.count,
+      count: y.count,
+      monthFull: y.year,
+    }));
+  }, [chartMode, monthlyData, metrics]);
+
+  const maxChartVal = useMemo(() => {
+    return Math.max(...currentChartData.map((d) => d.views), 1);
+  }, [currentChartData]);
 
   const handleExportData = () => {
     const data = articlesService.getAll();
@@ -159,9 +255,6 @@ export function AksornsaraPage() {
             <h1 className="font-bold text-[#1A1C1C] text-[32px] md:text-[44px] leading-tight m-0 font-serif">
               Dashboard Overview
             </h1>
-            <p className="text-gray-500 font-serif text-[15px] m-0 mt-1">
-              ภาพรวมคลังบทความสาราณียกร ข้อมูลจริงแบบ Real-time
-            </p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -171,7 +264,7 @@ export function AksornsaraPage() {
               className="flex items-center gap-2 text-white font-bold cursor-pointer border-none shadow-sm hover:opacity-90 active:scale-95 transition-all font-serif"
               style={{
                 fontSize: 14,
-                backgroundColor: '#DE5D8F',
+                backgroundColor: '#E992B4',
                 borderRadius: 9999,
                 height: 42,
                 padding: '0 22px',
@@ -235,85 +328,141 @@ export function AksornsaraPage() {
           {/* Left column */}
           <div className="flex flex-col gap-6 w-full lg:flex-1 min-w-0">
 
-            {/* Articles by Year Chart */}
+            {/* Monthly Views Chart (Recharts Library) */}
             <div
               className="bg-white rounded-[12px] w-full border border-gray-100 shadow-xs"
               style={{
                 maxWidth: 680,
-                padding: '24px 24px 36px',
+                padding: '24px 24px 28px',
               }}
             >
               {/* Chart header */}
-              <div className="flex items-start justify-between mb-6">
+              <div className="flex items-start justify-between mb-5 flex-wrap gap-3">
                 <div className="flex flex-col gap-0.5">
                   <span
                     className="font-bold text-black font-serif"
                     style={{ fontSize: 20, lineHeight: '28px' }}
                   >
-                    ภาพรวมสถิติคลังบทความ
+                    {chartMode === 'monthly'
+                      ? 'ภาพรวมการเข้าชมในแต่ละเดือน'
+                      : chartMode === 'category'
+                      ? 'ภาพรวมสถิติคลังบทความตามหมวดหมู่'
+                      : 'ภาพรวมสถิติคลังบทความตามปีตีพิมพ์'}
                   </span>
-                  <span
-                    className="font-serif text-[14px] text-[#9E4266]"
+                </div>
+
+                {/* Right controls: Year selector + Mode pills */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  {chartMode === 'monthly' && (
+                    <select
+                      value={selectedYear}
+                      onChange={(e) =>
+                        setSelectedYear(e.target.value === 'all' ? 'all' : Number(e.target.value))
+                      }
+                      className="bg-[#F7F8F9] border border-[#DFDFE0] rounded-full px-3 py-1 text-[13px] font-bold text-[#545455] font-serif cursor-pointer outline-none hover:border-[#E992B4] transition-colors"
+                      style={{ height: 32 }}
+                    >
+                      <option value={2026}>ปี 2026</option>
+                      <option value={2025}>ปี 2025</option>
+                      <option value={2024}>ปี 2024</option>
+                      <option value={2023}>ปี 2023</option>
+                      <option value={2022}>ปี 2022</option>
+                      <option value={2021}>ปี 2021</option>
+                      <option value="all">รวมทุกปี</option>
+                    </select>
+                  )}
+
+                  {/* Toggle chart mode */}
+                  <div
+                    className="flex items-center rounded-full p-0.5"
+                    style={{ border: '1px solid #DFDFE0', backgroundColor: '#F7F8F9', height: 32 }}
                   >
-                    จำนวนบทความจริงในคลังแยกตามปี (รวม {metrics.totalArticles} บทความ)
-                  </span>
+                    <button
+                      type="button"
+                      onClick={() => setChartMode('monthly')}
+                      className="font-bold cursor-pointer border-none transition-all font-serif"
+                      style={{
+                        fontSize: 12,
+                        padding: '4px 12px',
+                        borderRadius: 9999,
+                        backgroundColor: chartMode === 'monthly' ? '#E992B4' : 'transparent',
+                        color: chartMode === 'monthly' ? '#fff' : '#6D6D6D',
+                      }}
+                    >
+                      รายเดือน
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setChartMode('category')}
+                      className="font-bold cursor-pointer border-none transition-all font-serif"
+                      style={{
+                        fontSize: 12,
+                        padding: '4px 12px',
+                        borderRadius: 9999,
+                        backgroundColor: chartMode === 'category' ? '#E992B4' : 'transparent',
+                        color: chartMode === 'category' ? '#fff' : '#6D6D6D',
+                      }}
+                    >
+                      หมวดหมู่
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setChartMode('year')}
+                      className="font-bold cursor-pointer border-none transition-all font-serif"
+                      style={{
+                        fontSize: 12,
+                        padding: '4px 12px',
+                        borderRadius: 9999,
+                        backgroundColor: chartMode === 'year' ? '#E992B4' : 'transparent',
+                        color: chartMode === 'year' ? '#fff' : '#6D6D6D',
+                      }}
+                    >
+                      ปีตีพิมพ์
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Bar chart */}
-              <div
-                className="relative"
-                style={{ height: BAR_MAX_H + 32 }}
-              >
-                {/* Horizontal grid lines */}
-                {[0, 1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="absolute w-full"
-                    style={{
-                      bottom: 24 + (i / 3) * BAR_MAX_H,
-                      borderTop: '1px solid #DFDFE0',
-                      left: 0,
-                    }}
-                  />
-                ))}
-
-                {/* Bars + labels */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-3 px-2"
-                  style={{ height: BAR_MAX_H + 24 }}
-                >
-                  {metrics.yearlyData.map((d) => {
-                    const h = Math.max(16, Math.round((d.pct / 100) * BAR_MAX_H));
-                    const isMax = d.pct === 100;
-                    return (
-                      <div key={d.year} className="flex flex-col items-center gap-1.5 flex-1 group">
-                        <span className="text-[11px] font-bold text-gray-500 font-serif opacity-0 group-hover:opacity-100 transition-opacity">
-                          {d.count}
-                        </span>
-                        <div
-                          className="w-full rounded-t-[6px] transition-all group-hover:opacity-85 relative"
-                          style={{
-                            height: h,
-                            backgroundColor: isMax ? '#DE5D8F' : '#F5CDDC',
-                            minWidth: 28,
-                          }}
-                          title={`${d.year}: ${d.count} บทความ`}
-                        />
-                        <span
-                          style={{
-                            fontSize: 12,
-                            fontWeight: 700,
-                            color: '#9E4266',
-                            fontFamily: 'ChulaCharasNew, serif',
-                          }}
-                        >
-                          {d.year}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
+              {/* Responsive Recharts Bar Chart */}
+              <div className="w-full" style={{ height: 250 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={currentChartData}
+                    margin={{ top: 15, right: 10, left: -20, bottom: 0 }}
+                  >
+                    <CartesianGrid stroke="#F3EBF0" strokeDasharray="3 3" vertical={false} />
+                    <XAxis
+                      dataKey="label"
+                      tick={{ fill: '#9E4266', fontSize: 13, fontFamily: 'ChulaCharasNew' }}
+                      axisLine={{ stroke: '#DFDFE0' }}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      tick={{ fill: '#99999A', fontSize: 12, fontFamily: 'ChulaCharasNew' }}
+                      axisLine={false}
+                      tickLine={false}
+                      allowDecimals={false}
+                    />
+                    <Tooltip content={<CustomChartTooltip />} />
+                    <Bar
+                      dataKey="views"
+                      radius={[6, 6, 0, 0]}
+                      animationDuration={600}
+                    >
+                      {currentChartData.map((entry, index) => {
+                        const val = entry.views;
+                        const isMax = val > 0 && val === maxChartVal;
+                        return (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={isMax ? '#DE5D8F' : '#F5CDDC'}
+                            className="hover:opacity-85 transition-opacity cursor-pointer"
+                          />
+                        );
+                      })}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
 
@@ -390,9 +539,10 @@ export function AksornsaraPage() {
                       {/* Category / Year */}
                       <div className="text-center">
                         <span
-                          className="inline-block px-2 py-0.5 rounded-[6px] font-serif font-bold text-[11px] text-[#DE5D8F] bg-[#FCEFF4]"
+                          className="inline-block px-2 py-0.5 rounded-[6px] font-sans font-normal text-[11px] text-[#DE5D8F] bg-[#FCEFF4]"
+                          style={{ fontFamily: "'Inter', 'Noto Sans Thai', sans-serif" }}
                         >
-                          {art.category}
+                          {art.category?.replace(/^ปี\s*/, '')}
                         </span>
                       </div>
 

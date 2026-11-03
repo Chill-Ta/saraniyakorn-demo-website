@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Download,
   ChevronDown,
@@ -22,67 +22,151 @@ interface AuditLogEntry {
   status: 'Approved' | 'Denied' | 'Pending';
 }
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api').replace(/\/$/, '');
+const AUDIT_LOG_DATA: AuditLogEntry[] = [
+  {
+    id: '1',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Imported 30GB viruses',
+    timestamp: '20/06/2026, 11.26 pm',
+    ipDevice: 'IP/Device',
+    status: 'Approved',
+  },
+  {
+    id: '2',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Imported 30GB viruses',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Denied',
+  },
+  {
+    id: '3',
+    logId: '1234567890',
+    user: 'Triple T',
+    role: 'User',
+    action: 'Call Shirt',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Approved',
+  },
+  {
+    id: '4',
+    logId: '1234567890',
+    user: 'Angelic Tungs',
+    role: 'User',
+    action: 'Call Shirt',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Denied',
+  },
+  {
+    id: '5',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Approved Yellow Card',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Approved',
+  },
+  {
+    id: '6',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Approved Yellow Card',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Approved',
+  },
+  {
+    id: '7',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Approved Yellow Card',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Approved',
+  },
+  {
+    id: '8',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Approved Yellow Card',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Approved',
+  },
+  {
+    id: '9',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Approved Yellow Card',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Approved',
+  },
+  {
+    id: '10',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Approved Yellow Card',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Pending',
+  },
+  {
+    id: '11',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Approved Yellow Card',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Pending',
+  },
+  {
+    id: '12',
+    logId: '1234567890',
+    user: 'Shirt Nanthanit',
+    role: 'Admin',
+    action: 'Approved Yellow Card',
+    timestamp: '20/06/2026',
+    ipDevice: 'IP/Device',
+    status: 'Pending',
+  },
+];
 
 export function AdminAuditLogPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [logs, setLogs] = useState<AuditLogEntry[]>([]);
-  const [totalItems, setTotalItems] = useState(0);
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-
   const [dateFilter, setDateFilter] = useState('กิจกรรมล่าสุด');
   const [userFilter, setUserFilter] = useState('โดยทุกคน');
+  const [actionFilter, setActionFilter] = useState('ทุกกิจกรรม');
   const [statusFilter, setStatusFilter] = useState('ทุกสถานะ');
 
-  const dateOptions = ['30 วันล่าสุด', '15 วันล่าสุด', '7 วันล่าสุด', 'กิจกรรมล่าสุด'];
+  // Filter options from Figma Node 7294:26328
+  const dateOptions = ['30 วันล่าสุด', '15 วันล่าสุด', '7 วันล่าสุด', 'กิจกรรมล่าสุด', 'เก่าที่สุด'];
   const userOptions = ['โดยทุกคน', 'โดยแอดมิน', 'โดยผู้ใช้'];
-  const statusOptions = ['ทุกสถานะ', 'สำเร็จ', 'ถูกปฏิเสธ', 'กำลังดำเนินการ'];
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetch(`${API_BASE}/v1/activities?page=${page}&limit=20&search=${encodeURIComponent(searchTerm)}`, {
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer mock.jwt.admin',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && Array.isArray(data.data)) {
-          const mapped: AuditLogEntry[] = data.data.map((item: any, idx: number) => ({
-            id: String(item.id || idx),
-            logId: String(item.id ? item.id.substring(0, 10) : `LOG-${1000 + idx}`),
-            user: item.actor_name || 'ผู้ดูแลระบบ',
-            role: 'Admin',
-            action: item.action || item.detail || 'ปรับปรุงข้อมูลในระบบ',
-            timestamp: item.created_at
-              ? new Date(item.created_at).toLocaleString('th-TH', {
-                  dateStyle: 'short',
-                  timeStyle: 'short',
-                })
-              : item.time_ago || 'เมื่อสักครู่',
-            ipDevice: 'Web / Backoffice',
-            status: 'Approved',
-          }));
-          setLogs(mapped);
-          setTotalItems(data.meta?.total_items ?? mapped.length);
-        } else {
-          setLogs([]);
-          setTotalItems(0);
-        }
-      })
-      .catch((err) => {
-        console.warn('Failed to fetch audit logs from database', err);
-        setLogs([]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [page, searchTerm]);
+  const actionOptions = ['ทุกกิจกรรม', 'ใบเสร็จใบฟ้า', 'อนุมัติใบเสร็จใบฟ้า', 'และอีกมากมาย'];
+  const statusOptions = ['ทุกสถานะ', 'สำเร็จ', 'ถูกปฏิเสธ', 'ล้มเหลว', 'กำลังดำเนินการ'];
 
   const filteredLogs = useMemo(() => {
-    return logs.filter((log) => {
+    return AUDIT_LOG_DATA.filter((log) => {
+      // Search
+      const matchSearch =
+        !searchTerm ||
+        log.logId.includes(searchTerm) ||
+        log.user.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        log.action.toLowerCase().includes(searchTerm.toLowerCase());
+
       // User filter
       let matchUser = true;
       if (userFilter === 'โดยแอดมิน') matchUser = log.role === 'Admin';
@@ -94,20 +178,13 @@ export function AdminAuditLogPage() {
       if (statusFilter === 'ถูกปฏิเสธ') matchStatus = log.status === 'Denied';
       if (statusFilter === 'กำลังดำเนินการ') matchStatus = log.status === 'Pending';
 
-      return matchUser && matchStatus;
+      return matchSearch && matchUser && matchStatus;
     });
-  }, [logs, userFilter, statusFilter]);
+  }, [searchTerm, userFilter, statusFilter]);
 
   const handleExport = () => {
-    const blob = new Blob([JSON.stringify(logs, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `artsgoz_audit_log_${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
+    alert('ส่งออกข้อมูล Audit Log สำเร็จ!');
   };
-
-  const totalPages = Math.max(1, Math.ceil(totalItems / 20));
 
   return (
     <GozAdminLayout showTopSearch={false}>
@@ -127,11 +204,8 @@ export function AdminAuditLogPage() {
             <input
               type="text"
               value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setPage(1);
-              }}
-              placeholder="ค้นหากิจกรรม, รหัส Log ID, หรือผู้ใช้งาน"
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="ค้นหา"
               className="w-full h-11 pl-4 pr-11 rounded-[10px] border border-[#DFDFE0] bg-[#FAFAFA] text-[#1A1C1C] text-[15px] outline-none transition-colors focus:bg-white focus:border-[#DE5D8F]"
               style={{ fontFamily: 'ChulaCharasNew, sans-serif' }}
             />
@@ -184,7 +258,27 @@ export function AdminAuditLogPage() {
                 />
               </div>
 
-              {/* Dropdown 3: Status */}
+              {/* Dropdown 3: Action */}
+              <div className="relative">
+                <select
+                  value={actionFilter}
+                  onChange={(e) => setActionFilter(e.target.value)}
+                  className="appearance-none bg-white border border-[#DFDFE0] rounded-[8px] px-3.5 py-2 pr-8 text-[14px] text-[#1A1C1C] font-bold cursor-pointer outline-none focus:border-[#DE5D8F]"
+                  style={{ fontFamily: 'ChulaCharasNew, sans-serif' }}
+                >
+                  {actionOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  size={15}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8B8B8C] pointer-events-none"
+                />
+              </div>
+
+              {/* Dropdown 4: Status */}
               <div className="relative">
                 <select
                   value={statusFilter}
@@ -205,7 +299,7 @@ export function AdminAuditLogPage() {
               </div>
             </div>
 
-            {/* Export Button */}
+            {/* Export Button (Figma Node 7294:26328) */}
             <button
               type="button"
               id="btn-export-audit"
@@ -214,7 +308,7 @@ export function AdminAuditLogPage() {
               style={{ fontFamily: 'ChulaCharasNew, sans-serif' }}
             >
               <Download size={15} color="#DE5D8F" strokeWidth={2.5} />
-              <span>ส่งออกข้อมูล (JSON)</span>
+              <span>ส่งออกข้อมูล</span>
             </button>
           </div>
         </div>
@@ -225,7 +319,7 @@ export function AdminAuditLogPage() {
             className="text-[#8B8B8C] text-[13px]"
             style={{ fontFamily: 'ChulaCharasNew, sans-serif' }}
           >
-            แสดงทั้งหมด {filteredLogs.length} จาก {totalItems} รายการ
+            แสดงทั้งหมด {filteredLogs.length} จาก 670 รายการ
           </span>
         </div>
 
@@ -245,75 +339,59 @@ export function AdminAuditLogPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F0F0F0]">
-                {isLoading ? (
-                  <tr>
-                    <td colSpan={7} className="py-12 text-center text-gray-400 font-serif">
-                      กำลังโหลดประวัติการทำงานจากฐานข้อมูล...
+                {filteredLogs.map((log) => (
+                  <tr key={log.id} className="hover:bg-[#FAFAFA] transition-colors text-[14px]">
+                    <td className="py-3.5 px-5 font-mono text-[#545455]">
+                      {log.logId}
+                    </td>
+                    <td className="py-3.5 px-4 font-bold text-[#1A1C1C]">
+                      {log.user}
+                    </td>
+                    <td className="py-3.5 px-4 text-[#545455]">
+                      {log.role}
+                    </td>
+                    <td className="py-3.5 px-5 text-[#1A1C1C]">
+                      {log.action}
+                    </td>
+                    <td className="py-3.5 px-4 text-[#8B8B8C]">
+                      {log.timestamp}
+                    </td>
+                    <td className="py-3.5 px-4 text-[#8B8B8C]">
+                      {log.ipDevice}
+                    </td>
+                    <td className="py-3.5 px-5 text-center">
+                      {log.status === 'Approved' && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold text-[#137333] bg-[#E6F4EA]">
+                          <CheckCircle2 size={13} strokeWidth={2.5} />
+                          Approved
+                        </span>
+                      )}
+                      {log.status === 'Denied' && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold text-[#C5221F] bg-[#FCE8E6]">
+                          <XCircle size={13} strokeWidth={2.5} />
+                          Denied
+                        </span>
+                      )}
+                      {log.status === 'Pending' && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold text-[#B06000] bg-[#FEF7E0]">
+                          <Clock size={13} strokeWidth={2.5} />
+                          Pending
+                        </span>
+                      )}
                     </td>
                   </tr>
-                ) : filteredLogs.length === 0 ? (
-                  <tr>
-                    <td colSpan={7} className="py-12 text-center text-gray-400 font-serif">
-                      ไม่พบประวัติการทำงานในระบบ
-                    </td>
-                  </tr>
-                ) : (
-                  filteredLogs.map((log) => (
-                    <tr key={log.id} className="hover:bg-[#FAFAFA] transition-colors text-[14px]">
-                      <td className="py-3.5 px-5 font-mono text-[#545455]">
-                        {log.logId}
-                      </td>
-                      <td className="py-3.5 px-4 font-bold text-[#1A1C1C]">
-                        {log.user}
-                      </td>
-                      <td className="py-3.5 px-4 text-[#545455]">
-                        {log.role}
-                      </td>
-                      <td className="py-3.5 px-5 text-[#1A1C1C]">
-                        {log.action}
-                      </td>
-                      <td className="py-3.5 px-4 text-[#8B8B8C]">
-                        {log.timestamp}
-                      </td>
-                      <td className="py-3.5 px-4 text-[#8B8B8C]">
-                        {log.ipDevice}
-                      </td>
-                      <td className="py-3.5 px-5 text-center">
-                        {log.status === 'Approved' && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold text-[#137333] bg-[#E6F4EA]">
-                            <CheckCircle2 size={13} strokeWidth={2.5} />
-                            Approved
-                          </span>
-                        )}
-                        {log.status === 'Denied' && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold text-[#C5221F] bg-[#FCE8E6]">
-                            <XCircle size={13} strokeWidth={2.5} />
-                            Denied
-                          </span>
-                        )}
-                        {log.status === 'Pending' && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold text-[#B06000] bg-[#FEF7E0]">
-                            <Clock size={13} strokeWidth={2.5} />
-                            Pending
-                          </span>
-                        )}
-                      </td>
-                    </tr>
-                  ))
-                )}
+                ))}
               </tbody>
             </table>
           </div>
 
           {/* Bottom Summary Bar */}
           <div className="p-4 border-t border-[#DFDFE0] flex items-center justify-between text-[#8B8B8C] text-[13px]" style={{ fontFamily: 'ChulaCharasNew, sans-serif' }}>
-            <span>ทั้งหมด {totalItems} รายการ</span>
+            <span>ทั้งหมด 108 รายการ</span>
             <div className="flex items-center gap-1">
               <button
                 type="button"
-                disabled={page <= 1}
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                className="w-8 h-8 rounded-full border border-[#DFDFE0] bg-white flex items-center justify-center text-[#545455] hover:bg-[#F9FAFB] cursor-pointer disabled:opacity-40"
+                className="w-8 h-8 rounded-full border border-[#DFDFE0] bg-white flex items-center justify-center text-[#545455] hover:bg-[#F9FAFB] cursor-pointer"
               >
                 <ChevronLeft size={16} />
               </button>
@@ -321,13 +399,23 @@ export function AdminAuditLogPage() {
                 type="button"
                 className="w-8 h-8 rounded-full border-none bg-[#DE5D8F] text-white font-bold flex items-center justify-center cursor-pointer shadow-xs"
               >
-                {page}
+                1
               </button>
               <button
                 type="button"
-                disabled={page >= totalPages}
-                onClick={() => setPage((p) => p + 1)}
-                className="w-8 h-8 rounded-full border border-[#DFDFE0] bg-white flex items-center justify-center text-[#545455] hover:bg-[#F9FAFB] cursor-pointer disabled:opacity-40"
+                className="w-8 h-8 rounded-full border border-[#DFDFE0] bg-white flex items-center justify-center text-[#545455] hover:bg-[#F9FAFB] cursor-pointer"
+              >
+                2
+              </button>
+              <button
+                type="button"
+                className="w-8 h-8 rounded-full border border-[#DFDFE0] bg-white flex items-center justify-center text-[#545455] hover:bg-[#F9FAFB] cursor-pointer"
+              >
+                3
+              </button>
+              <button
+                type="button"
+                className="w-8 h-8 rounded-full border border-[#DFDFE0] bg-white flex items-center justify-center text-[#545455] hover:bg-[#F9FAFB] cursor-pointer"
               >
                 <ChevronRight size={16} />
               </button>

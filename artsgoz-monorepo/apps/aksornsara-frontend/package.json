@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@artsgoz/design-system": "workspace:*"
+    "@artsgoz/design-system": "workspace:*",
+    "firebase": "^13.1.0"
   }
 }

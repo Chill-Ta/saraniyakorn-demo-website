@@ -1,70 +1,102 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router';
-import { Radio, MessageSquare, Link2 } from 'lucide-react';
+import { MessageSquare, ExternalLink, FileEdit, CheckCircle2 } from 'lucide-react';
 import { AksornsaraLayout } from './AksornsaraLayout';
+import { articlesService } from './services/articlesService';
 
 interface ActivityItem {
-  id: string;
-  type: 'publish' | 'comment';
+  id: number;
+  type: 'publish' | 'comment' | 'update';
   action: string;
   timeAgo: string;
+  articleId: string;
   articleTitle: string;
   content?: string;
 }
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api').replace(/\/$/, '');
-
 export function ActivitiesPage() {
-  const [search, setSearch] = useState('');
-  const [activities, setActivities] = useState<ActivityItem[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const allArticles = useMemo(() => articlesService.getAll(), []);
 
-  const fetchActivities = (targetPage: number, append = false) => {
-    setIsLoading(true);
-    fetch(`${API_BASE}/v1/activities?page=${targetPage}&limit=10&search=${encodeURIComponent(search)}`, {
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer mock.jwt.admin',
+  const initialActivitiesList: ActivityItem[] = useMemo(() => {
+    const a0 = allArticles[0] || { id: 'art-001', title: '“ที่ใดมีชีวิต ที่นั่นย่อมมีหวัง”', author: 'ภัคจิรา มาตาพิทักษ์' };
+    const a1 = allArticles[1] || { id: 'art-002', title: 'บัตรแมงมุม : วิบากกรรมผัดวันประกันพรุ่งของกทม.', author: 'ดอม รุ่งเรือง' };
+    const a2 = allArticles[2] || { id: 'art-003', title: '‘พารู้จัก Sharenting พ่อแม่สายแชร์’', author: 'Mondaysep' };
+    const a3 = allArticles[3] || { id: 'art-004', title: 'คำนี้มีที่มา', author: 'ชมรมสาราณียกร' };
+    const a4 = allArticles[4] || { id: 'art-005', title: 'ดนตรีบำบัดกับการฟื้นฟูจิตใจ', author: 'ชมรมสาราณียกร' };
+
+    return [
+      {
+        id: 1,
+        type: 'publish',
+        action: `${a0.author} เผยแพร่บทความใหม่`,
+        timeAgo: '15 นาทีที่แล้ว',
+        articleId: a0.id,
+        articleTitle: a0.title,
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && Array.isArray(data.data)) {
-          const mapped: ActivityItem[] = data.data.map((item: any) => ({
-            id: String(item.id),
-            type: item.type === 'comment' ? 'comment' : 'publish',
-            action: item.action || 'มีการอัปเดตบทความ',
-            timeAgo: item.time_ago || (item.created_at ? new Date(item.created_at).toLocaleDateString('th-TH') : 'เมื่อสักครู่'),
-            articleTitle: item.article_title || 'บทความวิชาการ',
-            content: item.detail || item.content || undefined,
-          }));
+      {
+        id: 2,
+        type: 'comment',
+        action: 'มีความคิดเห็นใหม่ในบทความ',
+        timeAgo: '45 นาทีที่แล้ว',
+        articleId: a1.id,
+        articleTitle: a1.title,
+        content: 'วิเคราะห์ระบบขนส่งสาธารณะในกรุงเทพฯ ได้ตรงจุดมากครับ',
+      },
+      {
+        id: 3,
+        type: 'update',
+        action: 'กองบรรณาธิการ อัปเดตข้อมูลและตรวจพิสูจน์อักษร',
+        timeAgo: '2 ชั่วโมงที่แล้ว',
+        articleId: a2.id,
+        articleTitle: a2.title,
+      },
+      {
+        id: 4,
+        type: 'publish',
+        action: `${a3.author} บันทึกบทความในหมวดหมู่ภาษา`,
+        timeAgo: 'เมื่อวานนี้',
+        articleId: a3.id,
+        articleTitle: a3.title,
+      },
+      {
+        id: 5,
+        type: 'comment',
+        action: 'มีความคิดเห็นใหม่ในบทความ',
+        timeAgo: '2 วันที่แล้ว',
+        articleId: a4.id,
+        articleTitle: a4.title,
+        content: 'ท่วงทำนองกับการบำบัดความเครียด ข้อมูลน่าสนใจมากครับ',
+      },
+    ];
+  }, [allArticles]);
 
-          setActivities((prev) => (append ? [...prev, ...mapped] : mapped));
-          setHasMore(Boolean(data.has_more));
-          setPage(targetPage);
-        } else {
-          if (!append) setActivities([]);
-          setHasMore(false);
-        }
-      })
-      .catch((err) => {
-        console.warn('Failed to fetch activities from database', err);
-        if (!append) setActivities([]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  const [search, setSearch] = useState('');
+  const [activities, setActivities] = useState<ActivityItem[]>(initialActivitiesList);
+  const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    fetchActivities(1, false);
-  }, [search]);
+  const filteredActivities = activities.filter((item) => {
+    const q = search.toLowerCase();
+    return (
+      item.action.toLowerCase().includes(q) ||
+      item.articleTitle.toLowerCase().includes(q) ||
+      (item.content && item.content.toLowerCase().includes(q))
+    );
+  });
 
   const handleLoadMore = () => {
-    fetchActivities(page + 1, true);
+    const extraArticles = allArticles.slice(5, 8);
+    const extraActivities: ActivityItem[] = extraArticles.map((art, idx) => ({
+      id: 10 + idx,
+      type: idx % 2 === 0 ? 'publish' : 'update',
+      action: idx % 2 === 0 ? `${art.author} เผยแพร่บทความใหม่` : `ปรับปรุงเนื้อหาบทความ (${art.category})`,
+      timeAgo: `${idx + 3} วันที่แล้ว`,
+      articleId: art.id,
+      articleTitle: art.title,
+    }));
+
+    setActivities((prev) => [...prev, ...extraActivities]);
+    setHasMore(false);
   };
 
   return (
@@ -74,9 +106,9 @@ export function ActivitiesPage() {
       searchValue={search}
       onSearchChange={setSearch}
     >
-      <div className="w-full flex flex-col gap-8" style={{ maxWidth: 896 }}>
+      <div className="w-full flex flex-col gap-6" style={{ maxWidth: 896 }}>
         {/* ── Page Title ── */}
-        <div className="flex items-end justify-between">
+        <div>
           <h1
             className="font-bold text-[#1A1C1C]"
             style={{
@@ -86,140 +118,87 @@ export function ActivitiesPage() {
               margin: 0,
             }}
           >
-            กิจกรรมทั้งหมด
+            กิจกรรมล่าสุด
           </h1>
         </div>
 
-        {/* ── Activity Cards List ── */}
-        <div className="flex flex-col gap-6 w-full">
-          {isLoading && activities.length === 0 ? (
-            <div className="bg-white rounded-[16px] p-8 border border-[#DFDFE0] text-center text-[#504444] font-serif">
-              กำลังโหลดกิจกรรมจากฐานข้อมูล...
-            </div>
-          ) : activities.length === 0 ? (
-            <div className="bg-white rounded-[16px] p-8 border border-[#DFDFE0] text-center text-[#504444] font-serif">
-              ไม่พบกิจกรรมในระบบ
+        {/* ── Activities List ── */}
+        <div className="flex flex-col gap-4 w-full">
+          {filteredActivities.length === 0 ? (
+            <div className="bg-white rounded-[16px] p-8 border border-[#D4C2C2] text-center text-[#504444] font-serif">
+              ไม่พบกิจกรรมที่ค้นหา
             </div>
           ) : (
-            activities.map((item) => (
+            filteredActivities.map((item) => (
               <div
                 key={item.id}
-                className="bg-white border border-[#DFDFE0] rounded-[16px] relative overflow-hidden flex flex-col transition-shadow hover:shadow-sm"
+                onClick={() => navigate(`/aksornsara/create?id=${item.articleId}`)}
+                className="bg-white border border-[#D4C2C2] rounded-[16px] overflow-hidden flex flex-col p-6 hover:shadow-md transition-all cursor-pointer group"
                 style={{
                   boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.03)',
-                  padding: '24px 24px 20px 24px',
                 }}
               >
-                {/* Decorative Top Accent Gradient Bar */}
-                <div
-                  className="absolute top-0 left-[1px] right-[1px] h-[4px]"
-                  style={{
-                    background: 'linear-gradient(90deg, #F4C2C2 0%, #FFFFFF 100%)',
-                  }}
-                />
-
-                {/* Card Top Row: Icon + Action & Time + Article Pill Badge */}
                 <div className="flex items-start justify-between gap-4">
-                  {/* Left: Icon Badge & Action Info */}
-                  <div className="flex items-start gap-3.5">
-                    {/* Icon Badge */}
+                  <div className="flex items-center gap-3">
                     <div
-                      className="flex items-center justify-center rounded-[8px] shrink-0 mt-0.5"
+                      className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
                       style={{
-                        width: 32,
-                        height: 32,
-                        backgroundColor: '#ECECEC',
+                        backgroundColor:
+                          item.type === 'publish'
+                            ? '#ECF4E7'
+                            : item.type === 'comment'
+                            ? '#FCEFF4'
+                            : '#E5EEFF',
                       }}
                     >
-                      {item.type === 'publish' ? (
-                        <Radio size={16} color="#9E4266" />
-                      ) : (
-                        <MessageSquare size={16} color="#9E4266" />
-                      )}
+                      {item.type === 'publish' && <CheckCircle2 size={18} color="#64A93C" />}
+                      {item.type === 'comment' && <MessageSquare size={18} color="#DE5D8F" />}
+                      {item.type === 'update' && <FileEdit size={18} color="#0165F8" />}
                     </div>
-
-                    {/* Action Text & Timestamp */}
-                    <div className="flex flex-col gap-0.5">
-                      <span
-                        className="font-bold text-[#121C28]"
-                        style={{
-                          fontFamily: 'ChulaCharasNew, sans-serif',
-                          fontSize: 16,
-                          lineHeight: '22px',
-                        }}
-                      >
+                    <div className="flex flex-col">
+                      <span className="font-bold text-[#121C28] font-serif text-[16px]">
                         {item.action}
                       </span>
-                      <span
-                        className="text-[#6D6D6D]"
-                        style={{
-                          fontFamily: 'ChulaCharasNew, sans-serif',
-                          fontSize: 13,
-                          lineHeight: '18px',
-                        }}
-                      >
+                      <span className="text-gray-400 font-serif text-[13px]">
                         {item.timeAgo}
                       </span>
                     </div>
                   </div>
 
-                  {/* Right: Article Pill Badge */}
-                  <div
-                    className="flex items-center gap-1.5 px-3 py-1 rounded-[6px] shrink-0"
-                    style={{ backgroundColor: '#ECECEC' }}
-                  >
-                    <Link2 size={12} color="#545455" />
-                    <span
-                      className="font-bold text-[#504444]"
-                      style={{
-                        fontFamily: 'ChulaCharasNew, sans-serif',
-                        fontSize: 12,
-                        lineHeight: '18px',
-                      }}
-                    >
-                      บทความ: {item.articleTitle}
-                    </span>
-                  </div>
+                  <span className="text-[#DE5D8F] font-serif text-[13px] flex items-center gap-1 group-hover:underline">
+                    เปิดบทความ
+                    <ExternalLink size={12} />
+                  </span>
                 </div>
 
-                {/* Comment Quote Block (if comment activity) */}
-                {item.content && (
-                  <div
-                    className="mt-3.5 pl-4 border-l-2 border-[#DFDFE0]"
-                    style={{ marginLeft: 45 }}
-                  >
-                    <p
-                      className="text-[#121C28]"
-                      style={{
-                        fontFamily: 'ChulaCharasNew, sans-serif',
-                        fontWeight: 400,
-                        fontSize: 15,
-                        lineHeight: '22px',
-                        margin: 0,
-                      }}
-                    >
+                {/* Article Box */}
+                <div className="mt-3.5 pt-3.5 border-t border-gray-100 flex flex-col gap-1">
+                  <span className="font-bold text-[#1A1C1C] font-serif text-[15px] group-hover:text-[#DE5D8F] transition-colors">
+                    {item.articleTitle}
+                  </span>
+                  {item.content && (
+                    <p className="text-gray-600 font-serif text-[14px] m-0 bg-[#FAFAFA] p-2.5 rounded-[8px] border-l-2 border-[#DE5D8F]">
                       "{item.content}"
                     </p>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ))
           )}
 
           {/* Load More Button */}
-          {hasMore && activities.length > 0 && (
-            <div className="flex justify-center pt-4 pb-8">
+          {hasMore && filteredActivities.length > 0 && (
+            <div className="flex justify-center pt-2 pb-6">
               <button
                 type="button"
                 onClick={handleLoadMore}
-                className="font-bold text-[#7B5455] hover:text-[#9E4266] bg-transparent border-none cursor-pointer transition-colors"
+                className="font-bold text-[#DE5D8F] bg-transparent border-none cursor-pointer hover:underline transition-opacity font-serif"
                 style={{
-                  fontFamily: 'ChulaCharasNew, sans-serif',
-                  fontSize: 14,
-                  lineHeight: '20px',
+                  fontSize: 15,
+                  lineHeight: '22px',
                 }}
               >
-                โหลดกิจกรรมทั้งหมดเพิ่มเติม
+                โหลดกิจกรรมเพิ่มเติม ↓
               </button>
             </div>
           )}

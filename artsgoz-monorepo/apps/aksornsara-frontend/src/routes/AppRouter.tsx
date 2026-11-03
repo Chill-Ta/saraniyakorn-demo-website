@@ -18,6 +18,10 @@ const router = createBrowserRouter([
         element: <ArticlesPage />,
       },
       {
+        path: PATHS.SAVED,
+        element: <ArticlesPage />,
+      },
+      {
         path: `${PATHS.ARTICLES}/:id`,
         element: <ArticleDetailPage />,
       },

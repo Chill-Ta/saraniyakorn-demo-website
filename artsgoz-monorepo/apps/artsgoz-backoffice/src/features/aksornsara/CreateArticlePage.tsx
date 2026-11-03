@@ -64,10 +64,13 @@ export function CreateArticlePage() {
   // Categories (Blank when creating new)
   const [categories, setCategories] = useState<{ id: string; name: string; checked: boolean }[]>(() => {
     const base = [
-      { id: '1', name: 'ปี 2026', checked: false },
-      { id: '2', name: 'ปี 2025', checked: false },
-      { id: '3', name: 'ปี 2024', checked: false },
-      { id: '4', name: 'ทั่วไป', checked: false },
+      { id: '1', name: 'ศิลปะ', checked: false },
+      { id: '2', name: 'วรรณกรรม', checked: false },
+      { id: '3', name: 'ภาษา', checked: false },
+      { id: '4', name: 'วัฒนธรรม', checked: false },
+      { id: '5', name: 'ปรัชญา', checked: false },
+      { id: '6', name: 'วิจารณ์', checked: false },
+      { id: '7', name: 'ทั่วไป', checked: false },
     ];
     if (initialArticle?.category) {
       const match = base.find((c) => c.name === initialArticle.category);
@@ -106,6 +109,8 @@ export function CreateArticlePage() {
         }
       };
       reader.readAsDataURL(file);
+
+      // Base64 preview
     }
   };
 
@@ -137,7 +142,7 @@ export function CreateArticlePage() {
 
   const handleSaveDraft = () => {
     const selectedCats = categories.filter((c) => c.checked).map((c) => c.name);
-    const category = selectedCats[0] || 'ปี 2026';
+    const category = selectedCats[0] || 'ทั่วไป';
 
     const cleanExcerpt = content.replace(/<[^>]+>/g, '').slice(0, 180) + '...';
     const finalTitle = title.trim() || 'บทความฉบับร่าง';
@@ -182,7 +187,7 @@ export function CreateArticlePage() {
   const handleConfirmPublish = () => {
     setShowPublishModal(false);
     const selectedCats = categories.filter((c) => c.checked).map((c) => c.name);
-    const category = selectedCats[0] || 'ปี 2026';
+    const category = selectedCats[0] || 'ทั่วไป';
 
     const cleanExcerpt = content.replace(/<[^>]+>/g, '').slice(0, 180) + '...';
     const finalTitle = title.trim() || 'บทความใหม่ไม่มีชื่อ';
@@ -286,7 +291,7 @@ export function CreateArticlePage() {
                   width: 140,
                   height: 48,
                   borderRadius: 10,
-                  backgroundColor: '#DE5D8F',
+                  backgroundColor: '#E992B4',
                   fontSize: 16,
                 }}
               >
@@ -337,9 +342,9 @@ export function CreateArticlePage() {
               <button
                 type="button"
                 onClick={() => setShowPublishModal(true)}
-                className="cursor-pointer border-none text-white transition-all hover:bg-[#CA5582] active:scale-95 shadow-sm font-serif"
+                className="cursor-pointer border-none text-white transition-opacity hover:opacity-90 active:scale-95 shadow-sm font-serif"
                 style={{
-                  backgroundColor: '#DE5D8F',
+                  backgroundColor: '#E992B4',
                   borderRadius: 9999,
                   height: 38,
                   padding: '0 24px',
@@ -356,8 +361,11 @@ export function CreateArticlePage() {
           <div className="bg-white rounded-[20px] p-8 md:p-12 shadow-sm border border-[#DFDFE0] flex flex-col gap-8 max-w-[840px] mx-auto w-full">
             {/* Category badge */}
             <div className="flex items-center gap-2">
-              <span className="font-serif font-bold text-[14px] text-[#DE5D8F] bg-[#FCEFF4] rounded-[11px] px-3.5 py-1.5">
-                {categories.find((c) => c.checked)?.name || 'ทั่วไป'}
+              <span
+                className="font-sans font-normal text-[14px] text-[#DE5D8F] bg-[#FCEFF4] rounded-[11px] px-3.5 py-1.5"
+                style={{ fontFamily: "'Inter', 'Noto Sans Thai', sans-serif" }}
+              >
+                {(categories.find((c) => c.checked)?.name || 'ทั่วไป').replace(/^ปี\s*/, '')}
               </span>
             </div>
 
@@ -464,9 +472,9 @@ export function CreateArticlePage() {
                 id="btn-publish-open"
                 type="button"
                 onClick={() => setShowPublishModal(true)}
-                className="flex items-center gap-1.5 cursor-pointer border-none text-white transition-all hover:bg-[#CA5582] active:scale-95 shadow-sm font-serif"
+                className="flex items-center gap-1.5 cursor-pointer border-none text-white transition-opacity hover:opacity-90 active:scale-95 shadow-sm font-serif"
                 style={{
-                  backgroundColor: '#DE5D8F',
+                  backgroundColor: '#E992B4',
                   borderRadius: 9999,
                   height: 38,
                   padding: '0 24px',
@@ -674,7 +682,7 @@ export function CreateArticlePage() {
                     <button
                       type="button"
                       onClick={handleAddCategory}
-                      className="px-3 py-1.5 rounded-[8px] bg-[#DE5D8F] text-white border-none font-bold text-[13px] cursor-pointer font-serif"
+                      className="px-3 py-1.5 rounded-[8px] bg-[#E992B4] text-white border-none font-bold text-[13px] cursor-pointer font-serif transition-opacity hover:opacity-90 active:scale-95"
                     >
                       เพิ่ม
                     </button>
@@ -738,7 +746,7 @@ export function CreateArticlePage() {
                   <button
                     type="button"
                     onClick={handleAddTag}
-                    className="px-3 py-1.5 rounded-[8px] bg-[#DE5D8F] text-white border-none font-bold text-[13px] cursor-pointer font-serif"
+                    className="px-3 py-1.5 rounded-[8px] bg-[#E992B4] text-white border-none font-bold text-[13px] cursor-pointer font-serif transition-opacity hover:opacity-90 active:scale-95"
                   >
                     เพิ่ม
                   </button>
@@ -784,3 +792,4 @@ export function CreateArticlePage() {
 }
 
 export default CreateArticlePage;
+

@@ -12,7 +12,17 @@
 @theme {
   --font-maintenance: 'Google Sans', sans-serif;
   --font-inter: 'Inter', 'Noto Sans Thai', sans-serif;
-  --font-sans: 'Inter', 'Noto Sans Thai', sans-serif;
+  --font-chula: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', sans-serif;
+  --font-serif: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', serif;
+  --font-sans: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', sans-serif;
+}
+
+body, button, input, select, textarea {
+  font-family: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', sans-serif;
+}
+
+.font-chula {
+  font-family: 'ChulaCharasNew', 'Inter', 'Noto Sans Thai', sans-serif;
 }
 
 .font-inter {

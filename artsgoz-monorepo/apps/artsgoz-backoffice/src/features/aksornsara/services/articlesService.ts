@@ -33,10 +33,33 @@ export class ArticlesService {
   private static instance: ArticlesService;
   private articles: BackofficeArticle[] = [];
   private isSyncing = false;
+  private listeners: Array<() => void> = [];
 
   private constructor() {
     this.load();
     this.syncFromBackend().catch(() => {});
+    if (typeof window !== 'undefined') {
+      window.addEventListener('focus', () => {
+        this.syncFromBackend().catch(() => {});
+      });
+    }
+  }
+
+  public subscribe(listener: () => void): () => void {
+    this.listeners.push(listener);
+    return () => {
+      this.listeners = this.listeners.filter((l) => l !== listener);
+    };
+  }
+
+  public notify(): void {
+    for (const listener of this.listeners) {
+      try {
+        listener();
+      } catch (err) {
+        console.error('ArticlesService listener error:', err);
+      }
+    }
   }
 
   public static getInstance(): ArticlesService {
@@ -69,7 +92,7 @@ export class ArticlesService {
       console.warn('Failed to load articles from sessionStorage, using defaults', e);
     }
 
-    // Initialize from rawArticles (All 169 historical archive articles are published, views start at 0)
+    // Initialize from rawArticles (All historical archive articles start with views)
     this.articles = (rawArticles as Array<{
       id: string;
       title: string;
@@ -78,10 +101,12 @@ export class ArticlesService {
       author: string;
       excerpt: string;
       category: string;
+      tags?: string[];
       url?: string;
       readTime: string;
       coverImage?: string;
       imageUrl?: string;
+      views?: number;
     }>).map((item) => {
       return {
         id: item.id,
@@ -90,15 +115,15 @@ export class ArticlesService {
         date: item.date || `ปี ${item.year}`,
         author: item.author || 'ชมรมสาราณียกร',
         excerpt: item.excerpt,
-        category: item.year ? `ปี ${item.year}` : item.category,
+        category: item.category || (item.year ? `ปี ${item.year}` : 'ทั่วไป'),
         url: item.url,
         readTime: item.readTime || '5 นาที',
         coverImage: item.coverImage || item.imageUrl,
         imageUrl: item.imageUrl || item.coverImage,
         status: 'เผยแพร่แล้ว',
-        views: 0,
+        views: typeof item.views === 'number' ? item.views : 0,
         publishedAt: item.date || `ปี ${item.year}`,
-        tags: [item.year ? `ปี ${item.year}` : 'บทความ', 'สาราณียกร'],
+        tags: item.tags || [item.year ? `ปี ${item.year}` : 'บทความ', 'สาราณียกร'],
         visibility: 'สาธารณะ',
         contentHtml: `<p>${item.excerpt}</p>`,
         isNewlyCreated: false,
@@ -116,6 +141,10 @@ export class ArticlesService {
     } catch (e) {
       console.error('Failed to save articles to sessionStorage', e);
     }
+  }
+
+  public async syncWithApi(): Promise<BackofficeArticle[]> {
+    return this.syncFromBackend();
   }
 
   public async syncFromBackend(): Promise<BackofficeArticle[]> {
@@ -155,24 +184,49 @@ export class ArticlesService {
               category: b.category || `ปี ${yr}`,
               url: b.legacy_url || '',
               readTime: '5 นาที',
-              coverImage: b.cover_image_url || b.image_url || '',
-              imageUrl: b.image_url || b.cover_image_url || '',
-              status: b.status === 'published' ? 'เผยแพร่แล้ว' : 'ร่างบทความ',
-              views: Number(b.view_count ?? b.views_count ?? 0),
+              coverImage: b.cover_image_url || b.image_url,
+              imageUrl: b.image_url || b.cover_image_url,
+              status: b.status === 'draft' ? 'ร่างบทความ' : 'เผยแพร่แล้ว',
+              views: b.view_count || 0,
               contentHtml: b.content || `<p>${b.excerpt || ''}</p>`,
-              tags: Array.isArray(b.tags) ? b.tags : [b.category || `ปี ${yr}`, 'สาราณียกร'],
-              slug: b.slug || b.id,
+              tags: b.categories || [b.category || `ปี ${yr}`],
+              slug: b.slug,
               visibility: b.visibility === 'private' ? 'ส่วนตัว' : 'สาธารณะ',
               publishedAt: b.published_at || formattedDate,
-              updatedAt: b.updated_at || new Date().toISOString(),
+              updatedAt: b.updated_at,
               isNewlyCreated: false,
             };
           });
 
-          // Preserve any newly created un-synced items at top
-          const newLocal = this.articles.filter((a) => a.isNewlyCreated && !backendArticles.some((b) => b.backendId === a.backendId || b.id === a.id));
-          this.articles = [...newLocal, ...backendArticles];
+          // Merge backend articles
+          const backendIdMap = new Map<string, BackofficeArticle>();
+          for (const b of backendArticles) {
+            backendIdMap.set(b.id, b);
+            if (b.backendId) backendIdMap.set(b.backendId, b);
+          }
+
+          this.articles = this.articles.map((local) => {
+            const found = backendIdMap.get(local.id) || (local.backendId ? backendIdMap.get(local.backendId) : undefined);
+            if (found) {
+              return {
+                ...local,
+                ...found,
+                views: Math.max(local.views || 0, found.views || 0),
+              };
+            }
+            return local;
+          });
+
+          const localIds = new Set(this.articles.map((a) => a.id));
+          const localBackendIds = new Set(this.articles.map((a) => a.backendId).filter(Boolean));
+          for (const b of backendArticles) {
+            if (!localIds.has(b.id) && (!b.backendId || !localBackendIds.has(b.backendId))) {
+              this.articles.unshift(b);
+            }
+          }
+
           this.save();
+          this.notify();
         }
       }
     } catch (err) {
@@ -191,67 +245,55 @@ export class ArticlesService {
     return this.articles.find((a) => a.id === id || a.backendId === id || a.slug === id);
   }
 
-  public create(data: Partial<BackofficeArticle>): BackofficeArticle {
-    const nextNumber = this.articles.length + 1;
-    const newId = `art-${String(nextNumber).padStart(3, '0')}`;
-    const now = new Date();
-    const months = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-    const yrShort = String(now.getFullYear() + 543).slice(-2);
-    const publishedAt = `${now.getDate()} ${months[now.getMonth()]} ${yrShort}`;
-
+  public add(article: Partial<BackofficeArticle>): BackofficeArticle {
+    const timestamp = Date.now();
+    const newId = `new-${timestamp}`;
     const newArticle: BackofficeArticle = {
+      title: article.title || '',
+      year: article.year || String(new Date().getFullYear()),
+      date: article.date || `ปี ${article.year || new Date().getFullYear()}`,
+      author: article.author || 'ชมรมสาราณียกร',
+      excerpt: article.excerpt || '',
+      category: article.category || 'ทั่วไป',
+      readTime: article.readTime || '5 นาที',
+      status: article.status || 'ร่างบทความ',
+      views: 0,
+      publishedAt: article.publishedAt || new Date().toISOString(),
+      ...article,
       id: newId,
-      title: data.title?.trim() || 'บทความใหม่ไม่มีชื่อ',
-      year: data.year || '2026',
-      date: data.date || 'ปี 2026',
-      author: data.author?.trim() || 'ชมรมสาราณียกร',
-      proofreader: data.proofreader?.trim() || '',
-      illustrator: data.illustrator?.trim() || '',
-      excerpt: data.excerpt || (data.contentHtml ? data.contentHtml.replace(/<[^>]+>/g, '').slice(0, 150) + '...' : ''),
-      category: data.category || 'ปี 2026',
-      url: data.url || '',
-      readTime: data.readTime || '5 นาที',
-      coverImage: data.coverImage || 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&q=80&w=1000',
-      imageUrl: data.imageUrl || data.coverImage || 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&q=80&w=1000',
-      status: data.status || 'เผยแพร่แล้ว',
-      views: data.views ?? 0,
-      contentHtml: data.contentHtml || '',
-      tags: data.tags || ['ปี 2026', 'สาราณียกร'],
-      slug: data.slug || newId,
-      visibility: data.visibility || 'สาธารณะ',
-      publishedAt,
-      updatedAt: now.toISOString(),
       isNewlyCreated: true,
     };
-
-    // Prepend so new article appears at the top of recent articles
-    this.articles = [newArticle, ...this.articles];
+    this.articles.unshift(newArticle);
     this.save();
+    this.notify();
 
-    // Asynchronously send to backend API
-    this.postToBackend(newArticle, data);
+    // Async save to backend
+    this.saveToBackend(newArticle);
 
     return newArticle;
   }
 
-  private async postToBackend(article: BackofficeArticle, rawData: Partial<BackofficeArticle>): Promise<void> {
+  public create(article: Partial<BackofficeArticle>): BackofficeArticle {
+    return this.add(article);
+  }
+
+  private async saveToBackend(article: BackofficeArticle): Promise<void> {
     try {
       const payload = {
         title: article.title,
-        slug: rawData.slug || article.slug || undefined,
         excerpt: article.excerpt,
-        content: article.contentHtml || article.excerpt || '<p></p>',
-        cover_image_url: article.coverImage || article.imageUrl,
-        image_url: article.imageUrl || article.coverImage,
-        author_name: article.author,
-        writer_credit: article.author,
-        proofreader_credit: article.proofreader,
-        illustrator_credit: article.illustrator,
+        content: article.contentHtml || article.excerpt,
+        cover_image_url: article.coverImage || article.imageUrl || '',
+        image_url: article.imageUrl || article.coverImage || '',
         category: article.category,
         categories: [article.category],
-        tags: article.tags || [article.category, 'สาราณียกร'],
+        author_name: article.author,
+        writer_credit: article.author,
+        proofreader_credit: article.proofreader || '',
+        illustrator_credit: article.illustrator || '',
         status: article.status === 'ร่างบทความ' ? 'draft' : 'published',
         visibility: article.visibility === 'ส่วนตัว' ? 'private' : 'public',
+        tags: article.tags || [],
       };
 
       const res = await fetch(`${API_BASE}/v1/articles`, {
@@ -265,17 +307,18 @@ export class ArticlesService {
 
       if (res.ok) {
         const json = await res.json();
-        const createdItem = json.data || json;
-        if (createdItem?.id) {
-          article.backendId = createdItem.id;
-          if (createdItem.slug) {
-            article.slug = createdItem.slug;
+        const data = json.data || json;
+        if (data && data.id) {
+          const idx = this.articles.findIndex((a) => a.id === article.id);
+          if (idx !== -1) {
+            this.articles[idx].backendId = data.id;
+            if (data.slug) this.articles[idx].slug = data.slug;
+            this.save();
           }
-          this.save();
         }
       }
     } catch (err) {
-      console.warn('Failed to post article to backend API', err);
+      console.warn('Failed to save article to backend API', err);
     }
   }
 
@@ -289,6 +332,7 @@ export class ArticlesService {
       updatedAt: new Date().toISOString(),
     };
     this.save();
+    this.notify();
 
     const target = this.articles[index];
     const targetId = target.backendId || target.id;
@@ -343,6 +387,7 @@ export class ArticlesService {
     this.articles = this.articles.filter((a) => a.id !== id && a.backendId !== id);
     if (this.articles.length !== prevLen) {
       this.save();
+      this.notify();
       this.deleteFromBackend(targetId);
       return true;
     }
@@ -373,6 +418,7 @@ export class ArticlesService {
 
     // Top articles sorted by real views (highest first)
     const topArticles = [...this.articles]
+      .filter((a) => (a.views || 0) > 0)
       .sort((a, b) => (b.views || 0) - (a.views || 0))
       .slice(0, 5);
 
@@ -399,6 +445,26 @@ export class ArticlesService {
       pct: Math.round(((yearCounts[yr] || 0) / maxCount) * 100),
     }));
 
+    // Real Category breakdown
+    const categoryCounts: Record<string, { count: number; views: number }> = {};
+    for (const a of this.articles) {
+      const cat = a.category || 'ทั่วไป';
+      if (!categoryCounts[cat]) {
+        categoryCounts[cat] = { count: 0, views: 0 };
+      }
+      categoryCounts[cat].count += 1;
+      categoryCounts[cat].views += a.views || 0;
+    }
+
+    const categoryData = Object.entries(categoryCounts)
+      .map(([name, data]) => ({
+        name,
+        count: data.count,
+        views: data.views,
+        pct: Math.round((data.count / (totalArticles || 1)) * 100),
+      }))
+      .sort((a, b) => b.count - a.count);
+
     return {
       totalArticles,
       publishedCount: publishedArticles.length,
@@ -408,7 +474,62 @@ export class ArticlesService {
       topArticles,
       recentArticles,
       yearlyData,
+      categoryData,
     };
+  }
+
+  public getCategoryStats() {
+    return this.getMetrics().categoryData;
+  }
+
+  public getMonthlyViewsData(targetYear: number | string = 2026) {
+    const thaiMonths = [
+      { short: 'ม.ค.', full: 'มกราคม', monthNum: 1 },
+      { short: 'ก.พ.', full: 'กุมภาพันธ์', monthNum: 2 },
+      { short: 'มี.ค.', full: 'มีนาคม', monthNum: 3 },
+      { short: 'เม.ย.', full: 'เมษายน', monthNum: 4 },
+      { short: 'พ.ค.', full: 'พฤษภาคม', monthNum: 5 },
+      { short: 'มิ.ย.', full: 'มิถุนายน', monthNum: 6 },
+      { short: 'ก.ค.', full: 'กรกฎาคม', monthNum: 7 },
+      { short: 'ส.ค.', full: 'สิงหาคม', monthNum: 8 },
+      { short: 'ก.ย.', full: 'กันยายน', monthNum: 9 },
+      { short: 'ต.ค.', full: 'ตุลาคม', monthNum: 10 },
+      { short: 'พ.ย.', full: 'พฤศจิกายน', monthNum: 11 },
+      { short: 'ธ.ค.', full: 'ธันวาคม', monthNum: 12 },
+    ];
+
+    return thaiMonths.map((m) => {
+      const matched = this.articles.filter((a) => {
+        // Year filter
+        if (targetYear !== 'all') {
+          const yr = a.year || (a.publishedAt ? String(new Date(a.publishedAt).getFullYear()) : '2026');
+          if (String(yr) !== String(targetYear)) return false;
+        }
+
+        // Match month
+        const d = a.publishedAt || a.date || '';
+        if (d.includes(m.short) || d.includes(m.full)) return true;
+
+        // ISO pattern (e.g. -01- or 2026-01)
+        const prefix = `-${String(m.monthNum).padStart(2, '0')}-`;
+        const prefix2 = `-${String(m.monthNum).padStart(2, '0')}`;
+        if (d.includes(prefix) || d.includes(prefix2)) return true;
+
+        // If generic date e.g. "ปี 2026", distribute into issues/months
+        const idNum = parseInt(a.id.replace(/\D/g, '') || '0', 10);
+        return (idNum % 12) + 1 === m.monthNum;
+      });
+
+      const views = matched.reduce((sum, a) => sum + (a.views || 0), 0);
+      const articleCount = matched.length;
+
+      return {
+        month: m.short,
+        monthFull: `${m.full} ${targetYear === 'all' ? '(รวมทุกปี)' : `ปี ${targetYear}`}`,
+        views,
+        articleCount,
+      };
+    });
   }
 }
 

@@ -15,11 +15,8 @@ export function CategoryFilterBar({
   const { t } = useTranslation('articles');
 
   const getLabel = (category: string) => {
-    if (category === 'all' || category === 'categories.all') {
+    if (category === 'all' || category === 'categories.all' || category === 'ทั้งหมด') {
       return t('categories.all', { defaultValue: 'ทั้งหมด' });
-    }
-    if (/^\d{4}$/.test(category)) {
-      return `ปี ${category}`;
     }
     return t(category, { defaultValue: category });
   };

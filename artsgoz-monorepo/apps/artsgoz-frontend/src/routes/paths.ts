@@ -12,6 +12,7 @@ export const PATHS = {
   INTERNSHIPS_OPEN: '/internships/open',
   INTERNSHIPS_REVIEW: '/internships/review',
   ARTICLES: '/articles',
+  SAVED: '/saved',
   CLUBS: '/clubs',
   HELP: '/help',
 } as const;
