@@ -1,4 +1,4 @@
-import { useMemo, useState, useRef } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import { useSearchParams, useNavigate, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { SearchInput, Pagination } from '@artsgoz/design-system';
@@ -19,6 +19,7 @@ import {
   MOCK_ARTICLES,
   AKSORNSARA_CATEGORIES,
   getArticlesSummaryList,
+  fetchRemoteArticles,
   ArticleBannerMock,
 } from '../../../features/articles/index.js';
 import { Footer } from '../../../components/Footer/index.js';
@@ -372,9 +373,20 @@ export default function ArticlesPage() {
     );
   };
 
+  // Load remote articles from backend API
+  const [articlesList, setArticlesList] = useState<any[]>(() => getArticlesSummaryList());
+
+  useEffect(() => {
+    fetchRemoteArticles().then((items) => {
+      if (items && items.length > 0) {
+        setArticlesList(items);
+      }
+    });
+  }, []);
+
   // Filter articles by category (year) + search query, and sort by date/year ('newest' or 'oldest')
   const filteredArticles = useMemo(() => {
-    const allArticles = getArticlesSummaryList();
+    const allArticles = articlesList;
     const list = allArticles.filter((article) => {
       const matchesCategory =
         selectedCategory === 'all' ||
@@ -394,17 +406,17 @@ export default function ArticlesPage() {
     });
 
     return list.sort((a, b) => {
-      const yrA = Number(a.year) || 0;
-      const yrB = Number(b.year) || 0;
+      const timeA = parseDateToTimestamp(a.date);
+      const timeB = parseDateToTimestamp(b.date);
       if (articlesSortOrder === 'newest') {
-        if (yrB !== yrA) return yrB - yrA;
+        if (timeB !== timeA) return timeB - timeA;
         return b.id.localeCompare(a.id);
       } else {
-        if (yrA !== yrB) return yrA - yrB;
+        if (timeA !== timeB) return timeA - timeB;
         return a.id.localeCompare(b.id);
       }
     });
-  }, [searchQuery, selectedCategory, articlesSortOrder]);
+  }, [articlesList, searchQuery, selectedCategory, articlesSortOrder]);
 
   const totalPages = Math.ceil(filteredArticles.length / ITEMS_PER_PAGE);
 

@@ -103,6 +103,7 @@ type Article struct {
 	MetaDescription    string         `gorm:"type:text;column:meta_description" json:"meta_description"`
 	SEOMetaDescription string         `gorm:"type:text;column:seo_meta_description" json:"seo_meta_description,omitempty"`
 	ViewsCount         int64          `gorm:"not null;default:0" json:"views_count"`
+	ViewCount          int64          `gorm:"column:view_count;default:0" json:"view_count"`
 	References         []string       `gorm:"serializer:json" json:"references,omitempty"`
 	CreatedAt          time.Time      `gorm:"not null" json:"created_at"`
 	UpdatedAt          time.Time      `gorm:"not null" json:"updated_at"`

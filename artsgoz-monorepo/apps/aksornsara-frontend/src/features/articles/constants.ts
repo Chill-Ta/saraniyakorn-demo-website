@@ -105,6 +105,9 @@ export const fetchRemoteArticles = async (): Promise<ArticleSummary[]> => {
             author: item.author_name || item.writer_credit || 'ชมรมสาราณียกร',
             excerpt: item.excerpt || '',
             category: item.category || `ปี ${yr}`,
+            tags: Array.isArray(item.categories) && item.categories.length > 0
+              ? item.categories
+              : (item.category ? [item.category] : ['ทั่วไป']),
             url: item.legacy_url || '',
             readTime: '5 นาที',
             imageUrl: img,

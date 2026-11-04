@@ -187,7 +187,7 @@ export class ArticlesService {
               coverImage: b.cover_image_url || b.image_url,
               imageUrl: b.image_url || b.cover_image_url,
               status: b.status === 'draft' ? 'ร่างบทความ' : 'เผยแพร่แล้ว',
-              views: b.view_count || 0,
+              views: Number(b.views_count ?? b.view_count ?? b.views ?? 0),
               contentHtml: b.content || `<p>${b.excerpt || ''}</p>`,
               tags: b.categories || [b.category || `ปี ${yr}`],
               slug: b.slug,
@@ -203,15 +203,19 @@ export class ArticlesService {
           for (const b of backendArticles) {
             backendIdMap.set(b.id, b);
             if (b.backendId) backendIdMap.set(b.backendId, b);
+            if (b.slug) backendIdMap.set(b.slug, b);
           }
 
           this.articles = this.articles.map((local) => {
-            const found = backendIdMap.get(local.id) || (local.backendId ? backendIdMap.get(local.backendId) : undefined);
+            const found =
+              backendIdMap.get(local.id) ||
+              (local.backendId ? backendIdMap.get(local.backendId) : undefined) ||
+              (local.slug ? backendIdMap.get(local.slug) : undefined);
             if (found) {
               return {
                 ...local,
                 ...found,
-                views: Math.max(local.views || 0, found.views || 0),
+                views: Math.max(Number(local.views || 0), Number(found.views || 0)),
               };
             }
             return local;
@@ -219,8 +223,13 @@ export class ArticlesService {
 
           const localIds = new Set(this.articles.map((a) => a.id));
           const localBackendIds = new Set(this.articles.map((a) => a.backendId).filter(Boolean));
+          const localSlugs = new Set(this.articles.map((a) => a.slug).filter(Boolean));
           for (const b of backendArticles) {
-            if (!localIds.has(b.id) && (!b.backendId || !localBackendIds.has(b.backendId))) {
+            const exists =
+              localIds.has(b.id) ||
+              (b.backendId && localBackendIds.has(b.backendId)) ||
+              (b.slug && localSlugs.has(b.slug));
+            if (!exists) {
               this.articles.unshift(b);
             }
           }
@@ -314,6 +323,7 @@ export class ArticlesService {
             this.articles[idx].backendId = data.id;
             if (data.slug) this.articles[idx].slug = data.slug;
             this.save();
+            this.notify();
           }
         }
       }

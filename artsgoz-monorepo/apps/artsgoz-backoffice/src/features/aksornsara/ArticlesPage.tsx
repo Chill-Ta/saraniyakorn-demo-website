@@ -15,6 +15,8 @@ import { AksornsaraLayout } from './AksornsaraLayout';
 import { articlesService, BackofficeArticle } from './services/articlesService';
 import articleThumbFallback from '../../assets/article_thumb.png';
 
+const FRONTEND_URL = (import.meta.env.VITE_AKSORNSARA_FRONTEND_URL || 'http://localhost:4201').replace(/\/$/, '');
+
 export function ArticlesPage() {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
@@ -445,7 +447,7 @@ export function ArticlesPage() {
                           <a
                             href={
                               item.url ||
-                              `http://localhost:4200/articles/${item.id}`
+                              `${FRONTEND_URL}/articles/${item.slug || item.backendId || item.id}`
                             }
                             target="_blank"
                             rel="noopener noreferrer"
