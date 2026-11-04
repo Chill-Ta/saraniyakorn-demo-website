@@ -156,7 +156,11 @@ function SidebarContent({ onItemClick }: SidebarContentProps) {
       {/* Sign out */}
       <div
         onClick={() => {
-          navigate('/yellow-card/backoffice');
+          localStorage.removeItem('artsgoz_token');
+          localStorage.removeItem('artsgoz_user');
+          sessionStorage.removeItem('artsgoz_token');
+          sessionStorage.removeItem('artsgoz_user');
+          navigate('/login');
           onItemClick?.();
         }}
         className="flex items-center cursor-pointer transition-all duration-150 select-none bg-transparent hover:bg-[#F9DEE8] active:bg-[#F0BED2] mb-4"

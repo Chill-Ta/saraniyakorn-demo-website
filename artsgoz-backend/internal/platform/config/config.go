@@ -22,6 +22,7 @@ type Config struct {
 	UploadDir      string
 	UploadBaseURL  string
 	StorageBucket  string
+	JWTSecret      string
 }
 
 // Load reads an optional .env.local file and then resolves configuration from
@@ -46,6 +47,7 @@ func Load() (Config, error) {
 		UploadDir:      envOrDefault("UPLOAD_DIR", "./uploads"),
 		UploadBaseURL:  envOrDefault("UPLOAD_BASE_URL", "/uploads"),
 		StorageBucket:  os.Getenv("STORAGE_BUCKET"),
+		JWTSecret:      envOrDefault("JWT_SECRET", "artsgoz_super_secret_jwt_key_2026"),
 	}
 	if cfg.DBHost == "" || cfg.DBUser == "" || cfg.DBName == "" {
 		return Config{}, fmt.Errorf("config: DB_HOST, DB_USER, and DB_NAME are required")

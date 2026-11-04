@@ -14,35 +14,41 @@ import { AdminDashboardPage } from '../features/goz-admin/AdminDashboardPage';
 import { AdminAuditLogPage } from '../features/goz-admin/AdminAuditLogPage';
 import { AdminReviewsPage } from '../features/goz-admin/AdminReviewsPage';
 import { AdminUsersPage } from '../features/goz-admin/AdminUsersPage';
+import { LoginPage } from '../features/auth/LoginPage';
+import { ProtectedRoute } from '../features/auth/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
     path: PATHS.ROOT,
-    element: <Navigate to={PATHS.AKSORNSARA} replace />,
+    element: <ProtectedRoute><Navigate to={PATHS.AKSORNSARA} replace /></ProtectedRoute>,
+  },
+  {
+    path: PATHS.LOGIN,
+    element: <LoginPage />,
   },
   {
     path: PATHS.DASHBOARD.ROOT,
-    element: <AdminDashboardPage />,
+    element: <ProtectedRoute><AdminDashboardPage /></ProtectedRoute>,
   },
   {
     path: PATHS.ADMIN.ROOT,
-    element: <AdminDashboardPage />,
+    element: <ProtectedRoute><AdminDashboardPage /></ProtectedRoute>,
   },
   {
     path: PATHS.ADMIN.DASHBOARD,
-    element: <AdminDashboardPage />,
+    element: <ProtectedRoute><AdminDashboardPage /></ProtectedRoute>,
   },
   {
     path: PATHS.ADMIN.AUDIT_LOG,
-    element: <AdminAuditLogPage />,
+    element: <ProtectedRoute><AdminAuditLogPage /></ProtectedRoute>,
   },
   {
     path: PATHS.ADMIN.REVIEWS,
-    element: <AdminReviewsPage />,
+    element: <ProtectedRoute><AdminReviewsPage /></ProtectedRoute>,
   },
   {
     path: PATHS.ADMIN.USERS,
-    element: <AdminUsersPage />,
+    element: <ProtectedRoute><AdminUsersPage /></ProtectedRoute>,
   },
   {
     path: PATHS.YELLOW_CARD_BACKOFFICE,
@@ -50,39 +56,39 @@ const router = createBrowserRouter([
   },
   {
     path: PATHS.AKSORNSARA,
-    element: <AksornsaraPage />,
+    element: <ProtectedRoute><AksornsaraPage /></ProtectedRoute>,
   },
   {
     path: PATHS.AKSORNSARA_TRAFFIC,
-    element: <TrafficPage />,
+    element: <ProtectedRoute><TrafficPage /></ProtectedRoute>,
   },
   {
     path: PATHS.AKSORNSARA_CATEGORIES,
-    element: <CategoriesPage />,
+    element: <ProtectedRoute><CategoriesPage /></ProtectedRoute>,
   },
   {
     path: PATHS.AKSORNSARA_ARTICLES,
-    element: <ArticlesPage />,
+    element: <ProtectedRoute><ArticlesPage /></ProtectedRoute>,
   },
   {
     path: PATHS.AKSORNSARA_PUBLISHED_ARTICLES,
-    element: <PublishedArticlesPage />,
+    element: <ProtectedRoute><PublishedArticlesPage /></ProtectedRoute>,
   },
   {
     path: PATHS.AKSORNSARA_CREATE,
-    element: <CreateArticlePage />,
+    element: <ProtectedRoute><CreateArticlePage /></ProtectedRoute>,
   },
   {
     path: PATHS.AKSORNSARA_COMMENTS,
-    element: <CommentsPage />,
+    element: <ProtectedRoute><CommentsPage /></ProtectedRoute>,
   },
   {
     path: PATHS.AKSORNSARA_ACTIVITIES,
-    element: <ActivitiesPage />,
+    element: <ProtectedRoute><ActivitiesPage /></ProtectedRoute>,
   },
   {
     path: PATHS.AKSORNSARA_SETTINGS,
-    element: <AccountSettingsPage />,
+    element: <ProtectedRoute><AccountSettingsPage /></ProtectedRoute>,
   },
   // Legacy /saraniyakorn route aliases redirecting to /aksornsara
   {

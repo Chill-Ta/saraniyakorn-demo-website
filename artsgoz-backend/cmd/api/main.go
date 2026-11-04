@@ -12,6 +12,7 @@ import (
 
 	"github.com/artsgoz/artsgoz-backend/internal/activity"
 	"github.com/artsgoz/artsgoz-backend/internal/article"
+	"github.com/artsgoz/artsgoz-backend/internal/auth"
 	"github.com/artsgoz/artsgoz-backend/internal/comment"
 	"github.com/artsgoz/artsgoz-backend/internal/dashboard"
 	"github.com/artsgoz/artsgoz-backend/internal/media"
@@ -82,6 +83,18 @@ func run() error {
 	userHandler := user.NewHandler(userService)
 	user.RegisterRoutes(api, userHandler)
 	user.RegisterRoutes(apiV1, userHandler)
+
+	// Auth module
+	jwtManager := auth.NewJWTManager(cfg.JWTSecret, 24*time.Hour)
+	authService := auth.NewService(userRepository, jwtManager)
+	auth.Register(api, authService)
+	auth.Register(apiV1, authService)
+
+	// User admin module
+	adminService := user.NewAdminService(userRepository)
+	adminHandler := user.NewAdminHandler(adminService)
+	user.RegisterAdminRoutes(api, adminHandler, auth.Middleware(authService))
+	user.RegisterAdminRoutes(apiV1, adminHandler, auth.Middleware(authService))
 
 	// Activity module
 	activityRepository := activity.NewGormRepository(database.DB)

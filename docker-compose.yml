@@ -38,6 +38,7 @@ services:
       DB_SSL_MODE: "disable"
       UPLOAD_DIR: "/app/uploads"
       UPLOAD_BASE_URL: "/uploads"
+      JWT_SECRET: "artsgoz_super_secret_jwt_key_2026"
     depends_on:
       postgres:
         condition: service_healthy

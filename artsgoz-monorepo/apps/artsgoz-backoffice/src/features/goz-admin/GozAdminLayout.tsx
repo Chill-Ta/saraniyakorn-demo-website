@@ -59,7 +59,11 @@ export function GozAdminLayout({
   ];
 
   const handleSignOut = () => {
-    navigate('/yellow-card/backoffice');
+    localStorage.removeItem('artsgoz_token');
+    localStorage.removeItem('artsgoz_user');
+    sessionStorage.removeItem('artsgoz_token');
+    sessionStorage.removeItem('artsgoz_user');
+    navigate('/login');
   };
 
   const renderSidebarContent = (onItemClick?: () => void) => (
