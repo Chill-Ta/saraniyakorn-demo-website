@@ -42,6 +42,7 @@ docker compose up -d --build
 * **หน้าเว็บหลัก ArtsGoz:** [http://localhost:4300](http://localhost:4300)
 * **Backend REST API:** [http://localhost:8080](http://localhost:8080)
 * **Database Connection:** `localhost:5433` (User: `user`, Password: `password`, DB: `artsgoz`)
+* **User and Password สําหรับ login หน้าแดชบอร์ด : Username: admin: password: password123
 
 ---
 
