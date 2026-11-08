@@ -356,7 +356,9 @@ export function AksornsaraLayout({
 
             {/* Profile Avatar */}
             <div
-              className="hidden md:flex items-center justify-center shrink-0 cursor-pointer overflow-hidden"
+              onClick={() => navigate('/aksornsara/settings')}
+              title="การตั้งค่าบัญชี (Account Settings)"
+              className="hidden md:flex items-center justify-center shrink-0 cursor-pointer overflow-hidden transition-opacity hover:opacity-80 active:scale-95"
               style={{
                 width: 32,
                 height: 32,

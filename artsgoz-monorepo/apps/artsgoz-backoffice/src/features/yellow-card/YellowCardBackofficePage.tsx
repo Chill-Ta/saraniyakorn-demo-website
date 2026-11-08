@@ -99,7 +99,11 @@ export function YellowCardBackofficePage() {
   };
 
   const handleLogout = () => {
-    navigate(PATHS.ROOT);
+    localStorage.removeItem('artsgoz_token');
+    localStorage.removeItem('artsgoz_user');
+    sessionStorage.removeItem('artsgoz_token');
+    sessionStorage.removeItem('artsgoz_user');
+    navigate('/login');
   };
 
   return (

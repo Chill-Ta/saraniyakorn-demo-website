@@ -100,6 +100,10 @@ export function YellowCardBackofficePage() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('artsgoz_token');
+    localStorage.removeItem('artsgoz_user');
+    sessionStorage.removeItem('artsgoz_token');
+    sessionStorage.removeItem('artsgoz_user');
     navigate(PATHS.ROOT);
   };
 
